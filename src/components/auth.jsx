@@ -11,8 +11,8 @@ export const Auth = () => {
   const [password, setPassword] = useState("");
 
   //! Shows what user is signed in
-  console.log(auth?.currentUse?.email);
-  console.log(auth?.currentUse?.photourl);
+  console.log(auth?.currentUser?.email);
+  console.log(auth?.currentUser?.photoURL);
   //   ? handles if the object doesnt exist
 
   const signIn = async () => {
