@@ -75,3 +75,15 @@ alias: {
 - In CLI for project: npm install
 - In CLI for project: o "enter"
 - Look for black square under "Vite + React" to confirm shadcn functionality
+
+\***\*\*\*\*** ADDING FIREBASE **\*\*\*\***
+
+- In CLI for project: npm install firebase
+- Create config folder in /src
+- Create file firebase.jsx /src/config folder
+- In CLI for project: npm install -g firebase-tools
+- In firebase.jsx copy: import { getAuth, GoogleAuthProvider } from "firebase-auth";
+- In firebase.jsc create exports:
+  export const auth = getAuth(app);
+  export const provider = new GoogleAuthProvider();
+- In src/components create file: auth.jsx
