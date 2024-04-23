@@ -1,6 +1,7 @@
 import { auth, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -15,9 +16,16 @@ export const Auth = () => {
   console.log(auth?.currentUser?.photoURL);
   //   ? handles if the object doesnt exist
 
-  const signIn = async () => {
+  const register = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const signin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +63,8 @@ export const Auth = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={signIn}>Sign In</button>
+        <button onClick={register}>Register</button>
+        <button onClick={signin}>Sign In</button>
       </div>
       <button onClick={logout}>Log Out</button>
     </div>
