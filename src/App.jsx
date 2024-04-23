@@ -15,6 +15,7 @@ import { addDoc } from "firebase/firestore";
 import { deleteDoc, doc } from "firebase/firestore";
 import { updateDoc } from "firebase/firestore";
 
+
 function App() {
   const [accountList, setAccountList] = useState([]);
 
@@ -74,7 +75,9 @@ function App() {
   };
 
   return (
+   
     <div className="App">
+       
       <Auth />
       <div>
         <input

@@ -40,3 +40,63 @@
 .read-the-docs {
   color: #888;
 } */
+
+/* These two image ID's are for the opacity on the TBD Homepage */
+.page-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.full-view-image, .invisible-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease-in-out;
+  z-index: 2
+}
+
+.full-view-image {
+  opacity: 1;
+}
+
+.invisible-image {
+  opacity: 0;
+  z-index: -1;
+}
+
+.top-half {
+  position: absolute;
+  background-color: rgb(218,211,197);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%; /* Top half of the page */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Ver
+  z-index: 1; /* Ensures content is visible under the fading image */
+}
+
+.thinker-image {
+  max-height: 100%; /* Ensures the image takes up no more than the container height */
+  max-width: 100%; /* Ensures the image takes up no more than the container width */
+  object-fit: contain; /* Maintains aspect ratio and fits within the given dimensions */
+}
+
+.bottom-half {
+  position: absolute;
+  background-color: rgb(255,256,247);
+  top: 50%; /* Starts from the middle of the page */
+  left: 0;
+  width: 100%;
+  height: 50%; /* Bottom half of the page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
