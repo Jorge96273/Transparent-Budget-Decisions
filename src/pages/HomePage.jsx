@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import TBD from "../images/TBD.png";
 import Thinker from "../images/Thinker.png";
-import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom'; 
+// import { Button } from "@/components/ui/button";
 // import './App.css'; // Make sure to import your CSS file
+
 
 const HomePage = () => {
   const [imageVisible, setImageVisible] = useState(true);
@@ -15,6 +17,7 @@ const HomePage = () => {
   }, []);
   
   return (
+    
     <div className="page-container">
       <img
         className={imageVisible ? "full-view-image" : "invisible-image"}
@@ -30,15 +33,16 @@ const HomePage = () => {
         </div>
       <div className="bottom-half">
         <p className='font-bold text-lg'>Transparent Budget Decisions</p>
-        <br></br>
-        <br></br>
-        <p>Breaking the stigma that focusing on your money is difficult.</p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '100px', marginTop: '20px' }}>
-          <Button>Demo</Button>  
-          <Button>Enter</Button>  
+        <p className='quote-style'>"Breaking the stigma that focusing on your money is difficult."</p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '100px', marginTop: '100px' }}>
+        <button className="round-button">Demo</button>
+        <Link to="/enterlanding">
+        <button className="round-button">Enter</button>
+        </Link>
         </div>
       </div> 
     </div>
+   
   );
 }
 
