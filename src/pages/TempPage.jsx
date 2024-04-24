@@ -12,8 +12,8 @@ import { addDoc } from "firebase/firestore";
 import { deleteDoc, doc } from "firebase/firestore";
 import { updateDoc } from "firebase/firestore";
 import { useNavigate, Navigate } from "react-router-dom";
-import LoginDialogTemplate from "@/components/LoginDialogTempate";
-import SignupDialogTemplate from "@/components/SignupDialogtemplate";
+import LoginDialogTemplate from "@/components/LoginDialogTemplate";
+import SignupDialogTemplate from "@/components/SignupDialogTemplate";
 
 function App() {
   const [accountList, setAccountList] = useState([]);
