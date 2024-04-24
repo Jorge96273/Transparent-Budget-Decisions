@@ -7,9 +7,9 @@ import Footer from "./components/Footer"
 function App() {
   return (
     <>
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-orange-50">
       <NavBar/>
-      <div className="flex-grow">
+      <div className="flex-grow bg-orange-50">
         <Outlet />
       </div>
       <Footer />

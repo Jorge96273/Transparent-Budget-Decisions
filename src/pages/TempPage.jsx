@@ -17,6 +17,7 @@ import SignupDialogTemplate from "@/components/SignupDialogTemplate";
 
 function App() {
   const [accountList, setAccountList] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // New Account State
   const [newAccountName, setNewAccountName] = useState("");
@@ -28,23 +29,36 @@ function App() {
 
   const accountsCollectionRef = collection(db, "Accounts");
 
-  const getAccountList = async () => {
+  useEffect(() => {
+    // Firebase Auth state change listener
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuthenticated(true); // User is authenticated
+        fetchAccounts(user.uid); // Fetch accounts for the authenticated user
+      } else {
+        setIsAuthenticated(false); // User is not authenticated
+        console.log("User is not authenticated. Please log in to view accounts.");
+      }
+    });
+
+    return () => unsubscribe(); // Clean up the listener on component unmount
+  }, []);
+
+  const fetchAccounts = async (userID) => {
     try {
-      const data = await getDocs(accountsCollectionRef);
-      const fiteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setAccountList(fiteredData);
-      console.log(fiteredData);
+      const data = await getDocs(collection(db, "Accounts"));
+      const filteredData = data.docs
+        .filter((doc) => doc.data().userID === userID) // Only fetch data for the authenticated user
+        .map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+
+      setAccountList(filteredData);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching account data:", err);
     }
   };
-
-  useEffect(() => {
-    getAccountList();
-  }, []);
 
   const onSubmitAccount = async () => {
     try {
@@ -54,7 +68,7 @@ function App() {
         Debt: isAccountDebt,
         userID: auth?.currentUser?.uid,
       });
-      getAccountList();
+      // getAccountList();
     } catch (err) {
       console.error(err);
     }
@@ -63,13 +77,13 @@ function App() {
   const deleteAccount = async (id) => {
     const accountDoc = doc(db, "Accounts", id);
     await deleteDoc(accountDoc);
-    getAccountList();
+    // getAccountList();
   };
 
   const updateAccount = async (id) => {
     const accountDoc = doc(db, "Accounts", id);
     await updateDoc(accountDoc, { Balence: updatedBalence });
-    getAccountList();
+    // getAccountList();
   };
 
   return (

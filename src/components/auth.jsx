@@ -19,9 +19,9 @@ export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  //! Shows what user is signed in
-  console.log(auth?.currentUser?.email);
-  console.log(auth?.currentUser?.photoURL);
+  // //! Shows what user is signed in
+  // console.log(auth?.currentUser?.email);
+  // console.log(auth?.currentUser?.photoURL);
   //   ? handles if the object doesnt exist
 
   const { isAuth } = useGetUserInfo();
@@ -36,10 +36,10 @@ export const Auth = () => {
   const signin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      <Navigate to="/about/" />;
-      if (isAuth) {
-        return <Navigate to="/about/" />;
-      }
+      console.log("before redirect", isAuth)
+      navigate("/")
+      console.log("after redirect", isAuth)
+
     } catch (err) {
       console.log(err);
     }
@@ -47,9 +47,8 @@ export const Auth = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      if (isAuth) {
-        return <Navigate to="/about/" />;
-      }
+      navigate("/")
+
     } catch (err) {
       console.log(err);
     }
@@ -58,6 +57,7 @@ export const Auth = () => {
   const logout = async () => {
     try {
       await signOut(auth);
+      navigate("/")
     } catch (err) {
       console.log(err);
     }
