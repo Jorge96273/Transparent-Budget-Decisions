@@ -1,123 +1,192 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "../components/ui/button";
 import "../App.css";
 import { Auth } from "../components/auth";
 import { db, auth } from "../config/firebase";
-import { getDocs } from "firebase/firestore";
-// gets multiple entries
-import { getDoc } from "firebase/firestore";
-// gets single entry
-import { collection } from "firebase/firestore";
-import { addDoc } from "firebase/firestore";
-import { deleteDoc, doc } from "firebase/firestore";
-import { updateDoc } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
 import { useNavigate, Navigate } from "react-router-dom";
 import LoginDialogTemplate from "@/components/LoginDialogTemplate";
 import SignupDialogTemplate from "@/components/SignupDialogTemplate";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 
 function App() {
+  //! added trigger to prevent infinite loop for rerendering accounts
+  const [triggerFetch, setTriggerFetch] = useState(false);
   const [accountList, setAccountList] = useState([]);
+  //!  Had to deconstruct to properly get user!!!!!
+  const [user, loading] = useAuthState(auth);
+  const uid = user?.uid; // Correctly get the uid from the user object
+  const [accountType, setAccountType] = useState("");
+  const [accountBalance, setAccountBalance] = useState(0);
+  const [newTransactionName, setNewTransactionName] = useState("");
+  const [newTransactionDate, setNewTransactionDate] = useState("");
+  const [newTransactionType, setNewTransactionType] = useState("withdrawl");
+  const [newTransactionAmount, setNewTransactionAmount] = useState(0);
+  const [monthlyExpense, setMonthlyExpense] = useState(false);
+  const [updatedTransactionAmount, setUpdatedTransactionAmount] =
+    useState(newTransactionAmount);
 
-  // New Account State
-  const [newAccountName, setNewAccountName] = useState("");
-  const [newAccountBalence, setNewAccountBalence] = useState(0);
-  const [isAccountDebt, setIsAccountDebt] = useState(false);
+  const firstRenderRef = useRef(true);
 
-  // update state
-  const [updatedBalence, setUpdatedBalence] = useState(0);
+  const transactionCollectionRef = collection(
+    db,
+    `${uid}/SAVINGS/transactions`
+  );
 
-  const accountsCollectionRef = collection(db, "Accounts");
+  const addTransaction = async () => {
+    const docRef = await addDoc(transactionCollectionRef, {
+      accountType,
+      accountBalance,
+      newTransactionName,
+      newTransactionAmount,
+      newTransactionDate,
+      newTransactionType,
+      monthlyExpense,
+      //   !NEED TO FIX TIMESTAMP
+      createdAt: serverTimestamp(),
+    });
+    setTriggerFetch(!triggerFetch);
+    setAccountType(""),
+      setAccountBalance(0),
+      setNewTransactionName(""),
+      setNewTransactionAmount(0),
+      setNewTransactionDate(""),
+      setNewTransactionType(""),
+      setMonthlyExpense(false),
+      console.log("Document written with ID: ", docRef.id);
+  };
 
   const getAccountList = async () => {
     try {
-      const data = await getDocs(accountsCollectionRef);
-      const fiteredData = data.docs.map((doc) => ({
+      const data = await getDocs(collection(db, `${uid}/SAVINGS/transactions`));
+      const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setAccountList(fiteredData);
-      console.log(fiteredData);
+      setAccountList(filteredData);
     } catch (err) {
       console.log(err);
     }
   };
 
+  const deleteTransaction = async (id) => {
+    await deleteDoc(doc(db, `${uid}/SAVINGS/transactions`, id));
+    toast.success("Account deleted successfully");
+    setTriggerFetch(!triggerFetch);
+  };
+
+  const updateTransaction = async (id) => {
+    const accountRef = doc(db, `${uid}/SAVINGS/transactions`, id);
+    await updateDoc(accountRef, {
+      newTransactionAmount: updatedTransactionAmount,
+    });
+    toast.success("Account balance updated successfully");
+    setTriggerFetch(!triggerFetch);
+  };
   useEffect(() => {
-    getAccountList();
-  }, []);
-
-  const onSubmitAccount = async () => {
-    try {
-      await addDoc(accountsCollectionRef, {
-        Name: newAccountName,
-        Balence: newAccountBalence,
-        Debt: isAccountDebt,
-        userID: auth?.currentUser?.uid,
-      });
-      getAccountList();
-    } catch (err) {
-      console.error(err);
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false; // Bypass the initial render
+    } else {
+      getAccountList(); // Call getAccountList on subsequent renders
     }
-  };
+  }, [triggerFetch]);
 
-  const deleteAccount = async (id) => {
-    const accountDoc = doc(db, "Accounts", id);
-    await deleteDoc(accountDoc);
-    getAccountList();
-  };
-
-  const updateAccount = async (id) => {
-    const accountDoc = doc(db, "Accounts", id);
-    await updateDoc(accountDoc, { Balence: updatedBalence });
-    getAccountList();
-  };
-
+  useEffect(() => {
+    getAccountList(); // Call getAccountList on initial render
+  }, [user]);
   return (
     <div className="App">
       <Auth />
+
       <div>
         <input
           type="text"
-          placeholder=" Account Name"
-          onChange={(e) => setNewAccountName(e.target.value)}
+          placeholder="Account Type"
+          onChange={(e) => setAccountType(e.target.value)}
         />
         <input
-          type="number"
-          placeholder=" Account Balence"
-          onChange={(e) => setNewAccountBalence(Number(e.target.value))}
+          type="text"
+          placeholder="Account Balence"
+          onChange={(e) => setAccountBalance(e.target.value)}
         />
-
+        <input
+          type="text"
+          placeholder="Transaction Name"
+          onChange={(e) => setNewTransactionName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Transaction Amount"
+          onChange={(e) => setNewTransactionAmount(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Transaction Date"
+          onChange={(e) => setNewTransactionDate(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Withdrawl or Deposit"
+          onChange={(e) => setNewTransactionType(e.target.value)}
+        />
         <input
           type="checkbox"
-          checked={isAccountDebt}
-          onChange={(e) => setIsAccountDebt(Number(e.target.checked))}
+          checked={monthlyExpense}
+          //   onChange={(e) => setMonthlyExpense(e.target.checked)}
+          onChange={(e) => setMonthlyExpense(Number(e.target.checked))}
         />
-        <label>Debt</label>
-        <button onClick={onSubmitAccount}>Submit Account</button>
+        <label>Monthly Expense </label>
+        <></>
+        <button onClick={addTransaction}>Submit Account</button>
       </div>
       <div>
-        {accountList.map((account) => (
-          <div key={account.id}>
-            <h1 style={{ color: account.Debt ? "red" : "green" }}>
-              {account.Name}
-            </h1>
-            <p>{account.Balence}</p>
-            <button onClick={() => deleteAccount(account.id)}>
+        {accountList.map((transaction) => (
+          <div key={transaction.id}>
+            <p
+              style={{
+                color:
+                  transaction.newTransactionType === "Withdrawl"
+                    ? "red"
+                    : "green",
+              }}
+            >
+              <span>
+                Account: {transaction.accountType} | Account Balence:{" "}
+                {transaction.accountBalance}| Transaction:{" "}
+                {transaction.newTransactionName} | Transaction Amount:{" "}
+                {transaction.newTransactionAmount}| Transaction Date:{" "}
+                {transaction.newTransactionDate} | Transaction Type:{" "}
+                {transaction.newTransactionType} | Monthly Expense:{" "}
+                {transaction.monthlyExpense} |
+              </span>
+            </p>
+            <button onClick={() => deleteTransaction(transaction.id)}>
               Delete Account
             </button>
             <input
-              placeholder="Updated Balence"
+              placeholder="Updated Balance"
               type="number"
-              onChange={(e) => setUpdatedBalence(e.target.value)}
+              onChange={(e) =>
+                setUpdatedTransactionAmount(Number(e.target.value))
+              }
             />
-            <button onClick={() => updateAccount(account.id)}>
-              Update Balence
+            <button onClick={() => updateTransaction(transaction.id)}>
+              Update Balance
             </button>
           </div>
         ))}
       </div>
-      <LoginDialogTemplate />
-      <SignupDialogTemplate />
     </div>
   );
 }
