@@ -6,15 +6,25 @@ import {
   signOut,
 } from "firebase/auth";
 import { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
+
+export const useGetUserInfo = () => {
+  const { name, profilePhoto, userID, isAuth } =
+    JSON.parse(localStorage.getItem("auth")) || {};
+
+  return { name, profilePhoto, userID, isAuth };
+};
 
 export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   //! Shows what user is signed in
   console.log(auth?.currentUser?.email);
   console.log(auth?.currentUser?.photoURL);
   //   ? handles if the object doesnt exist
+
+  const { isAuth } = useGetUserInfo();
 
   const register = async () => {
     try {
@@ -26,6 +36,10 @@ export const Auth = () => {
   const signin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      <Navigate to="/about/" />;
+      if (isAuth) {
+        return <Navigate to="/about/" />;
+      }
     } catch (err) {
       console.log(err);
     }
@@ -33,6 +47,9 @@ export const Auth = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      if (isAuth) {
+        return <Navigate to="/about/" />;
+      }
     } catch (err) {
       console.log(err);
     }

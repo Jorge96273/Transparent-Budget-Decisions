@@ -11,6 +11,9 @@ import { collection } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
 import { deleteDoc, doc } from "firebase/firestore";
 import { updateDoc } from "firebase/firestore";
+import { useNavigate, Navigate } from "react-router-dom";
+import LoginDialogTemplate from "@/components/LoginDialogTemplate";
+import SignupDialogTemplate from "@/components/SignupDialogTemplate";
 
 function App() {
   const [accountList, setAccountList] = useState([]);
@@ -33,7 +36,6 @@ function App() {
         id: doc.id,
       }));
       setAccountList(fiteredData);
-      console.log("Made it this far");
       console.log(fiteredData);
     } catch (err) {
       console.log(err);
@@ -114,6 +116,8 @@ function App() {
           </div>
         ))}
       </div>
+      <LoginDialogTemplate />
+      <SignupDialogTemplate />
     </div>
   );
 }

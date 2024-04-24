@@ -6,6 +6,7 @@ import ErrorPage from "./pages/ErrorPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import TempPage from "./pages/TempPage.jsx"
+import DashboardPage from "./pages/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         path: "login/",
         element: <LoginPage />,
       },
+      {
+        path: "dashboard/",
+        element: <DashboardPage />,
+      },     
       {
         path: "about/",
         element: <AboutPage />,
