@@ -1,7 +1,7 @@
 const NavBar = () => {
   return (
     <>
-      <nav className="h-max ">
+      <nav className="nav-background-color">
         <div className="max-w-screen-xl max-h-20 flex flex-wrap items-center justify-between mx-20 p-1">
           <a
             href="/"
