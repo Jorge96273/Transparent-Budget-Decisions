@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Button } from "../components/ui/button";
+
 import "../App.css";
 import { Auth } from "../components/auth";
 import { db, auth } from "../config/firebase";
@@ -19,6 +19,7 @@ import LoginDialogTemplate from "@/components/LoginDialogTemplate";
 import SignupDialogTemplate from "@/components/SignupDialogTemplate";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
+import { Button } from "react-bootstrap";
 
 function App() {
   //! added trigger to prevent infinite loop for rerendering accounts
@@ -108,7 +109,7 @@ function App() {
   return (
     <div className="App">
       <Auth />
-
+      <h3>Add a Transaction</h3>
       <div>
         <input
           type="text"
@@ -148,8 +149,9 @@ function App() {
         />
         <label>Monthly Expense </label>
         <></>
-        <button onClick={addTransaction}>Submit Account</button>
+        <Button onClick={addTransaction}>Submit Account</Button>
       </div>
+      <h3>Transaction History</h3>
       <div>
         {accountList.map((transaction) => (
           <div key={transaction.id}>
@@ -162,18 +164,18 @@ function App() {
               }}
             >
               <span>
-                Account: {transaction.accountType} | Account Balence:{" "}
+                Account: {transaction.accountType} | Account Balence: $
                 {transaction.accountBalance}| Transaction:{" "}
-                {transaction.newTransactionName} | Transaction Amount:{" "}
+                {transaction.newTransactionName} | Transaction Amount: $
                 {transaction.newTransactionAmount}| Transaction Date:{" "}
                 {transaction.newTransactionDate} | Transaction Type:{" "}
                 {transaction.newTransactionType} | Monthly Expense:{" "}
                 {transaction.monthlyExpense} |
               </span>
             </p>
-            <button onClick={() => deleteTransaction(transaction.id)}>
+            <Button onClick={() => deleteTransaction(transaction.id)}>
               Delete Account
-            </button>
+            </Button>
             <input
               placeholder="Updated Balance"
               type="number"
@@ -181,9 +183,9 @@ function App() {
                 setUpdatedTransactionAmount(Number(e.target.value))
               }
             />
-            <button onClick={() => updateTransaction(transaction.id)}>
+            <Button onClick={() => updateTransaction(transaction.id)}>
               Update Balance
-            </button>
+            </Button>
           </div>
         ))}
       </div>
