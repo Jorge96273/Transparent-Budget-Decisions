@@ -2,32 +2,33 @@
 export default function Footer() {
   return (
     <>
-      <footer className='rounded bg-orange-50 shadow m-4 dark:bg-gray-800'>
-        <div className='w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between'>
-          <span className='text-sm text-gray-500 sm:text-center dark:text-gray-400'>
+      <footer className='flex justify-center p-2 bg-gray-50'>
+        <div className='w-full mx-auto flex justify-center mt-3'>
+          <span className='text-xs text-gray-500 sm:text-center dark:text-gray-400'>
             © 2024{" "}
-            <a href='/' className='hover:underline'>
+            <a href='/' className='no-underline text-gray-400 hover:underline'>
               TBD™
             </a>{" "}
             All Rights Reserved.
-          </span>
-          <ul className='flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0'>
+            </span>
+          <ul className='flex items-center text-xs font-medium text-gray-500 dark:text-gray-400 sm:mt-0'>
             <li>
-              <a href='/' className='hover:underline me-4 md:me-6'>
+              <a href='/' className='no-underline  text-gray-400 hover:underline me-4 md:me-6'>
                 Home
               </a>
             </li>
             <li>
-              <a href='/about/' className='hover:underline me-4 md:me-6'>
+              <a href='/about/' className='no-underline text-gray-400 hover:underline me-4 md:me-6'>
                 About
               </a>
             </li>
             <li>
-              <a href='/' className='hover:underline me-4 md:me-6'>
+              <a href='/' className='no-underline text-gray-400 hover:underline me-4 md:me-6'>
                 Privacy Policy
               </a>
             </li>
           </ul>
+          
         </div>
       </footer>
     </>
