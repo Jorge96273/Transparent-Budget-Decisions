@@ -43,10 +43,10 @@
 
 /* These two image ID's are for the opacity on the TBD Homepage */
 .page-container {
-  position: relative;
+  position: absolute;
   width: 100vw;
-  height: 85vh;
-  overflow: hidden;
+  min-height: 85vh;
+  overflow: auto;
 }
 
 .full-view-image, .invisible-image {
@@ -94,7 +94,7 @@
   top: 50%; /* Starts from the middle of the page */
   left: 0;
   width: 100%;
-  height: 50%; /* Bottom half of the page */
+  min-height: 50%; /* Bottom half of the page */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -131,6 +131,37 @@
   background-color: rgb(16, 87, 129); /* Darker shade of red on hover */
 }
 
-.nav-background-color {
+.nav-footer-background-color {
   background-color: rgb(255, 255, 247); 
+}
+
+.rounded-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.rounded-input {
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  width: 300px; /* Adjust the width as needed */
+  outline: none;
+}
+
+.rounded-button {
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.rounded-button:hover {
+  background-color: darkgreen;
 }
