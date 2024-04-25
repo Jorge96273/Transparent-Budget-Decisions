@@ -71,7 +71,7 @@
 
 .top-half {
   position: absolute;
-  background-color: rgb(218,211,197);
+  /* background-color: rgb(218,211,197); */
   top: 0;
   left: 0;
   width: 100%;
@@ -132,5 +132,5 @@
 }
 
 .nav-background-color {
-  background-color: rgb(255, 255, 247); 
+  background-color: rgb(218,211,197); 
 }

@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import TempPage from "./pages/TempPage.jsx"
 import DashboardPage from "./pages/Dashboard.jsx";
+import EducationPage from "./pages/EducationPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard/",
         element: <DashboardPage />,
+      },     
+      {
+        path: "education/",
+        element: <EducationPage />,
       },     
       {
         path: "about/",

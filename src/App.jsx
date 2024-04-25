@@ -9,7 +9,7 @@ function App() {
     <>
     <div className="flex flex-col min-h-screen bg-orange-50">
       <NavBar/>
-      <div className="flex-grow bg-orange-50">
+      <div className="flex-grow">
         <Outlet />
       </div>
       <Footer />
