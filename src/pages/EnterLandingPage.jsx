@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-
 
 const EnterLandingPage = () => {
   const [email, setEmail] = useState("");
@@ -72,33 +71,50 @@ const EnterLandingPage = () => {
 
     return () => unsubscribe();
   }, [navigate]);
-    
-    return (
-      <>
-      <div className="page-container">EnterLandingPage
-      <div className="top-half">
-      <div className="rounded-form">
-      <p className='font-bold text-lg'>Already have an account?</p>
-            
-            <input type="text" className="rounded-input" 
-            placeholder="Email..."
-            onChange={(e) => setEmail(e.target.value)}
+
+  return (
+    <>
+      <div className="page-container">
+        <div className="top-half">  
+        <div className="login-container">
+        <button className="rounded-button" onClick={signInWithGoogle}>
+              Login/Sign Up with Google
+            </button>
+            <br></br>
+            <p className="font-bold text-lg">OR</p>
+          <div className="rounded-form">
+            <input
+              type="text"
+              className="rounded-input"
+              placeholder="Email..."
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <input type="password" placeholder="Password" className="rounded-input" 
-            onChange={(e) => setPassword(e.target.value)}
+            <input
+              type="password"
+              placeholder="Password"
+              className="rounded-input"
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <button className="rounded-button" onClick={signin}>Login</button>
-            <p className='font-bold text-lg'>OR</p>
-            <button className="rounded-button" onClick={signInWithGoogle}>Login with Google</button>
+          </div>
+        </div>
+        </div>
+        <div className="bottom-half-login">
+          <div className="column left-column">
+            <p className="font-bold text-lg">Already have an account?</p>
+            <button className="rounded-button" onClick={signin}>
+              Email/Pword Login
+            </button>
+          </div>
+          <div className="column right-column">
+            <p className="font-bold text-lg">Don't have an account?</p>
+            <button className="rounded-button" onClick={register}>
+              Email/Pword Sign Up
+            </button>
+          </div>
         </div>
       </div>
-      <div className="bottom-half">
-      <p className='font-bold text-lg'>Don't have an account?</p> 
-      <button className="rounded-button" onClick={register}>Sign Up</button>
-      </div>      
-      </div>
-      </>
-    )
-  }
-  
-  export default EnterLandingPage
+    </>
+  );
+};
+
+export default EnterLandingPage;
