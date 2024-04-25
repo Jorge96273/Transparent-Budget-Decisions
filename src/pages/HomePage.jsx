@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 import TBD from "../images/TBD.png";
 import Thinker from "../images/Thinker.png";
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 // import { Button } from "@/components/ui/button";
 // import './App.css'; // Make sure to import your CSS file
 
 
 const HomePage = () => {
   const [imageVisible, setImageVisible] = useState(true);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setImageVisible(false);
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
-  
+
   return (
-    
+
     <div className="page-container">
       <img
         className={imageVisible ? "full-view-image" : "invisible-image"}
@@ -30,7 +30,7 @@ const HomePage = () => {
           src={Thinker}
           alt="greek statue"
         />
-        </div>
+      </div>
       <div className="bottom-half">
         <p className='font-bold text-lg'>Transparent Budget Decisions</p>
         <p className='quote-style'>&quot;Breaking the stigma that focusing on your money is difficult.&quot;</p>
@@ -40,9 +40,9 @@ const HomePage = () => {
         <button className="rounded-full bg-gray-800 w-full pl-6 pr-6 pt-2 pb-2 text-xl font-bold text-gray-100">Enter</button>
         </Link>
         </div>
-      </div> 
+      </div>
     </div>
-   
+
   );
 }
 

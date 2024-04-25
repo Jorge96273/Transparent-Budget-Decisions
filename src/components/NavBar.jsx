@@ -1,3 +1,6 @@
+import React from "react";
+import LogoutButton from "./LogoutButton";
+
 const NavBar = () => {
   return (
     <>
@@ -55,6 +58,13 @@ const NavBar = () => {
                     Education
                   </a>
                 </li>
+                <li>
+                <a
+                  className="no-underline block py-2 px-3 text-gray-900 rounded"
+                  >
+                <LogoutButton />
+                </a>
+              </li>
               </ul>
             </div>
           </div>
