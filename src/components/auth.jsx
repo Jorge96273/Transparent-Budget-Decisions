@@ -20,8 +20,8 @@ export const Auth = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   //! Shows what user is signed in
-  console.log(auth?.currentUser?.email);
-  console.log(auth?.currentUser?.photoURL);
+  // console.log(auth?.currentUser?.email);
+  // console.log(auth?.currentUser?.photoURL);
   //   ? handles if the object doesnt exist
 
   const { isAuth } = useGetUserInfo();

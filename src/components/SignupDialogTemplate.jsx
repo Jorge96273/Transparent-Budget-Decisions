@@ -9,8 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -22,6 +22,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import TransactionTable from "./TransactionTable";
 
 const SignupDialogTemplate = () => {
   const [email, setEmail] = useState("");

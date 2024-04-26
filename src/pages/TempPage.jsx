@@ -20,11 +20,12 @@ import SignupDialogTemplate from "@/components/SignupDialogTemplate";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
+import TransactionTable from "@/components/TransactionTable";
 
 function App() {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
-  let currentMonth = currentDate.getMonth() + 1; 
+  let currentMonth = currentDate.getMonth() + 1;
   let currentDay = currentDate.getDate();
   let formattedDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
@@ -154,7 +155,7 @@ function App() {
           <option value="Credit">Credit</option>
           <option value="Savings">Savings</option>
         </select>
-        
+
         <div>
           <label htmlFor="accountBalance">Current Account Balance:</label>
           <span id="accountBalance">{accountBalance.toFixed(2)}</span>
@@ -175,7 +176,7 @@ function App() {
           placeholder="Transaction Date"
           onChange={(e) => setNewTransactionDate(e.target.value)}
         />
-        
+
         <label htmlFor="transactionType">Withdraw or Deposit:</label>
         <select
           id="transactionType"
@@ -185,7 +186,7 @@ function App() {
           <option value="Withdrawl">Withdrawl</option>
           <option value="Deposit">Deposit</option>
         </select>
-    
+
         <label htmlFor="monthlyExpense">Monthly Expense:</label>
         <select
           id="monthlyExpense"
@@ -236,6 +237,7 @@ function App() {
           </div>
         ))}
       </div>
+      <TransactionTable />
     </div>
   );
 }

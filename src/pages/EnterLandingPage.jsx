@@ -75,28 +75,28 @@ const EnterLandingPage = () => {
   return (
     <>
       <div className="page-container">
-        <div className="top-half">  
-        <div className="login-container">
-        <button className="rounded-button" onClick={signInWithGoogle}>
+        <div className="top-half">
+          <div className="login-container">
+            <button className="rounded-button" onClick={signInWithGoogle}>
               Login/Sign Up with Google
             </button>
             <br></br>
             <p className="font-bold text-lg">OR</p>
-          <div className="rounded-form">
-            <input
-              type="text"
-              className="rounded-input"
-              placeholder="Email..."
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="rounded-input"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="rounded-form">
+              <input
+                type="text"
+                className="rounded-input"
+                placeholder="Email..."
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="rounded-input"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
         </div>
         <div className="bottom-half-login">
           <div className="column left-column">
