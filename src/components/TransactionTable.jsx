@@ -36,7 +36,7 @@ import {
 import { useMemo } from "react";
 import { TransAmtDialog } from "@/components/TransAmtDialog";
 
-function App() {
+function TransactionTable() {
   //! added trigger to prevent infinite loop for rerendering accounts
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [accountList, setAccountList] = useState([]);
@@ -378,4 +378,4 @@ function App() {
     </>
   );
 }
-export default App;
+export default TransactionTable;
