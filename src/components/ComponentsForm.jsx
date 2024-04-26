@@ -45,23 +45,14 @@ function App() {
   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
     useState(newTransactionAmount);
 
-  const [newBudget, setNewBudget] = useState("")
-  const [newBudgetAmount, setNewBudgetAmount] = useState(0)
-  const [budgetAccount, setBudgetAccount] = useState([])
-  const [selectBudget, setSelectBudget] = useState("None")
-
-
   const firstRenderRef = useRef(true);
 
   const transactionCollectionRef = collection(db, `${uid}`);
-
-  
 
   const addTransaction = async () => {
     const docRef = await addDoc(transactionCollectionRef, {
       accountType,
       accountBalance,
-      selectBudget,
       newTransactionName,
       newTransactionAmount,
       newTransactionDate,
@@ -73,7 +64,6 @@ function App() {
     setTriggerFetch(!triggerFetch);
     setAccountType("Debit"),
       // setAccountBalance(0),
-      setSelectBudget("None")
       setNewTransactionName(""),
       setNewTransactionAmount(0),
       setNewTransactionDate(formattedDate),
@@ -82,60 +72,27 @@ function App() {
       console.log("Document written with ID: ", docRef.id);
   };
 
-  const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`)
-
-  const createBudget = async () => {
-    const docRef = await addDoc(budgetCollectionRef,{
-      newBudget,
-      newBudgetAmount,
-    });
-    setTriggerFetch(!triggerFetch);
-    setNewBudget(""),
-    setNewBudgetAmount(0);
-  };
-  // const handleCreateBudget = async() => {
-  //   await createBudget()
-  // }
-  const getBudgetList = async () => {
-    try {
-      const data = await getDocs(collection(db, `budget/${uid}/newBudget`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setBudgetAccount(filteredData);
-    }catch (error) {
-      console.log(error)
-    }
-  }
-
-  const getAccountList = async () => {
-    try {
-      const data = await getDocs(collection(db, `${uid}`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setAccountList(filteredData);
-    } catch (err) {
-      console.error("Error fetching account data:", err);
-    }
-  };
-
   const balance = async () => {
     let totalDeposits = 0;
     let totalWithdrawals = 0;
     if (accountList) {
+      console.log(accountList, "******** THIS IS THE ACCOUNT LIST ***********");
       accountList.forEach((transaction) => {
+        console.log("******* THIS IS THE TRANSACTION ********", transaction);
         if (transaction.newTransactionType === "Withdrawl") {
+          console.log("Withdral", transaction.newTransactionAmount);
           totalWithdrawals += Number(transaction.newTransactionAmount);
+          console.log(totalWithdrawals);
         } else if (transaction.newTransactionType === "Deposit") {
+          console.log("Deposit", transaction.newTransactionAmount);
           totalDeposits += Number(transaction.newTransactionAmount);
+          console.log(totalDeposits);
         }
       });
     }
 
     const balance = totalDeposits - totalWithdrawals;
+    console.log(balance);
     setAccountBalance(balance);
   };
 
@@ -153,45 +110,13 @@ function App() {
     toast.success("Account balance updated successfully");
     setTriggerFetch(!triggerFetch);
   };
-  useEffect(() => {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false; // Bypass the initial render
-    } else {
-      getAccountList(), // Call getAccountList on subsequent renders
-        balance();
-    }
-  }, [triggerFetch]);
 
   useEffect(() => {
-    getAccountList(), // Call getAccountList on initial render
-      balance();
-  }, [user, accountType]);
-
-  useEffect(() => {
-    balance(),
-    getBudgetList();
+    balance();
   }, [accountList]);
-
-
   return (
     <div className="App">
       <Auth />
-      <h3>Create Budget</h3>
-      <div>
-        <input
-          type="text"
-          placeholder="Budget Name"
-          onChange={(e) => setNewBudget(e.target.value)}
-        />
-
-        <input
-          type="number"
-          placeholder="Budget Amount"
-          onChange={(e) => setNewBudgetAmount(e.target.value)}
-        />
-
-        <Button onClick={createBudget}>Create Budget</Button>
-      </div>
       <h3>Add a Transaction</h3>
       <div>
         <label htmlFor="accountType">Account:</label>
@@ -209,21 +134,6 @@ function App() {
           <label htmlFor="accountBalance">Current Account Balance:</label>
           <span id="accountBalance">{accountBalance.toFixed(2)}</span>
         </div>
-
-        <label htmlFor="budgetAccount">Budget Account:</label>
-        <select
-          id="budgetAccount"
-          value={selectBudget}
-          onChange={(event) => setSelectBudget(event.target.value)}
-        >
-          <option value="None">None</option>
-          {budgetAccount.map((budget) => (
-            <option key={budget.id} value={budget.newBudget}>
-              {budget.newBudget}
-            </option>
-          ))}
-        </select>
-
         <input
           type="text"
           placeholder="Transaction Name"
@@ -277,8 +187,7 @@ function App() {
             >
               <span>
                 Account: {transaction.accountType} | Previous Account Balence: $
-                {transaction.accountBalance}| Budget Account:{" "} 
-                {transaction.selectBudget} | Transaction:{" "}
+                {transaction.accountBalance}| Transaction:{" "}
                 {transaction.newTransactionName} | Transaction Amount: $
                 {transaction.newTransactionAmount}| Transaction Date:{" "}
                 {transaction.newTransactionDate} | Transaction Type:{" "}
