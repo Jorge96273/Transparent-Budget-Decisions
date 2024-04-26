@@ -1,20 +1,20 @@
-import { useEffect, useState, useRef } from "react";
-import { Auth } from "../components/auth";
-import { db, auth } from "../config/firebase";
+// import { useEffect, useState, useRef } from "react";
+// import { Auth } from "../components/auth";
+import { db } from "../config/firebase";
 import {
-  getDocs,
+  // getDocs,
   collection,
-  addDoc,
+  // addDoc,
   deleteDoc,
   doc,
   updateDoc,
-  serverTimestamp,
+  // serverTimestamp,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-import { Button } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
 
-import { useCallback } from "react";
+// import { useCallback } from "react";
 import * as React from "react";
 import {
   flexRender,
@@ -36,47 +36,54 @@ import {
 import { useMemo } from "react";
 import { TransAmtDialog } from "@/components/TransAmtDialog";
 
-function TransactionTable() {
-  //! added trigger to prevent infinite loop for rerendering accounts
-  const [triggerFetch, setTriggerFetch] = useState(false);
-  const [accountList, setAccountList] = useState([]);
-  //!  Had to deconstruct to properly get user!!!!!
-  const [user, loading] = useAuthState(auth);
-  const uid = user?.uid; // Correctly get the uid from the user object
-  const [accountType, setAccountType] = useState("");
-  const [accountBalance, setAccountBalance] = useState(0);
-  const [newTransactionName, setNewTransactionName] = useState("");
-  const [newTransactionDate, setNewTransactionDate] = useState("");
-  const [newTransactionType, setNewTransactionType] = useState("withdrawl");
-  const [newTransactionAmount, setNewTransactionAmount] = useState(0);
-  const [monthlyExpense, setMonthlyExpense] = useState(false);
-  const [updatedTransactionAmount, setUpdatedTransactionAmount] =
-    useState(newTransactionAmount);
+function TransactionTable({
+  uid,
+  triggerFetch,
+  setTriggerFetch,
+  accountList,
+  setAccountList,
+  accountTable,
+}) {
+  // ! added trigger to prevent infinite loop for rerendering accounts
+  // const [triggerFetch, setTriggerFetch] = useState(false);
+  // const [accountList, setAccountList] = useState([]);
+  // !  Had to deconstruct to properly get user!!!!!
+  // const [user, loading] = useAuthState(auth);
+  // const uid = user?.uid; // Correctly get the uid from the user object
+  // const [accountType, setAccountType] = useState("");
+  // const [accountBalance, setAccountBalance] = useState(0);
+  // const [newTransactionName, setNewTransactionName] = useState("");
+  // const [newTransactionDate, setNewTransactionDate] = useState("");
+  // const [newTransactionType, setNewTransactionType] = useState("withdrawl");
+  // const [newTransactionAmount, setNewTransactionAmount] = useState(0);
+  // const [monthlyExpense, setMonthlyExpense] = useState(false);
+  // const [updatedTransactionAmount, setUpdatedTransactionAmount] =
+  //   useState(newTransactionAmount);
 
-  const firstRenderRef = useRef(true);
+  // const firstRenderRef = useRef(true);
 
   const transactionCollectionRef = collection(db, `${uid}`);
 
-  const debounce = (func, delay) => {
-    let debounceTimer;
-    return function (...args) {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => func.apply(this, args), delay);
-    };
-  };
+  // const debounce = (func, delay) => {
+  //   let debounceTimer;
+  //   return function (...args) {
+  //     clearTimeout(debounceTimer);
+  //     debounceTimer = setTimeout(() => func.apply(this, args), delay);
+  //   };
+  // };
 
-  const getAccountList = async () => {
-    try {
-      const data = await getDocs(collection(db, `${uid}`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setAccountList(filteredData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getAccountList = async () => {
+  //   try {
+  //     const data = await getDocs(collection(db, `${uid}`));
+  //     const filteredData = data.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }));
+  //     setAccountList(filteredData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const deleteTransaction = async (id) => {
     await deleteDoc(doc(db, `${uid}`, id));
@@ -93,24 +100,37 @@ function TransactionTable() {
     setTriggerFetch(!triggerFetch);
   };
 
-  const debouncedSetAccountType = useCallback(
-    debounce((value) => setAccountType(value), 300),
-    []
-  );
+  // const debouncedSetAccountType = useCallback(
+  //   debounce((value) => setAccountType(value), 300),
+  //   []
+  // );
 
-  useEffect(() => {
-    if (!firstRenderRef.current) {
-      getAccountList(); // Call getAccountList on subsequent renders
-    }
-    firstRenderRef.current = false; // Ensure this runs only once after the first render
-  }, [triggerFetch]);
+  // useEffect(() => {
+  //   if (!firstRenderRef.current) {
+  //     getAccountList(); // Call getAccountList on subsequent renders
+  //   }
+  //   firstRenderRef.current = false; // Ensure this runs only once after the first render
+  // }, [triggerFetch]);
 
-  useEffect(() => {
-    if (user) {
-      getAccountList(); // Call getAccountList on initial render or when user changes
-    }
-  }, [user]);
-
+  // useEffect(() => {
+  //   if (user) {
+  //     getAccountList(); // Call getAccountList on initial render or when user changes
+  //   }
+  // }, [user]);
+  if (accountList) {
+    const debitAccount = accountList.filter(
+      (account) => account.accountType === "Debit"
+    );
+    const creditAccount = accountList.filter(
+      (account) => account.accountType === "Credit"
+    );
+    const savingsAccount = accountList.filter(
+      (account) => account.accountType === "Savings"
+    );
+    const monthlyExpenses = accountList.filter(
+      (account) => account.monthlyExpense === "Yes"
+    );
+  }
   function transformAccountList(list) {
     return list.map((transaction) => {
       console.log(transaction.id); // Directly log the transaction.id
@@ -235,7 +255,13 @@ function TransactionTable() {
     },
   ];
 
-  const data = useMemo(() => transformAccountList(accountList), [accountList]);
+  // const data = useMemo(() => transformAccountList(accountList), [accountList]);
+  const data = useMemo(
+    () => transformAccountList(accountTable),
+    [accountTable]
+  );
+
+  //* utilizes the useMemo hook from React to memoize the result of the transformAccountList function, which is applied to the accountList variable. This means that the transformAccountList function will only be executed when the accountList changes, rather than on every render of the component. This is particularly useful for optimizing performance, especially when dealing with expensive computations or large datasets.
 
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
@@ -263,8 +289,6 @@ function TransactionTable() {
 
   return (
     <>
-      <div className="App"></div>
-      <h3>Transaction History</h3>
       <div className="w-full">
         <div className="rounded-md border">
           <Table>

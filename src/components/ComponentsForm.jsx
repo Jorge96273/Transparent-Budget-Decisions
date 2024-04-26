@@ -72,19 +72,6 @@ function App() {
       console.log("Document written with ID: ", docRef.id);
   };
 
-  const getAccountList = async () => {
-    try {
-      const data = await getDocs(collection(db, `${uid}`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setAccountList(filteredData);
-    } catch (err) {
-      console.error("Error fetching account data:", err);
-    }
-  };
-
   const balance = async () => {
     let totalDeposits = 0;
     let totalWithdrawals = 0;
@@ -123,19 +110,6 @@ function App() {
     toast.success("Account balance updated successfully");
     setTriggerFetch(!triggerFetch);
   };
-  useEffect(() => {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false; // Bypass the initial render
-    } else {
-      getAccountList(), // Call getAccountList on subsequent renders
-        balance();
-    }
-  }, [triggerFetch]);
-
-  useEffect(() => {
-    getAccountList(), // Call getAccountList on initial render
-      balance();
-  }, [user, accountType]);
 
   useEffect(() => {
     balance();
