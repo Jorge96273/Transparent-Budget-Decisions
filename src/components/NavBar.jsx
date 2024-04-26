@@ -4,7 +4,7 @@ import LogoutButton from "./LogoutButton";
 const NavBar = () => {
   return (
     <>
-      <nav className="nav-background-color">
+      <nav className="nav-footer-background-color">
         <div className="max-w-screen-xl max-h-20 flex flex-wrap items-center justify-between mx-20 p-1">
           <a
             href="/"
