@@ -113,7 +113,7 @@ function TransactionTable() {
 
   function transformAccountList(list) {
     return list.map((transaction) => {
-      console.log(transaction.id); // Directly log the transaction.id
+      // console.log(transaction.id); // Directly log the transaction.id
       return {
         accountType: transaction.accountType,
         accountBalance: transaction.accountBalance,
