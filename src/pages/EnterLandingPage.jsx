@@ -75,52 +75,28 @@ const EnterLandingPage = () => {
   return (
     <>
       <div className="page-container">
-<<<<<<< HEAD
-        EnterLandingPage
         <div className="top-half">
-          <div className="rounded-form">
-            <p className="font-bold text-lg">Already have an account?</p>
-
-=======
-        <div className="top-half">  
-        <div className="login-container">
-        <button className="rounded-button" onClick={signInWithGoogle}>
+          <div className="login-container">
+            <button className="rounded-button" onClick={signInWithGoogle}>
               Login/Sign Up with Google
             </button>
             <br></br>
             <p className="font-bold text-lg">OR</p>
-          <div className="rounded-form">
->>>>>>> main
-            <input
-              type="text"
-              className="rounded-input"
-              placeholder="Email..."
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="rounded-input"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-<<<<<<< HEAD
-            <button className="rounded-button" onClick={signin}>
-              Login
-            </button>
-            <p className="font-bold text-lg">OR</p>
-            <button className="rounded-button" onClick={signInWithGoogle}>
-              Login with Google
-            </button>
+            <div className="rounded-form">
+              <input
+                type="text"
+                className="rounded-input"
+                placeholder="Email..."
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="rounded-input"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-        <div className="bottom-half">
-          <p className="font-bold text-lg">Don't have an account?</p>
-          <button className="rounded-button" onClick={register}>
-            Sign Up
-          </button>
-=======
-          </div>
-        </div>
         </div>
         <div className="bottom-half-login">
           <div className="column left-column">
@@ -135,7 +111,6 @@ const EnterLandingPage = () => {
               Email/Pword Sign Up
             </button>
           </div>
->>>>>>> main
         </div>
       </div>
     </>
