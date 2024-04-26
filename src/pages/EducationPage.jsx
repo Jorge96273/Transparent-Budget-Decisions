@@ -8,6 +8,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import bot from "../images/bot.svg"
+
 
 const Chatbot = () => {
   const [userInput, setUserInput] = useState("");
@@ -17,22 +19,8 @@ const Chatbot = () => {
     setUserInput(e.target.value);
   };
 
-  const saveChatToFirestore = async (userMessage, botMessage) => {
-    try {
-      await addDoc(collection(db, "chats"), {
-        userMessage,
-        botMessage,
-        timestamp: new Date(),
-      });
-      console.log("Chat history saved to Firestore");
-    } catch (error) {
-      console.error("Error saving chat history:", error);
-    }
-  };
-
   const handleSend = async () => {
     const userMessage = { sender: "User", message: userInput };
-    setChatHistory([...chatHistory, userMessage]);
 
     try {
       const response = await axios.post(
@@ -53,58 +41,88 @@ const Chatbot = () => {
         sender: "Bot",
         message: response.data.choices[0].message.content,
       };
-      setChatHistory((prevHistory) => [...prevHistory, botMessage]);
-
-      saveChatToFirestore(userMessage, botMessage);
+      setChatHistory([...chatHistory, userMessage, botMessage]);
+      setUserInput("");
     } catch (error) {
-      console.error("Error sending message to chatbot:", error);
+      console.error("Error sending message:", error);
     }
-
-    setUserInput("");
   };
+
+  console.log(chatHistory.length)
 
   return (
     <>
-      <div className='mt-20 flex flex-col justify-betwee'>
-        <span className='flex w-full justify-center'>
-          Ask TBD-Bot any financial question:{" "}
+      <div className='mt-8 flex flex-col items-center'>
+        <img src={bot} className="w-20"></img>
+        <span className='font-bold text-3xl'>
+          Ask TBD any financial question
         </span>
-        <div className='flex justify-center w-full'>
-          <div className=''>
-            {chatHistory.map((chat, index) => (
-              <div key={index}>
-                <strong>{chat.sender}:</strong> {chat.message}
-              </div>
-            ))}
-          </div>
-          <input type='text' value={userInput} onChange={handleInputChange} />
 
+        <div className='w-full flex flex-col items-center'>
+        {chatHistory.length ? 
+         ( <div className='bg-gray-900 outline p-2 mt-4 rounded shadow-inner flex flex-col items-start xl:1/3 lg:w-1/2 md:3/4 sm:w-3/4 max-h-80 overflow-y-scroll'> 
+            {chatHistory.map((chat, index) => (
+              <div key={index} className='p-2 text-start bg-blue-400 text-white m-2 rounded '>
+                <strong className="text-gray-800">{chat.sender}:</strong> {chat.message}
+              </div>
+            ))}       <div className='flex justify-center w-full mt-4'>
+            <textarea
+              type='textArea'
+              value={userInput}
+            onChange={handleInputChange}
+            className="p-2 shadow-sm rounded w-full h-20 resize-none border border-gray-300" 
+            placeholder="Type your message here..."
+            />
+            <button
+              className='ml-4 rounded-full h-10 mt-4 bg-gray-600 hover:bg-blue-500 pt-2 pb-2 pl-6 pr-6 text-white  '
+              onClick={handleSend}
+            >
+              Send
+            </button>
+          </div>
+          </div>
+          
+        )
+          :      ( <div className='flex justify-center mt-4'>
+          <textarea
+            type='textArea'
+            value={userInput}
+          onChange={handleInputChange}
+          className="p-2 shadow-sm rounded w-full h-20 resize-none border border-gray-300" 
+          placeholder="Type your message here..."
+          />
           <button
-            className=' ml-2 rounded-full bg-black pt-2 pb-2 pl-6 pr-6 text-white'
+            className='ml-4 rounded-full h-10 mt-4 bg-black pt-2 pb-2 pl-6 pr-6 text-white  '
             onClick={handleSend}
           >
-            Enter
+            Send
           </button>
+        </div>)}
+
+    
         </div>
-        <div className='flex justify-center'>
+
+        <div className='mt-10 w-1/2'>
           <Accordion type='single' collapsible>
             <AccordionItem value='item-1'>
-              <AccordionTrigger className='text-lg rounded bg-white pt-2 pb-2 pl-8 pr-8 m-2 h'>
+              <AccordionTrigger className='rounded bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
                 What is good debt?
               </AccordionTrigger>
               <AccordionContent>
-                Good debt is debt that can be leveraged strategically to
-                positively affect or enhance your ability to obtain a positive
-                return on your investment of that debt or..
+                Good debt is debt that can be leveraged strategically...
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='item-1'>
-              <AccordionTrigger className='text-lg rounded bg-white pt-2 pb-2 pl-8 pr-8 m-2 h'>
+            <AccordionItem value='item-2'>
+              <AccordionTrigger className='rounded bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
                 What is bad debt?
               </AccordionTrigger>
-              <AccordionContent>
-                Bad debt is debt that ...
-              </AccordionContent>
+              <AccordionContent>Bad debt is debt that...</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value='item-3'>
+              <AccordionTrigger className='rounded bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+                How can I save money with no job?
+              </AccordionTrigger>
+              <AccordionContent>Step 1. Get a job!</AccordionContent>
             </AccordionItem>
           </Accordion>
         </div>

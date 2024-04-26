@@ -24,14 +24,14 @@ const HomePage = () => {
         src={TBD}
         alt="tbd logo"
       />
-      <div className=" p-4 top-half">
-        <img
-          className="rounded m-4 h-80 "
-          src={Thinker}
-          alt="greek statue"
-        />
-      </div>
-      <div className="bottom-half">
+    <div className="p-4 top-half">
+      <img
+        className="h-100 rounded-3xl" 
+        src={Thinker}
+        alt="greek statue"
+      />
+    </div>
+      <div className="bottom-half shadow-2xl">
         <p className='font-bold text-lg'>Transparent Budget Decisions</p>
         <p className='quote-style'>&quot;Breaking the stigma that focusing on your money is difficult.&quot;</p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '80px', margin: '60px' }}>

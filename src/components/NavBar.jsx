@@ -17,7 +17,7 @@ const NavBar = () => {
             </a>
             <div className='m-2 text-decoration-line: none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
               <ul className='flex  flex-col font-medium md:p-0 mt-2 pt-2  md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
-                <li className='shadow-md  rounded-full bg-orange-50 hover:bg-orange-100'>
+                <li className='shadow-md  rounded-full bg-orange-100 hover:bg-orange-100'>
                   <a
                     href='/about/'
                     className='no-underline block py-2 px-3 text-gray-900 rounded'

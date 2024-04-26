@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
-import Label from "./ui/label";
+import { Label } from "./ui/label";
 import { doc, updateDoc } from "firebase/firestore";
 
 export function TransAmtDialog({
