@@ -22,28 +22,31 @@ import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
 
 function App() {
+  let currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
+  let currentMonth = currentDate.getMonth() + 1; 
+  let currentDay = currentDate.getDate();
+  let formattedDate = `${currentYear}-${currentMonth}-${currentDay}`;
+
   //! added trigger to prevent infinite loop for rerendering accounts
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [accountList, setAccountList] = useState([]);
   //!  Had to deconstruct to properly get user!!!!!
   const [user, loading] = useAuthState(auth);
   const uid = user?.uid; // Correctly get the uid from the user object
-  const [accountType, setAccountType] = useState("");
+  const [accountType, setAccountType] = useState("Debit");
   const [accountBalance, setAccountBalance] = useState(0);
   const [newTransactionName, setNewTransactionName] = useState("");
-  const [newTransactionDate, setNewTransactionDate] = useState("");
-  const [newTransactionType, setNewTransactionType] = useState("withdrawl");
+  const [newTransactionDate, setNewTransactionDate] = useState(formattedDate);
+  const [newTransactionType, setNewTransactionType] = useState("Withdrawl");
   const [newTransactionAmount, setNewTransactionAmount] = useState(0);
-  const [monthlyExpense, setMonthlyExpense] = useState(false);
+  const [monthlyExpense, setMonthlyExpense] = useState("No");
   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
     useState(newTransactionAmount);
 
   const firstRenderRef = useRef(true);
 
-  const transactionCollectionRef = collection(
-    db,
-    `${uid}/SAVINGS/transactions`
-  );
+  const transactionCollectionRef = collection(db, `${uid}`);
 
   const addTransaction = async () => {
     const docRef = await addDoc(transactionCollectionRef, {
@@ -58,19 +61,19 @@ function App() {
       createdAt: serverTimestamp(),
     });
     setTriggerFetch(!triggerFetch);
-    setAccountType(""),
-      setAccountBalance(0),
+    setAccountType("Debit"),
+      // setAccountBalance(0),
       setNewTransactionName(""),
       setNewTransactionAmount(0),
-      setNewTransactionDate(""),
-      setNewTransactionType(""),
-      setMonthlyExpense(false),
+      setNewTransactionDate(formattedDate),
+      setNewTransactionType("Withdrawl"),
+      setMonthlyExpense("No"),
       console.log("Document written with ID: ", docRef.id);
   };
 
   const getAccountList = async () => {
     try {
-      const data = await getDocs(collection(db, `${uid}/SAVINGS/transactions`));
+      const data = await getDocs(collection(db, `${uid}`));
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -81,14 +84,38 @@ function App() {
     }
   };
 
+  const balance = async () => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      console.log(accountList, "******** THIS IS THE ACCOUNT LIST ***********");
+      accountList.forEach((transaction) => {
+        console.log("******* THIS IS THE TRANSACTION ********", transaction);
+        if (transaction.newTransactionType === "Withdrawl") {
+          console.log("Withdral", transaction.newTransactionAmount);
+          totalWithdrawals += Number(transaction.newTransactionAmount);
+          console.log(totalWithdrawals);
+        } else if (transaction.newTransactionType === "Deposit") {
+          console.log("Deposit", transaction.newTransactionAmount);
+          totalDeposits += Number(transaction.newTransactionAmount);
+          console.log(totalDeposits);
+        }
+      });
+    }
+
+    const balance = totalDeposits - totalWithdrawals;
+    console.log(balance);
+    setAccountBalance(balance);
+  };
+
   const deleteTransaction = async (id) => {
-    await deleteDoc(doc(db, `${uid}/SAVINGS/transactions`, id));
+    await deleteDoc(doc(db, `${uid}`, id));
     toast.success("Account deleted successfully");
     setTriggerFetch(!triggerFetch);
   };
 
   const updateTransaction = async (id) => {
-    const accountRef = doc(db, `${uid}/SAVINGS/transactions`, id);
+    const accountRef = doc(db, `${uid}`, id);
     await updateDoc(accountRef, {
       newTransactionAmount: updatedTransactionAmount,
     });
@@ -99,55 +126,75 @@ function App() {
     if (firstRenderRef.current) {
       firstRenderRef.current = false; // Bypass the initial render
     } else {
-      getAccountList(); // Call getAccountList on subsequent renders
+      getAccountList(), // Call getAccountList on subsequent renders
+        balance();
     }
   }, [triggerFetch]);
 
   useEffect(() => {
-    getAccountList(); // Call getAccountList on initial render
-  }, [user]);
+    getAccountList(), // Call getAccountList on initial render
+      balance();
+  }, [user, accountType]);
+
+  useEffect(() => {
+    balance();
+  }, [accountList]);
   return (
     <div className="App">
       <Auth />
       <h3>Add a Transaction</h3>
       <div>
-        <input
-          type="text"
-          placeholder="Account Type"
-          onChange={(e) => setAccountType(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Account Balence"
-          onChange={(e) => setAccountBalance(e.target.value)}
-        />
+        <label htmlFor="accountType">Account:</label>
+        <select
+          id="accountType"
+          value={accountType}
+          onChange={(event) => setAccountType(event.target.value)}
+        >
+          <option value="Debit">Debit</option>
+          <option value="Credit">Credit</option>
+          <option value="Savings">Savings</option>
+        </select>
+        
+        <div>
+          <label htmlFor="accountBalance">Current Account Balance:</label>
+          <span id="accountBalance">{accountBalance.toFixed(2)}</span>
+        </div>
         <input
           type="text"
           placeholder="Transaction Name"
           onChange={(e) => setNewTransactionName(e.target.value)}
         />
         <input
-          type="text"
+          type="number"
           placeholder="Transaction Amount"
           onChange={(e) => setNewTransactionAmount(e.target.value)}
         />
         <input
-          type="text"
+          aria-label="Date"
+          type="date"
           placeholder="Transaction Date"
           onChange={(e) => setNewTransactionDate(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Withdrawl or Deposit"
-          onChange={(e) => setNewTransactionType(e.target.value)}
-        />
-        <input
-          type="checkbox"
-          checked={monthlyExpense}
-          //   onChange={(e) => setMonthlyExpense(e.target.checked)}
-          onChange={(e) => setMonthlyExpense(Number(e.target.checked))}
-        />
-        <label>Monthly Expense </label>
+        
+        <label htmlFor="transactionType">Withdraw or Deposit:</label>
+        <select
+          id="transactionType"
+          value={newTransactionType}
+          onChange={(event) => setNewTransactionType(event.target.value)}
+        >
+          <option value="Withdrawl">Withdrawl</option>
+          <option value="Deposit">Deposit</option>
+        </select>
+    
+        <label htmlFor="monthlyExpense">Monthly Expense:</label>
+        <select
+          id="monthlyExpense"
+          value={monthlyExpense}
+          onChange={(event) => setMonthlyExpense(event.target.value)}
+        >
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
         <></>
         <Button onClick={addTransaction}>Submit Account</Button>
       </div>
@@ -164,7 +211,7 @@ function App() {
               }}
             >
               <span>
-                Account: {transaction.accountType} | Account Balence: $
+                Account: {transaction.accountType} | Previous Account Balence: $
                 {transaction.accountBalance}| Transaction:{" "}
                 {transaction.newTransactionName} | Transaction Amount: $
                 {transaction.newTransactionAmount}| Transaction Date:{" "}
