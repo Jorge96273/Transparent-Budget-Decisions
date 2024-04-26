@@ -81,7 +81,7 @@ function App() {
       }));
       setAccountList(filteredData);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching account data:", err);
     }
   };
 

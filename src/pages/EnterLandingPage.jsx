@@ -10,6 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Button } from "@/components/ui/button"
+
 
 const EnterLandingPage = () => {
   const [email, setEmail] = useState("");
@@ -74,40 +76,40 @@ const EnterLandingPage = () => {
 
   return (
     <>
-      <div className="page-container">
-        <div className="top-half">
-          <div className="login-container">
-            <button className="rounded-button" onClick={signInWithGoogle}>
+      <div className='page-container'>
+        <div className='top-half'>
+          <div className='login-container'>
+            <button className='rounded-button' onClick={signInWithGoogle}>
               Login/Sign Up with Google
             </button>
             <br></br>
-            <p className="font-bold text-lg">OR</p>
-            <div className="rounded-form">
+            <p className='font-bold text-lg'>OR</p>
+            <div className='rounded-form'>
               <input
-                type="text"
-                className="rounded-input"
-                placeholder="Email..."
+                type='text'
+                className='rounded-input'
+                placeholder='Email...'
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
-                type="password"
-                placeholder="Password"
-                className="rounded-input"
+                type='password'
+                placeholder='Password'
+                className='rounded-input'
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
         </div>
-        <div className="bottom-half-login">
-          <div className="column left-column">
-            <p className="font-bold text-lg">Already have an account?</p>
-            <button className="rounded-button" onClick={signin}>
+        <div className='bottom-half-login'>
+          <div className='column left-column'>
+            <p className='font-bold text-lg'>Already have an account?</p>
+            <button className='rounded-button' onClick={signin}>
               Email/Pword Login
             </button>
           </div>
-          <div className="column right-column">
-            <p className="font-bold text-lg">Don't have an account?</p>
-            <button className="rounded-button" onClick={register}>
+          <div className='column right-column'>
+            <p className='font-bold text-lg'>Don't have an account?</p>
+            <button className='rounded-button' onClick={register}>
               Email/Pword Sign Up
             </button>
           </div>
