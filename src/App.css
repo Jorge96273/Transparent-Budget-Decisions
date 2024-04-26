@@ -43,10 +43,10 @@
 
 /* These two image ID's are for the opacity on the TBD Homepage */
 .page-container {
-  position: relative;
+  position: absolute;
   width: 100vw;
-  height: 85vh;
-  overflow: hidden;
+  min-height: 85vh;
+  overflow: auto;
 }
 
 .full-view-image, .invisible-image {
@@ -78,8 +78,8 @@
   height: 55%; /* Top half of the page */
   display: flex;
   justify-content: center;
-  align-items: center; /* Ver
-  z-index: 1; /* Ensures content is visible under the fading image */
+  align-items: center;
+  /* z-index: 1; */
 }
 
 .thinker-image {
@@ -94,7 +94,7 @@
   top: 50%; /* Starts from the middle of the page */
   left: 0;
   width: 100%;
-  height: 50%; /* Bottom half of the page */
+  min-height: 50%; /* Bottom half of the page */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -131,6 +131,98 @@
   background-color: rgb(16, 87, 129); /* Darker shade of red on hover */
 }
 
-.nav-background-color {
+
+.nav-footer-background-color {
   background-color: rgb(255, 255, 247); 
+}
+
+.rounded-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.centered-paragraph {
+  position: absolute;
+  top: 130px; /* Adjust this value to move the paragraph above the form */
+  width: 100%;
+  text-align: center; /* Center the text within the paragraph */
+}
+
+.rounded-input {
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  width: 300px; /* Adjust the width as needed */
+  outline: none;
+}
+
+.rounded-button {
+  background-color: rgb(4, 28, 42); /* Red color; change the RGB values as needed */
+  color: rgb(170, 147, 99); 
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.centered-button {
+  margin-top: -250px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Adjusts space between the form and the button */
+}
+
+.rounded-button:hover {
+  background-color: rgb(16, 87, 129);
+}
+
+.bottom-half-login {
+  position: absolute;
+  background-color: rgb(255, 255, 247); 
+  top: 50%; /* Starts from the middle of the page */
+  left: 0;
+  width: 100%;
+  min-height: 50%; /* Bottom half of the page */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  border-top-left-radius: 50px; /* Rounded corner on the top left */
+  border-top-right-radius: 50px; /* Rounded corner on the top right */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #333;  
+  
+}
+
+.column {
+  flex: 1; /* Each column takes equal space */
+  text-align: center; /* Centers text horizontally in each column */
+}
+
+.left-column {
+  border-right: 2px solid #ccc; /* Adds a vertical line on the right side of the left column */
+  padding-right: 20px; /* Padding to prevent content from touching the border */
+}
+
+.right-column {
+  padding-left: 20px; /* Padding to prevent content from touching the border */
+}
+
+.login-container {
+  width: 300px; /* Set a specific width for the container */
+  text-align: center; /* Centers text and buttons */
+  padding: 20px; /* Provides spacing inside the container */
+  background-color:  rgb(218,211,197);
+  height: 70%
 }
