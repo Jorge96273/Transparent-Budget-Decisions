@@ -300,6 +300,9 @@ function App() {
             type="text"
             placeholder="Transaction Amount"
             onChange={(e) => setNewTransactionAmount(e.target.value)}
+            git
+            merge
+            main
           />
           <input
             type="text"
