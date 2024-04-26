@@ -72,9 +72,28 @@ const EnterLandingPage = () => {
     return () => unsubscribe();
   }, [navigate]);
 
+  // Begin slider Functionality
+  const [isOpen1, setIsOpen1] = useState(false);
+
+  const toggleLayer_1_2 = () => {
+    setIsOpen1(!isOpen1);
+  };
+
+  const [isOpen2, setIsOpen2] = useState(false);
+
+  const toggleLayer_2_3 = () => {
+    setIsOpen2(!isOpen2);
+  };
+
+  const [rtnUser, setRtnUser] = useState(false);
+
+  const toggleRtnUser = () => {
+    setRtnUser(!rtnUser);
+  };
+
   return (
     <>
-      <div className="page-container">
+      {/* <div className="page-container">
         <div className="top-half">
           <div className="login-container">
             <button className="rounded-button" onClick={signInWithGoogle}>
@@ -110,6 +129,39 @@ const EnterLandingPage = () => {
             <button className="rounded-button" onClick={register}>
               Email/Pword Sign Up
             </button>
+          </div>
+        </div>
+      </div> */}
+      <div>
+        <div className="user-banner">
+          <div
+            style={{ display: "flex", justifyContent: "center", gap: "100px" }}
+          >
+            <button className="rounded-button" onClick={toggleLayer_1_2}>
+              New User
+            </button>
+
+            <button className="rounded-button">Returning User</button>
+          </div>
+          <div className="login-background-container1">
+            <div>
+              <button
+                className="rounded-button"
+                onClick={signInWithGoogle}>
+                Sign up with Google
+              </button>
+            
+              <button className="rounded-button centered-button"onClick={toggleLayer_2_3}>
+                Sign up with Email/Password
+              </button>
+            </div>
+            <div className={isOpen1 ? "login-overlay2" : "login-overlay1"}>
+              This is the new user overlay content.
+            </div>
+            <div className={isOpen2 ? "login-overlay3" : "login-overlay2"}>
+              
+            </div>
+
           </div>
         </div>
       </div>

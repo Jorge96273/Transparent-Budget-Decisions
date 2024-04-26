@@ -158,6 +158,7 @@
   margin: 10px 0;
   width: 300px; /* Adjust the width as needed */
   outline: none;
+  z-index: 2;
 }
 
 .rounded-button {
@@ -167,18 +168,21 @@
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
   transition: background-color 0.3s;
+  z-index: 2;
 }
 
 .centered-button {
-  margin-top: -250px;
+  margin-top: 70px;
   position: absolute;
   display: flex;
-  flex-direction: column;
+  left:50%;
+  transform: translate(-50%, -50%);
   align-items: center; /* Adjusts space between the form and the button */
 }
+
 
 .rounded-button:hover {
   background-color: rgb(16, 87, 129);
@@ -220,9 +224,97 @@
 }
 
 .login-container {
-  width: 300px; /* Set a specific width for the container */
-  text-align: center; /* Centers text and buttons */
-  padding: 20px; /* Provides spacing inside the container */
+  width: 300px; 
+  text-align: center; 
+  padding: 20px; 
   background-color:  rgb(218,211,197);
   height: 70%
 }
+
+/* begin toggle classes */
+.user-banner {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 20vh;
+  justify-content: center; 
+  align-items: center;
+  background-color:  rgb(218,211,197);
+}
+
+
+.login-background-container1 {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 80vh;
+  justify-content: center; 
+  align-items: center;
+  background-color:  red;
+  z-index: 1;
+}
+
+.login-background-container2 {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 80vh;
+  justify-content: center; 
+  align-items: center;
+  background-color:  green;
+  z-index: 1;
+}
+
+.login-overlay1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color:  rgb(255, 255, 247); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  transition: height 0.5s ease;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px; 
+  z-index: 3;
+  }
+
+.login-overlay2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  background-color: rgb(255, 255, 247); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  transition: height 0.5s ease;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px; 
+  z-index: 3;
+  }
+  
+  .login-overlay3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: rgb(255, 255, 247); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    transition: height 0.5s ease;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px; 
+    z-index: 3;
+    }
