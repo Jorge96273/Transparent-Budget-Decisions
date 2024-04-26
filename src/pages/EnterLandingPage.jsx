@@ -4,11 +4,12 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Button } from "@/components/ui/button"
 
 
 const EnterLandingPage = () => {
@@ -159,8 +160,8 @@ const EnterLandingPage = () => {
       <button className="rounded-button" onClick={handleSubmitSignUp}>Sign Up</button>
       </div>      
       </div>
-      </>
-    )
-  }
-  
-  export default EnterLandingPage
+    </>
+  );
+};
+
+export default EnterLandingPage;
