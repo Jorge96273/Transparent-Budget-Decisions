@@ -19,7 +19,7 @@ export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // //! Shows what user is signed in
+  //! Shows what user is signed in
   // console.log(auth?.currentUser?.email);
   // console.log(auth?.currentUser?.photoURL);
   //   ? handles if the object doesnt exist
