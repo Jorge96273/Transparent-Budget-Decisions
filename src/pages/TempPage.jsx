@@ -58,6 +58,7 @@ function App() {
       newTransactionDate,
       newTransactionType,
       monthlyExpense,
+
       //   !NEED TO FIX TIMESTAMP
       createdAt: serverTimestamp(),
     });

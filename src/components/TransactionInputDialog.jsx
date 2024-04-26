@@ -13,7 +13,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { doc, updateDoc } from "firebase/firestore";
 
-export function TransAmtDialog({
+export function TransactionInputDialog({
   transactionID,
   uid,
   setTriggerFetch,
@@ -61,62 +61,6 @@ export function TransAmtDialog({
               }
               className="col-span-3"
             />
-          </div>
-          <h3>Add a Transaction</h3>
-          <div>
-            <label htmlFor="accountType">Account:</label>
-            <select
-              id="accountType"
-              value={accountType}
-              onChange={(event) => setAccountType(event.target.value)}
-            >
-              <option value="Debit">Debit</option>
-              <option value="Credit">Credit</option>
-              <option value="Savings">Savings</option>
-            </select>
-
-            <div>
-              <label htmlFor="accountBalance">Current Account Balance:</label>
-              <span id="accountBalance">{accountBalance.toFixed(2)}</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Transaction Name"
-              onChange={(e) => setNewTransactionName(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Transaction Amount"
-              onChange={(e) => setNewTransactionAmount(e.target.value)}
-            />
-            <input
-              aria-label="Date"
-              type="date"
-              placeholder="Transaction Date"
-              onChange={(e) => setNewTransactionDate(e.target.value)}
-            />
-
-            <label htmlFor="transactionType">Withdraw or Deposit:</label>
-            <select
-              id="transactionType"
-              value={newTransactionType}
-              onChange={(event) => setNewTransactionType(event.target.value)}
-            >
-              <option value="Withdrawl">Withdrawl</option>
-              <option value="Deposit">Deposit</option>
-            </select>
-
-            <label htmlFor="monthlyExpense">Monthly Expense:</label>
-            <select
-              id="monthlyExpense"
-              value={monthlyExpense}
-              onChange={(event) => setMonthlyExpense(event.target.value)}
-            >
-              <option value="No">No</option>
-              <option value="Yes">Yes</option>
-            </select>
-            <></>
-            <Button onClick={addTransaction}>Submit Account</Button>
           </div>
         </div>
         <DialogFooter>
