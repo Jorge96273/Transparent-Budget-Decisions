@@ -31,6 +31,23 @@ export default function BarChart(category, xlabels, ydata) {
                             easing: 'easeInOutQuad',
                             duration: 2500
                         },
+                        scales: {
+                            x: {
+                                border: {
+                                    color: 'gray'
+                                },
+                                grid: {
+                                    color: 'white',
+                                    borderColor: 'grey',
+                                    tickColor: 'grey'
+                                },
+                                title: {
+                                    color: 'black',
+                                    display: true,
+                                    text: "Category"
+                                }
+                            }
+                        },
                         plugins: {
                             legend: {
                                 labels: {

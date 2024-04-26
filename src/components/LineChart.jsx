@@ -17,8 +17,8 @@ export default function LineChart(category,xlabels,ydata) {
                                 label: category,  //
                                 data: ydata,    // Y Axis
                                 fill: false,
-                                borderColor: '#6A8D92', // Use a color that fits the theme
-                                backgroundColor: '#6F1D1B', // Background color of points
+                                borderColor: '#6A8D92', 
+                                backgroundColor: '#6F1D1B', 
                                 pointBorderColor: '#6F1D1B',
                                 pointBackgroundColor: '#fff',
                                 pointBorderWidth: 2,
@@ -31,6 +31,23 @@ export default function LineChart(category,xlabels,ydata) {
                     }}
                     options={{
                         responsive: true,
+                        scales: {
+                            x: {
+                                border: {
+                                    color: 'gray'
+                                },
+                                grid: {
+                                    color: 'black',
+                                    borderColor: 'grey',
+                                    tickColor: 'grey'
+                                },
+                                title: {
+                                    color: 'black',
+                                    display: true,
+                                    text: "Month"
+                                }
+                            }
+                        },
                         plugins: {
                             legend: {
                                 labels: {
