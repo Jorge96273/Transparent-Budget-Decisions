@@ -65,20 +65,6 @@ function TransactionTable() {
     };
   };
 
-  const addTransaction = async () => {
-    const docRef = await addDoc(transactionCollectionRef, {
-      accountType,
-      accountBalance,
-      newTransactionName,
-      newTransactionAmount,
-      newTransactionDate,
-      newTransactionType,
-      monthlyExpense,
-      //   !NEED TO FIX TIMESTAMP
-      createdAt: serverTimestamp(),
-    });
-  };
-
   const getAccountList = async () => {
     try {
       const data = await getDocs(collection(db, `${uid}`));
@@ -277,50 +263,7 @@ function TransactionTable() {
 
   return (
     <>
-      <div className="App">
-        <Auth />
-        <h3>Add a Transaction</h3>
-        <div>
-          <input
-            type="text"
-            placeholder="Account Type"
-            onChange={(e) => setAccountType(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Account Balance"
-            onChange={(e) => setAccountBalance(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Transaction Name"
-            onChange={(e) => setNewTransactionName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Transaction Amount"
-            onChange={(e) => setNewTransactionAmount(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Transaction Date"
-            onChange={(e) => setNewTransactionDate(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Withdrawl or Deposit"
-            onChange={(e) => setNewTransactionType(e.target.value)}
-          />
-          <input
-            type="checkbox"
-            checked={monthlyExpense}
-            onChange={(e) => setMonthlyExpense(Number(e.target.checked))}
-          />
-          <label>Monthly Expense </label>
-          <></>
-          <Button onClick={addTransaction}>Submit Account</Button>
-        </div>
-      </div>
+      <div className="App"></div>
       <h3>Transaction History</h3>
       <div className="w-full">
         <div className="rounded-md border">

@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+
+import "../App.css";
 import { Auth } from "../components/auth";
 import { db, auth } from "../config/firebase";
 import {
@@ -9,61 +11,43 @@ import {
   doc,
   updateDoc,
   serverTimestamp,
+  query,
+  onSnapshot,
 } from "firebase/firestore";
+import { useNavigate, Navigate } from "react-router-dom";
+import LoginDialogTemplate from "@/components/LoginDialogTemplate";
+import SignupDialogTemplate from "@/components/SignupDialogTemplate";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
-
-import { useCallback } from "react";
-import * as React from "react";
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useMemo } from "react";
-import { TransAmtDialog } from "@/components/TransAmtDialog";
+import TransactionTable from "@/components/TransactionTable";
 
 function App() {
+  let currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
+  let currentMonth = currentDate.getMonth() + 1;
+  let currentDay = currentDate.getDate();
+  let formattedDate = `${currentYear}-${currentMonth}-${currentDay}`;
+
   //! added trigger to prevent infinite loop for rerendering accounts
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [accountList, setAccountList] = useState([]);
   //!  Had to deconstruct to properly get user!!!!!
   const [user, loading] = useAuthState(auth);
   const uid = user?.uid; // Correctly get the uid from the user object
-  const [accountType, setAccountType] = useState("");
+  const [accountType, setAccountType] = useState("Debit");
   const [accountBalance, setAccountBalance] = useState(0);
   const [newTransactionName, setNewTransactionName] = useState("");
-  const [newTransactionDate, setNewTransactionDate] = useState("");
-  const [newTransactionType, setNewTransactionType] = useState("withdrawl");
+  const [newTransactionDate, setNewTransactionDate] = useState(formattedDate);
+  const [newTransactionType, setNewTransactionType] = useState("Withdrawl");
   const [newTransactionAmount, setNewTransactionAmount] = useState(0);
-  const [monthlyExpense, setMonthlyExpense] = useState(false);
+  const [monthlyExpense, setMonthlyExpense] = useState("No");
   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
     useState(newTransactionAmount);
 
   const firstRenderRef = useRef(true);
 
   const transactionCollectionRef = collection(db, `${uid}`);
-
-  const debounce = (func, delay) => {
-    let debounceTimer;
-    return function (...args) {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => func.apply(this, args), delay);
-    };
-  };
 
   const addTransaction = async () => {
     const docRef = await addDoc(transactionCollectionRef, {
@@ -77,6 +61,15 @@ function App() {
       //   !NEED TO FIX TIMESTAMP
       createdAt: serverTimestamp(),
     });
+    setTriggerFetch(!triggerFetch);
+    setAccountType("Debit"),
+      // setAccountBalance(0),
+      setNewTransactionName(""),
+      setNewTransactionAmount(0),
+      setNewTransactionDate(formattedDate),
+      setNewTransactionType("Withdrawl"),
+      setMonthlyExpense("No"),
+      console.log("Document written with ID: ", docRef.id);
   };
 
   const getAccountList = async () => {
@@ -90,6 +83,30 @@ function App() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const balance = async () => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      console.log(accountList, "******** THIS IS THE ACCOUNT LIST ***********");
+      accountList.forEach((transaction) => {
+        console.log("******* THIS IS THE TRANSACTION ********", transaction);
+        if (transaction.newTransactionType === "Withdrawl") {
+          console.log("Withdral", transaction.newTransactionAmount);
+          totalWithdrawals += Number(transaction.newTransactionAmount);
+          console.log(totalWithdrawals);
+        } else if (transaction.newTransactionType === "Deposit") {
+          console.log("Deposit", transaction.newTransactionAmount);
+          totalDeposits += Number(transaction.newTransactionAmount);
+          console.log(totalDeposits);
+        }
+      });
+    }
+
+    const balance = totalDeposits - totalWithdrawals;
+    console.log(balance);
+    setAccountBalance(balance);
   };
 
   const deleteTransaction = async (id) => {
@@ -106,279 +123,123 @@ function App() {
     toast.success("Account balance updated successfully");
     setTriggerFetch(!triggerFetch);
   };
-
-  const debouncedSetAccountType = useCallback(
-    debounce((value) => setAccountType(value), 300),
-    []
-  );
-
   useEffect(() => {
-    if (!firstRenderRef.current) {
-      getAccountList(); // Call getAccountList on subsequent renders
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false; // Bypass the initial render
+    } else {
+      getAccountList(), // Call getAccountList on subsequent renders
+        balance();
     }
-    firstRenderRef.current = false; // Ensure this runs only once after the first render
   }, [triggerFetch]);
 
   useEffect(() => {
-    if (user) {
-      getAccountList(); // Call getAccountList on initial render or when user changes
-    }
-  }, [user]);
+    getAccountList(), // Call getAccountList on initial render
+      balance();
+  }, [user, accountType]);
 
-  function transformAccountList(list) {
-    return list.map((transaction) => {
-      console.log(transaction.id); // Directly log the transaction.id
-      return {
-        accountType: transaction.accountType,
-        accountBalance: transaction.accountBalance,
-        transactionName: transaction.newTransactionName,
-        transactionAmount: transaction.newTransactionAmount,
-        transactionDate: transaction.newTransactionDate,
-        transactionType: transaction.newTransactionType,
-        monthlyExpense: transaction.monthlyExpense,
-        transactionId: String(transaction.id),
-      };
-    });
-  }
-
-  const columns = [
-    {
-      accessorKey: "accountType",
-      header: "Account Type",
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("accountType")}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "accountBalance",
-      header: () => <div className="text-right">Account Balance</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("accountBalance"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-
-        return <div className="text-center font-medium">{formatted}</div>;
-      },
-    },
-    {
-      accessorKey: "transactionName",
-      header: "Transaction Name",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("transactionName")}</div>
-      ),
-    },
-    {
-      accessorKey: "transactionAmount",
-      header: () => <div className="text-right">Transaction Amount</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("transactionAmount"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-
-        return <div className="text-center font-medium">{formatted}</div>;
-      },
-    },
-    {
-      accessorKey: "updateTransaction",
-      header: () => <div className="text-center">Update Transaction</div>,
-      cell: ({ row }) => {
-        const transactionID = row.getValue("transactionId");
-
-        return (
-          <div className="items-center">
-            <TransAmtDialog
-              updateTransaction={updateTransaction}
-              transactionID={transactionID}
-              uid={uid}
-              setTriggerFetch={setTriggerFetch}
-              triggerFetch={triggerFetch}
-            />
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "transactionDate",
-      header: "Transaction Date",
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("transactionDate")}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "transactionType",
-      header: "Transaction Type",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("transactionType")}</div>
-      ),
-    },
-    {
-      accessorKey: "monthlyExpense",
-      header: "Monthly Expense",
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("monthlyExpense")}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "transactionId",
-      header: () => <div className="text-center">Delete Transaction</div>,
-      cell: ({ row }) => {
-        const transactionID = row.getValue("transactionId");
-
-        return (
-          <div className="text-center">
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={() => deleteTransaction(transactionID)}
-            >
-              Delete Transaction
-            </button>
-          </div>
-        );
-      },
-    },
-  ];
-
-  const data = useMemo(() => transformAccountList(accountList), [accountList]);
-
-  const [sorting, setSorting] = React.useState([]);
-  const [columnFilters, setColumnFilters] = React.useState([]);
-  const [columnVisibility, setColumnVisibility] = React.useState({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
-  const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  });
-
+  useEffect(() => {
+    balance();
+  }, [accountList]);
   return (
-    <>
-      <div className="App">
-        <Auth />
-        <h3>Add a Transaction</h3>
+    <div className="App">
+      <Auth />
+      <h3>Add a Transaction</h3>
+      <div>
+        <label htmlFor="accountType">Account:</label>
+        <select
+          id="accountType"
+          value={accountType}
+          onChange={(event) => setAccountType(event.target.value)}
+        >
+          <option value="Debit">Debit</option>
+          <option value="Credit">Credit</option>
+          <option value="Savings">Savings</option>
+        </select>
+
         <div>
-          <input
-            type="text"
-            placeholder="Account Type"
-            onChange={(e) => setAccountType(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Account Balance"
-            onChange={(e) => setAccountBalance(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Transaction Name"
-            onChange={(e) => setNewTransactionName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Transaction Amount"
-            onChange={(e) => setNewTransactionAmount(e.target.value)}
-            git
-            merge
-            main
-          />
-          <input
-            type="text"
-            placeholder="Transaction Date"
-            onChange={(e) => setNewTransactionDate(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Withdrawl or Deposit"
-            onChange={(e) => setNewTransactionType(e.target.value)}
-          />
-          <input
-            type="checkbox"
-            checked={monthlyExpense}
-            onChange={(e) => setMonthlyExpense(Number(e.target.checked))}
-          />
-          <label>Monthly Expense </label>
-          <></>
-          <Button onClick={addTransaction}>Submit Account</Button>
+          <label htmlFor="accountBalance">Current Account Balance:</label>
+          <span id="accountBalance">{accountBalance.toFixed(2)}</span>
         </div>
+        <input
+          type="text"
+          placeholder="Transaction Name"
+          onChange={(e) => setNewTransactionName(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Transaction Amount"
+          onChange={(e) => setNewTransactionAmount(e.target.value)}
+        />
+        <input
+          aria-label="Date"
+          type="date"
+          placeholder="Transaction Date"
+          onChange={(e) => setNewTransactionDate(e.target.value)}
+        />
+
+        <label htmlFor="transactionType">Withdraw or Deposit:</label>
+        <select
+          id="transactionType"
+          value={newTransactionType}
+          onChange={(event) => setNewTransactionType(event.target.value)}
+        >
+          <option value="Withdrawl">Withdrawl</option>
+          <option value="Deposit">Deposit</option>
+        </select>
+
+        <label htmlFor="monthlyExpense">Monthly Expense:</label>
+        <select
+          id="monthlyExpense"
+          value={monthlyExpense}
+          onChange={(event) => setMonthlyExpense(event.target.value)}
+        >
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <></>
+        <Button onClick={addTransaction}>Submit Account</Button>
       </div>
       <h3>Transaction History</h3>
-      <div className="w-full">
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader className="text-center">
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id} className="text-center">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    className="text-center"
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="text-center">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-right"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+      <div>
+        {accountList.map((transaction) => (
+          <div key={transaction.id}>
+            <p
+              style={{
+                color:
+                  transaction.newTransactionType === "Withdrawl"
+                    ? "red"
+                    : "green",
+              }}
+            >
+              <span>
+                Account: {transaction.accountType} | Previous Account Balence: $
+                {transaction.accountBalance}| Transaction:{" "}
+                {transaction.newTransactionName} | Transaction Amount: $
+                {transaction.newTransactionAmount}| Transaction Date:{" "}
+                {transaction.newTransactionDate} | Transaction Type:{" "}
+                {transaction.newTransactionType} | Monthly Expense:{" "}
+                {transaction.monthlyExpense} |
+              </span>
+            </p>
+            <Button onClick={() => deleteTransaction(transaction.id)}>
+              Delete Account
+            </Button>
+            <input
+              placeholder="Updated Balance"
+              type="number"
+              onChange={(e) =>
+                setUpdatedTransactionAmount(Number(e.target.value))
+              }
+            />
+            <Button onClick={() => updateTransaction(transaction.id)}>
+              Update Balance
+            </Button>
+          </div>
+        ))}
       </div>
-    </>
+      <TransactionTable />
+    </div>
   );
 }
+
 export default App;
