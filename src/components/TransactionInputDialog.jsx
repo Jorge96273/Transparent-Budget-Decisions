@@ -73,6 +73,7 @@ function TransactionInputDialog({
       const docRef = await addDoc(transactionCollectionRef, {
         accountType,
         accountBalance,
+        selectBudget,
         newTransactionName,
         newTransactionAmount,
         newTransactionDate,
