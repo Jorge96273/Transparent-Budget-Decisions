@@ -143,6 +143,7 @@ function TransactionTable({
         transactionType: transaction.newTransactionType,
         monthlyExpense: transaction.monthlyExpense,
         transactionId: String(transaction.id),
+        budgetCategory: transaction.selectBudget,
       };
     });
   }
@@ -231,6 +232,15 @@ function TransactionTable({
       cell: ({ row }) => (
         <div className="capitalize text-center">
           {row.getValue("monthlyExpense")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "budgetCategory",
+      header: "Budget Category",
+      cell: ({ row }) => (
+        <div className="capitalize text-center">
+          {row.getValue("budgetCategory")}
         </div>
       ),
     },

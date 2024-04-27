@@ -1,16 +1,19 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { db, auth } from "../config/firebase";
 import TransactionTable from "@/components/TransactionTable";
 import { useOutletContext } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
+import TransactionInputDialog from "@/components/TransactionInputDialog";
+import CreateBudgetDialog from "@/components/CreateBudgetDialog copy";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   const uid = user?.uid;
   const { triggerFetch, setTriggerFetch, accountList, setAccountList } =
     useOutletContext();
-
+  const [budgetAccount, setBudgetAccount] = useState([]);
+  console.log("DSH BUDGET", budgetAccount);
   const firstRenderRef = useRef(true);
 
   const getAccountList = async () => {
@@ -25,6 +28,22 @@ const Dashboard = () => {
       console.log(err);
     }
   };
+
+  const getBudgetList = async () => {
+    try {
+      const data = await getDocs(collection(db, `budget/${uid}/newBudget`));
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setBudgetAccount(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getBudgetList();
+  }, [accountList]);
 
   const debitAccount = accountList.filter(
     (account) => account.accountType === "Debit"
@@ -55,6 +74,26 @@ const Dashboard = () => {
   return (
     <>
       <div>Dashboard</div>
+      <TransactionInputDialog
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        setBudgetAccount={setBudgetAccount}
+        budgetAccount={budgetAccount}
+      />
+      <br></br>
+      <CreateBudgetDialog
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        setBudgetAccount={setBudgetAccount}
+        budgetAccount={budgetAccount}
+      />
+      <br></br>
       <h3>Debit Account Transaction History</h3>
       <TransactionTable
         uid={uid}
