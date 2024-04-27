@@ -45,17 +45,14 @@ function App() {
   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
     useState(newTransactionAmount);
 
-  const [newBudget, setNewBudget] = useState("")
-  const [newBudgetAmount, setNewBudgetAmount] = useState(0)
-  const [budgetAccount, setBudgetAccount] = useState([])
-  const [selectBudget, setSelectBudget] = useState("None")
-
+  const [newBudget, setNewBudget] = useState("");
+  const [newBudgetAmount, setNewBudgetAmount] = useState(0);
+  const [budgetAccount, setBudgetAccount] = useState([]);
+  const [selectBudget, setSelectBudget] = useState("None");
 
   const firstRenderRef = useRef(true);
 
   const transactionCollectionRef = collection(db, `${uid}`);
-
-  
 
   const addTransaction = async () => {
     const docRef = await addDoc(transactionCollectionRef, {
@@ -67,15 +64,14 @@ function App() {
       newTransactionDate,
       newTransactionType,
       monthlyExpense,
-
       //   !NEED TO FIX TIMESTAMP
       createdAt: serverTimestamp(),
     });
     setTriggerFetch(!triggerFetch);
     setAccountType("Debit"),
       // setAccountBalance(0),
-      setSelectBudget("None")
-      setNewTransactionName(""),
+      setSelectBudget("None");
+    setNewTransactionName(""),
       setNewTransactionAmount(0),
       setNewTransactionDate(formattedDate),
       setNewTransactionType("Withdrawl"),
@@ -83,16 +79,15 @@ function App() {
       console.log("Document written with ID: ", docRef.id);
   };
 
-  const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`)
+  const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`);
 
   const createBudget = async () => {
-    const docRef = await addDoc(budgetCollectionRef,{
+    const docRef = await addDoc(budgetCollectionRef, {
       newBudget,
       newBudgetAmount,
     });
     setTriggerFetch(!triggerFetch);
-    setNewBudget(""),
-    setNewBudgetAmount(0);
+    setNewBudget(""), setNewBudgetAmount(0);
   };
   // const handleCreateBudget = async() => {
   //   await createBudget()
@@ -105,10 +100,10 @@ function App() {
         id: doc.id,
       }));
       setBudgetAccount(filteredData);
-    }catch (error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const getAccountList = async () => {
     try {
@@ -169,10 +164,8 @@ function App() {
   }, [user, accountType]);
 
   useEffect(() => {
-    balance(),
-    getBudgetList();
+    balance(), getBudgetList();
   }, [accountList]);
-
 
   return (
     <div className="App">
@@ -278,7 +271,7 @@ function App() {
             >
               <span>
                 Account: {transaction.accountType} | Previous Account Balence: $
-                {transaction.accountBalance}| Budget Account:{" "} 
+                {transaction.accountBalance}| Budget Account:{" "}
                 {transaction.selectBudget} | Transaction:{" "}
                 {transaction.newTransactionName} | Transaction Amount: $
                 {transaction.newTransactionAmount}| Transaction Date:{" "}
