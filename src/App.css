@@ -245,13 +245,16 @@
 
 
 .login-background-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
   position: relative;
   bottom: 0;
   left: 0;
   width: 100vw;
   height: 80vh;
-  justify-content: center; 
-  align-items: center;
+
   background-color:  red;
   z-index: 1;
 }
@@ -279,7 +282,7 @@
   justify-content: center;
   align-items: center;
   color: black;
-  transition: height 0.5s ease;
+  transition: height 1s ease;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px; 
   z-index: 3;
@@ -290,31 +293,49 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 70%;
+  height: 0%;
   background-color: rgb(255, 255, 247); 
   display: flex;
   justify-content: center;
   align-items: center;
   color: black;
-  transition: height 0.5s ease;
+  transition: height 1s ease;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px; 
   z-index: 3;
   }
   
-  .login-overlay3 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0%;
-    background-color: rgb(255, 255, 247); 
+.login-overlay3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background-color: rgb(255, 255, 247); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  transition: opacity 2s ease;
+  visibility: hidden;
+  opacity: 0;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px; 
+  z-index: 3;
+  }
+
+.ease-overlay {
+  opacity: 1; 
+  visibility: visible; 
+  transition: opacity 2s ease, visibility 0s ease 2s;
+}
+
+.or-section {
     display: flex;
-    justify-content: center;
+    margin: auto; 
     align-items: center;
-    color: black;
-    transition: height 0.5s ease;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px; 
-    z-index: 3;
-    }
+  }
+
+.googlebuttondown {
+  margin-top: 4rem;
+}

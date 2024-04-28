@@ -9,8 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Button } from "@/components/ui/button"
-
+import { Button } from "@/components/ui/button";
 
 const EnterLandingPage = () => {
   const [email, setEmail] = useState("");
@@ -80,16 +79,23 @@ const EnterLandingPage = () => {
       console.log(`User: ${user}`);
       if (user) {
         navigate("/dashboard");
+      }
+    } catch (err) {
+      if (
+        err.code === "auth/invalid-credential" ||
+        err.code === "auth/invalid-email"
+      ) {
+        console.log(
+          "Invalid credentials. Please check your email and password"
+        );
+        setErrorMessage(
+          "Invalid credentials. Please check your email and password."
+        );
+      } else {
+        console.log(err);
+      }
     }
-  } catch (err) {
-    if (err.code === "auth/invalid-credential" || err.code === "auth/invalid-email") {
-      console.log("Invalid credentials. Please check your email and password"); 
-      setErrorMessage("Invalid credentials. Please check your email and password.");   
-    } else {
-    console.log(err);
-    }
-  }
-};
+  };
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
@@ -100,8 +106,8 @@ const EnterLandingPage = () => {
         console.log(`User: ${user}`);
         if (user) {
           navigate("/dashboard");
-        } 
-      } 
+        }
+      }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         console.log("This email is already in use.");
@@ -110,9 +116,9 @@ const EnterLandingPage = () => {
         console.log("Please enter a valid email");
         setErrorMessage("Please enter a valid email");
       } else {
-      console.log(err);
-      };
-    };
+        console.log(err);
+      }
+    }
   };
 
   useEffect(() => {
@@ -127,22 +133,34 @@ const EnterLandingPage = () => {
 
   // Begin slider Functionality
   const [isOpen1, setIsOpen1] = useState(false);
+  const [showOverlay3, setShowOverlay3] = useState(false);
+  const [showStyle, setShowStyle] = useState(false);
+  
 
   const toggleLayer_1_2 = () => {
     setIsOpen1(!isOpen1);
   };
 
-  const [isOpen2, setIsOpen2] = useState(false);
+  useEffect(() => {
+    let timer;
+    if (isOpen1) {
+        timer = setTimeout(() => {
+        setShowOverlay3(true);
+        setShowStyle(true);
+      }, 1000); // Delay of 1 second
+      
+    } else {
+        setShowStyle(false);
+        setTimeout(() => setShowOverlay3(false), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [isOpen1]);
 
-  const toggleLayer_2_3 = () => {
-    setIsOpen2(!isOpen2);
-  };
+  //   const [rtnUser, setRtnUser] = useState(false);
 
-  const [rtnUser, setRtnUser] = useState(false);
-
-  const toggleRtnUser = () => {
-    setRtnUser(!rtnUser);
-  };
+  //   const toggleRtnUser = () => {
+  //     setRtnUser(!rtnUser);
+  //   };
 
   return (
     <>
@@ -196,26 +214,49 @@ const EnterLandingPage = () => {
 
             <button className="rounded-button">Returning User</button>
           </div>
-          <div className="login-background-container1">
-            <div>
-              <button
-                className="rounded-button"
-                onClick={signInWithGoogle}>
-                Sign up with Google
-              </button>
-            
-              <button className="rounded-button centered-button"onClick={toggleLayer_2_3}>
-                Sign up with Email/Password
-              </button>
-            </div>
-            <div className={isOpen1 ? "login-overlay2" : "login-overlay1"}>
-              This is the new user overlay content.
-            </div>
-            <div className={isOpen2 ? "login-overlay3" : "login-overlay2"}>
-              
-            </div>
 
+          <div className="login-background-container1">
+            <div className="googlebuttondown">
+              <div className="or-section">
+                <button
+                  className="rounded-button or-section"
+                  onClick={signInWithGoogle}
+                >
+                  Sign up with Google
+                </button>
+              </div>
+              <br></br>
+
+              <div className="or-section">
+                <p className="font-bold text-lg or-section">OR</p>
+              </div>
+              <div className="rounded-form">
+                <input
+                  type="text"
+                  className="rounded-input"
+                  placeholder="Email..."
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="rounded-input"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div
+              className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+            ></div>
+
+{showOverlay3 && (
+          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
+            <button className="rounded-button" onClick={handleSubmitSignUp}>
+              Email/Pword Sign Up
+            </button>
           </div>
+        )}
+        </div>
         </div>
       </div>
     </>
