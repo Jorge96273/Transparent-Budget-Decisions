@@ -27,10 +27,6 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
     if (accountList) {
       accountList.forEach((transaction) => {
         if (transaction.selectBudget === category) {
-          const amount = Number(transaction.newTransactionAmount);
-          if (isNaN(amount)) {
-            console.error("Invalid Amount", transaction.newTransactionAmount);
-          }
           if (transaction.newTransactionType === "Withdrawl") {
             totalWithdrawals += Number(transaction.newTransactionAmount);
           } else if (transaction.newTransactionType === "Deposit") {
@@ -40,21 +36,19 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
       });
     }
     let recordedBalance = totalDeposits - totalWithdrawals;
-    // Formats the Calculations to USD Styling
-    const formatted = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(recordedBalance);
-    return formatted;
+
+    return recordedBalance;
   }
+
   // Sets the Data for each table row
   const data = budgetList.map((budget) => ({
     budgetName: budget.newBudget,
     budgetAmount: budget.newBudgetAmount,
     budgetId: String(budget.id),
     budgetSpent: budgetSpent(budget.newBudget),
+    budgetRemaining: budget.newBudgetAmount + budgetSpent(budget.newBudget),
   }));
-
+  //  Sets the columns and values for each row
   const columns = [
     {
       accessorKey: "budgetName",
@@ -70,6 +64,7 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
       header: "Budget Amount",
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("budgetAmount"));
+        // Formats number into USD style
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
@@ -83,6 +78,19 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
       header: "Budget Spent",
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("budgetSpent"));
+        const formatted = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(amount);
+
+        return <div className="text-center font-medium">{formatted}</div>;
+      },
+    },
+    {
+      accessorKey: "budgetRemaining",
+      header: "Budget Remaining",
+      cell: ({ row }) => {
+        const amount = parseFloat(row.getValue("budgetRemaining"));
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",

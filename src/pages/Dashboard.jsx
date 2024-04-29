@@ -164,6 +164,7 @@ const Dashboard = () => {
         setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
       <br></br>
+      <h3>Current Budget</h3>
       <BudgetedItemTable
         accountList={accountList}
         budgetList={budgetList}
