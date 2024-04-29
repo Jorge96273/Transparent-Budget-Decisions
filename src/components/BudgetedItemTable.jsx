@@ -127,7 +127,7 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-50">
         <div className="rounded-md border">
           <Table>
             <TableHeader className="text-center">
