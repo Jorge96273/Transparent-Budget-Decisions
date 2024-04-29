@@ -143,6 +143,7 @@ function TransactionTable({
         transactionType: transaction.newTransactionType,
         monthlyExpense: transaction.monthlyExpense,
         transactionId: String(transaction.id),
+        budgetCategory: transaction.selectBudget,
       };
     });
   }
@@ -235,6 +236,15 @@ function TransactionTable({
       ),
     },
     {
+      accessorKey: "budgetCategory",
+      header: "Budget Category",
+      cell: ({ row }) => (
+        <div className="capitalize text-center">
+          {row.getValue("budgetCategory")}
+        </div>
+      ),
+    },
+    {
       accessorKey: "transactionId",
       header: () => <div className="text-center">Delete Transaction</div>,
       cell: ({ row }) => {
@@ -261,7 +271,7 @@ function TransactionTable({
     [accountTable]
   );
 
-  //* utilizes the useMemo hook from React to memoize the result of the transformAccountList function, which is applied to the accountList variable. This means that the transformAccountList function will only be executed when the accountList changes, rather than on every render of the component. This is particularly useful for optimizing performance, especially when dealing with expensive computations or large datasets.
+  //* utilizes the useMemo hook from React to memorize the result of the transformAccountList function, which is applied to the accountList variable. This means that the transformAccountList function will only be executed when the accountList changes, rather than on every render of the component. This is particularly useful for optimizing performance, especially when dealing with expensive computations or large datasets.
 
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
