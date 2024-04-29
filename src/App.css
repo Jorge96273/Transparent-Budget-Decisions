@@ -162,7 +162,7 @@
 }
 
 .rounded-button {
-  background-color: rgb(4, 28, 42); /* Red color; change the RGB values as needed */
+  background-color: rgb(4, 28, 42); 
   color: rgb(170, 147, 99); 
   border: none;
   border-radius: 20px;
@@ -174,6 +174,43 @@
   z-index: 2;
 }
 
+.rounded-button-newuser {
+  background-color: rgb(4, 28, 42); 
+  color: rgb(170, 147, 99); 
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 200px;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+
+.rounded-button-rtnuser {
+  background-color: rgb(170, 147, 99); 
+  color: rgb(4, 28, 42);  
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 200px;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Adjust as needed */
+  border: none; /* If you don't want any border */
+  background: none; 
+}
+
 .centered-button {
   margin-top: 70px;
   position: absolute;
@@ -183,7 +220,10 @@
   align-items: center; /* Adjusts space between the form and the button */
 }
 
-
+.google-button img {
+  height: auto; /* Maintain aspect ratio */
+  width: 70%; /* Adjust width to fit your design */
+}
 .rounded-button:hover {
   background-color: rgb(16, 87, 129);
 }
@@ -240,7 +280,7 @@
   height: 20vh;
   justify-content: center; 
   align-items: center;
-  background-color:  rgb(218,211,197);
+  background-color:  rgb(255, 255, 247);
 }
 
 
@@ -254,7 +294,9 @@
   left: 0;
   width: 100vw;
   height: 80vh;
-  background-color:  red;
+  background-color:  rgb(4, 28, 42);  
+  border-top-left-radius: 52px;
+  border-top-right-radius: 52px; 
   z-index: 1;
 }
 
@@ -268,7 +310,9 @@
   left: 0;
   width: 100vw;
   height: 80vh;
-  background-color: green;
+  background-color:rgb(170, 147, 99);
+  border-top-left-radius: 52px;
+  border-top-right-radius: 52px;  
   z-index: 1;
 }
 
@@ -277,7 +321,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 95%;
+  height: 100%;
   background-color:  rgb(255, 255, 247); 
   display: flex;
   justify-content: center;
@@ -331,12 +375,21 @@
   transition: opacity 2s ease, visibility 0s ease 2s;
 }
 
-.or-section {
+.or-sectionrtn {
     display: flex;
     margin: auto; 
     align-items: center;
+    color: rgb(170, 147, 99);
+  }
+
+  .or-sectionnew {
+    display: flex;
+    margin: auto; 
+    align-items: center;
+    color: rgb(4, 28, 42);
   }
 
 .googlebuttondown {
   margin-top: 4rem;
 }
+

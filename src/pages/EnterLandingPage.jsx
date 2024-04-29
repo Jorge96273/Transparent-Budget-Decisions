@@ -11,6 +11,9 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Button } from "@/components/ui/button";
 
+import signupgoogle from "../images/signupgoogle.png";
+import continuegoogle from "../images/continuegoogle.png";
+
 const EnterLandingPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -231,11 +234,11 @@ const returningUser = () => {
           <div
             style={{ display: "flex", justifyContent: "center", gap: "100px" }}
           >
-            <button className="rounded-button" onClick={toggleLayer_1_2}>
+            <button className="rounded-button-newuser" onClick={toggleLayer_1_2}>
               New User
             </button>
 
-            <button className="rounded-button" onClick={returningUser}>Returning User</button>
+            <button className="rounded-button-rtnuser" onClick={returningUser}>Returning User</button>
           </div>
 
     {isNewUser ? (
@@ -243,16 +246,20 @@ const returningUser = () => {
             <div className="googlebuttondown">
               <div className="or-section">
                 <button
-                  className="rounded-button or-section"
+                  className="google-button or-section"
                   onClick={signInWithGoogle}
                 >
-                  Sign up with Google
+                  <img
+            
+                src={signupgoogle}
+                alt="Sign up with Google"
+      />
                 </button>
               </div>
               <br></br>
 
-              <div className="or-section">
-                <p className="font-bold text-lg or-section">OR</p>
+              <div className="or-sectionrtn">
+                <p className="font-bold text-lg or-sectionrtn">OR</p>
               </div>
               <div className="rounded-form">
                 <input
@@ -275,8 +282,8 @@ const returningUser = () => {
 
 {showOverlay3 && (
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
-            <button className="rounded-button" onClick={handleSubmitSignUp}>
-              Email/Pword Sign Up
+            <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
+              Email/Pword Sign up
             </button>
           </div>
         )}
@@ -285,17 +292,21 @@ const returningUser = () => {
         <div className="login-background-container2">
             <div className="googlebuttondown">
               <div className="or-section">
-                <button
-                  className="rounded-button or-section"
+              <button
+                  className="google-button or-section"
                   onClick={signInWithGoogle}
                 >
-                  Login with Google
+                  <img
+            
+                src={continuegoogle}
+                alt="Sign up with Google"
+      />
                 </button>
               </div>
               <br></br>
 
-              <div className="or-section">
-                <p className="font-bold text-lg or-section">OR</p>
+              <div className="or-sectionnew">
+                <p className="font-bold text-lg or-sectionnew">OR</p>
               </div>
               <div className="rounded-form">
                 <input
@@ -318,7 +329,7 @@ const returningUser = () => {
 
 {showOverlay3 && (
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
-            <button className="rounded-button" onClick={handleSubmitLogin}>
+            <button className="rounded-button-rtnuser" onClick={handleSubmitLogin}>
               Email/Pword Login
             </button>
           </div>
