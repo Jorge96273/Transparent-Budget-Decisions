@@ -66,6 +66,57 @@ const Dashboard = () => {
     (account) => account.monthlyExpense === "Yes"
   );
 
+  const currentAccountBalance = (accountType) => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      accountList.forEach((transaction) => {
+        if (transaction.accountType === accountType) {
+          if (transaction.newTransactionType === "Withdrawl") {
+            totalWithdrawals += Number(transaction.newTransactionAmount);
+          } else if (transaction.newTransactionType === "Deposit") {
+            totalDeposits += Number(transaction.newTransactionAmount);
+          }
+        } else if (!accountType) {
+          if (transaction.newTransactionType === "Withdrawl") {
+            totalWithdrawals += Number(transaction.newTransactionAmount);
+          } else if (transaction.newTransactionType === "Deposit") {
+            totalDeposits += Number(transaction.newTransactionAmount);
+          }
+        }
+      });
+    }
+    let recordedBalance = totalDeposits - totalWithdrawals;
+    const formatted = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(recordedBalance);
+    return formatted;
+  };
+
+  const monthlyExpensesBalance = () => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      let filterred = accountList.filter(
+        (account) => account.monthlyExpense === "Yes"
+      );
+      filterred.forEach((transaction) => {
+        if (transaction.newTransactionType === "Withdrawl") {
+          totalWithdrawals += Number(transaction.newTransactionAmount);
+        } else if (transaction.newTransactionType === "Deposit") {
+          totalDeposits += Number(transaction.newTransactionAmount);
+        }
+      });
+    }
+    let recordedBalance = totalDeposits - totalWithdrawals;
+    const formatted = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(recordedBalance);
+    return formatted;
+  };
+
   useEffect(() => {
     if (!firstRenderRef.current) {
       getAccountList(); // Call getAccountList on subsequent renders
@@ -111,7 +162,10 @@ const Dashboard = () => {
         budgetTriggerFetch={budgetTriggerFetch}
         setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
-      <h3>Debit Account Transaction History</h3>
+      <h3>
+        Debit Account Transaction History&emsp;&emsp;Current Balance:{" "}
+        {currentAccountBalance("Debit")}
+      </h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -121,7 +175,10 @@ const Dashboard = () => {
         accountTable={debitAccount}
       />
       <br></br>
-      <h3>Savings Account Transaction History</h3>
+      <h3>
+        Savings Account Transaction History&emsp;&emsp;Current Balance:{" "}
+        {currentAccountBalance("Savings")}
+      </h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -131,7 +188,10 @@ const Dashboard = () => {
         accountTable={savingsAccount}
       />
       <br></br>
-      <h3>Credit Card Transaction History</h3>
+      <h3>
+        Credit Card Transaction History&emsp;&emsp;Current Balance:{" "}
+        {currentAccountBalance("Credit")}
+      </h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -141,7 +201,9 @@ const Dashboard = () => {
         accountTable={creditAccount}
       />
       <br></br>
-      <h3>Monthly Expenses</h3>
+      <h3>
+        Monthly Expenses: {monthlyExpensesBalance()}
+      </h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -151,7 +213,9 @@ const Dashboard = () => {
         accountTable={monthlyExpenses}
       />
       <br></br>
-      <h3>All Transactions</h3>
+      <h3>
+        All Transactions: {currentAccountBalance("")}
+      </h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
