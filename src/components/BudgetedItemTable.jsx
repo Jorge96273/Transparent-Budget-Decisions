@@ -1,0 +1,178 @@
+// // import { useCallback } from "react";
+import * as React from "react";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useMemo } from "react";
+
+function BudgetedItemTable({ uid, accountList, budgetList }) {
+  // Caluclates the Amount Spent for Each Budget Category
+  function budgetSpent(category) {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      accountList.forEach((transaction) => {
+        if (transaction.selectBudget === category) {
+          const amount = Number(transaction.newTransactionAmount);
+          if (isNaN(amount)) {
+            console.error("Invalid Amount", transaction.newTransactionAmount);
+          }
+          if (transaction.newTransactionType === "Withdrawl") {
+            totalWithdrawals += Number(transaction.newTransactionAmount);
+          } else if (transaction.newTransactionType === "Deposit") {
+            totalDeposits += Number(transaction.newTransactionAmount);
+          }
+        }
+      });
+    }
+    let recordedBalance = totalDeposits - totalWithdrawals;
+    // Formats the Calculations to USD Styling
+    const formatted = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(recordedBalance);
+    return formatted;
+  }
+  // Sets the Data for each table row
+  const data = budgetList.map((budget) => ({
+    budgetName: budget.newBudget,
+    budgetAmount: budget.newBudgetAmount,
+    budgetId: String(budget.id),
+    budgetSpent: budgetSpent(budget.newBudget),
+  }));
+
+  const columns = [
+    {
+      accessorKey: "budgetName",
+      header: "Budget Name",
+      cell: ({ row }) => (
+        <div className="capitalize text-center">
+          {row.getValue("budgetName")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "budgetAmount",
+      header: "Budget Amount",
+      cell: ({ row }) => {
+        const amount = parseFloat(row.getValue("budgetAmount"));
+        const formatted = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(amount);
+
+        return <div className="text-center font-medium">{formatted}</div>;
+      },
+    },
+    {
+      accessorKey: "budgetSpent",
+      header: "Budget Spent",
+      cell: ({ row }) => {
+        const amount = parseFloat(row.getValue("budgetSpent"));
+        const formatted = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(amount);
+
+        return <div className="text-center font-medium">{formatted}</div>;
+      },
+    },
+  ];
+
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
+
+  return (
+    <>
+      <div className="w-full">
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader className="text-center">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id} className="text-center">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className="text-center"
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="text-center">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-right"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </>
+  );
+}
+export default BudgetedItemTable;

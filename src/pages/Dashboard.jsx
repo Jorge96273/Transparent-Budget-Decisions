@@ -7,6 +7,7 @@ import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
 import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
+import BudgetedItemTable from "@/components/BudgetedItemTable";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -111,6 +112,17 @@ const Dashboard = () => {
         budgetTriggerFetch={budgetTriggerFetch}
         setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
+      <br></br>
+      <BudgetedItemTable
+        accountList={accountList}
+        budgetList={budgetList}
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
+      />
+      <br></br>
       <h3>Debit Account Transaction History</h3>
       <TransactionTable
         uid={uid}
