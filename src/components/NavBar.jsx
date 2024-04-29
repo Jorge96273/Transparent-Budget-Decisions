@@ -35,14 +35,6 @@ const NavBar = () => {
                 </li>
                 <li className='shadow-md  rounded-full  hover:bg-orange-100'>
                   <a
-                    href='/'
-                    className='no-underline block py-2 px-3 text-gray-900 rounded'
-                  >
-                    Learning Center
-                  </a>
-                </li>
-                <li className='shadow-md  rounded-full  hover:bg-orange-100'>
-                  <a
                     href='/temp/'
                     className='no-underline block py-2 px-3 text-gray-900 rounded'
                   >
