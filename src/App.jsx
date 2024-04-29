@@ -8,7 +8,8 @@ function App() {
   //? Used to pass useState to pages through Outlet Context
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [accountList, setAccountList] = useState([]);
-
+  const [budgetList, setBudgetList] = useState([]);
+  const [budgetTriggerFetch, setBudgetTriggerFetch] = useState(false);
   return (
     <>
       <div className="bg-orange-50 flex flex-col min-h-screen">
@@ -20,6 +21,10 @@ function App() {
               setTriggerFetch,
               accountList,
               setAccountList,
+              budgetList,
+              setBudgetList,
+              budgetTriggerFetch,
+              setBudgetTriggerFetch,
             }}
           />
         </div>

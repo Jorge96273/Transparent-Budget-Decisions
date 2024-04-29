@@ -41,6 +41,11 @@ function CreateBudgetDialog({
   budgetAccount,
   setBudgetAccount,
 }) {
+  // Use State sets the input budget and ammount for the create budget method
+  const [newBudget, setNewBudget] = useState("");
+  const [newBudgetAmount, setNewBudgetAmount] = useState(0);
+
+  // This code is to close the dialog box, the closeDialog method will be added to the createBudget method to close the dialog box when clicking create budget.
   const [isDialogOpen, setIsDialogOpen] = useState(true); //?variable to manage dialog box visibility
   const dialogKey = useRef(0);
 
@@ -48,46 +53,22 @@ function CreateBudgetDialog({
     setIsDialogOpen(false);
     dialogKey.current += 1;
   };
-
+  // this set the database path for Firebase
   const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`);
 
+  // This
   const createBudget = async () => {
+    console.log("UID", uid, newBudget, newBudgetAmount);
     const docRef = await addDoc(budgetCollectionRef, {
       newBudget,
       newBudgetAmount,
     });
+    console.log("create budget");
     setTriggerFetch(!triggerFetch);
     closeDialog();
     setNewBudget(""), setNewBudgetAmount(0);
   };
-  // const handleCreateBudget = async() => {
-  //   await createBudget()
-  // }
-  const getBudgetList = async () => {
-    try {
-      const data = await getDocs(collection(db, `budget/${uid}/newBudget`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setBudgetAccount(filteredData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const getAccountList = async () => {
-    try {
-      const data = await getDocs(collection(db, `${uid}`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setAccountList(filteredData);
-    } catch (err) {
-      console.error("Error fetching account data:", err);
-    }
-  };
   return (
     <>
       <div className="App">

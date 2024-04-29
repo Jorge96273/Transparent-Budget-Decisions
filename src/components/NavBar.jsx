@@ -1,6 +1,22 @@
 import LogoutButton from "./LogoutButton";
+import { React, useState, useEffect } from "react";
+import { auth } from "@/config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 const NavBar = () => {
+  const [isloggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <>
       <div className='w-full mr-4 flex justify-center'>
@@ -25,6 +41,8 @@ const NavBar = () => {
                     About
                   </a>
                 </li>
+              {isloggedIn && (
+                <>
                 <li className='shadow-md rounded-full hover:bg-orange-100'>
                   <a
                     href='/dashboard/'
@@ -56,6 +74,8 @@ const NavBar = () => {
                 <LogoutButton />
                 </a>
               </li>
+              </>
+              )}
               </ul>
             </div>
           </div>

@@ -5,7 +5,8 @@ import TransactionTable from "@/components/TransactionTable";
 import { useOutletContext } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
-import CreateBudgetDialog from "@/components/CreateBudgetDialog copy";
+import CreateBudgetDialog from "@/components/CreateBudgetDialog";
+import BudgetsTable from "@/components/BudgetsTable";
 import {
   Accordion,
   AccordionContent,
@@ -16,10 +17,17 @@ import {
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   const uid = user?.uid;
-  const { triggerFetch, setTriggerFetch, accountList, setAccountList } =
-    useOutletContext();
-  const [budgetAccount, setBudgetAccount] = useState([]);
-  console.log("DSH BUDGET", budgetAccount);
+  const {
+    triggerFetch,
+    setTriggerFetch,
+    accountList,
+    setAccountList,
+    budgetList,
+    setBudgetList,
+    budgetTriggerFetch,
+    setBudgetTriggerFetch,
+  } = useOutletContext();
+
   const firstRenderRef = useRef(true);
 
   const getAccountList = async () => {
@@ -42,14 +50,14 @@ const Dashboard = () => {
         ...doc.data(),
         id: doc.id,
       }));
-      setBudgetAccount(filteredData);
+      setBudgetList(filteredData);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getBudgetList();
-  }, [accountList]);
+  }, [accountList, budgetTriggerFetch]);
 
   const debitAccount = accountList.filter(
     (account) => account.accountType === "Debit"
@@ -63,6 +71,57 @@ const Dashboard = () => {
   const monthlyExpenses = accountList.filter(
     (account) => account.monthlyExpense === "Yes"
   );
+
+  const currentAccountBalance = (accountType) => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      accountList.forEach((transaction) => {
+        if (transaction.accountType === accountType) {
+          if (transaction.newTransactionType === "Withdrawl") {
+            totalWithdrawals += Number(transaction.newTransactionAmount);
+          } else if (transaction.newTransactionType === "Deposit") {
+            totalDeposits += Number(transaction.newTransactionAmount);
+          }
+        } else if (!accountType) {
+          if (transaction.newTransactionType === "Withdrawl") {
+            totalWithdrawals += Number(transaction.newTransactionAmount);
+          } else if (transaction.newTransactionType === "Deposit") {
+            totalDeposits += Number(transaction.newTransactionAmount);
+          }
+        }
+      });
+    }
+    let recordedBalance = totalDeposits - totalWithdrawals;
+    const formatted = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(recordedBalance);
+    return formatted;
+  };
+
+  const monthlyExpensesBalance = () => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      let filterred = accountList.filter(
+        (account) => account.monthlyExpense === "Yes"
+      );
+      filterred.forEach((transaction) => {
+        if (transaction.newTransactionType === "Withdrawl") {
+          totalWithdrawals += Number(transaction.newTransactionAmount);
+        } else if (transaction.newTransactionType === "Deposit") {
+          totalDeposits += Number(transaction.newTransactionAmount);
+        }
+      });
+    }
+    let recordedBalance = totalDeposits - totalWithdrawals;
+    const formatted = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(recordedBalance);
+    return formatted;
+  };
 
   useEffect(() => {
     if (!firstRenderRef.current) {
@@ -79,139 +138,98 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>
-        <h2 className='text-4xl font-bold ml-8'>Welcome back!</h2>
-        <div className='flex justify-start ml-10 mb-1'>
-          <TransactionInputDialog
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            setBudgetAccount={setBudgetAccount}
-            budgetAccount={budgetAccount}
-          />
-        </div>
-        <div className='flex justify-start ml-10'>
-          <CreateBudgetDialog
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            setBudgetAccount={setBudgetAccount}
-            budgetAccount={budgetAccount}
-          />
-        </div>
-
-        <Accordion
-          type='multiple'
-          collapsible
-          className='flex w-full flex-col mt-2 items-center '
-        >
-          <AccordionItem value='item-1'>
-            <AccordionTrigger className='justify-center rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
-              Debit Account Transaction History
-            </AccordionTrigger>
-            <AccordionContent className='ml-6 mr-6 '>
-            
-                <TransactionTable
-                  uid={uid}
-                  triggerFetch={triggerFetch}
-                  setTriggerFetch={setTriggerFetch}
-                  accountList={accountList}
-                  setAccountList={setAccountList}
-                  accountTable={debitAccount}
-                />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value='item-2' className='w-1/4'>
-            <AccordionTrigger className='justify-center rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
-              Savings Account Transaction History
-            </AccordionTrigger>
-            <AccordionContent className='ml-6 mr-6 '>
-              {" "}
-              <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
-                <h3>Savings Account Transaction History</h3>
-                <TransactionTable
-                  uid={uid}
-                  triggerFetch={triggerFetch}
-                  setTriggerFetch={setTriggerFetch}
-                  accountList={accountList}
-                  setAccountList={setAccountList}
-                  accountTable={savingsAccount}
-                />
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value='item-3'>
-            <AccordionTrigger className='rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
-              How can I save money with no job?
-            </AccordionTrigger>
-            <AccordionContent className='ml-6 mr-6'>
-              Step 1. Get a job!
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
-        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
-          <h3 className='font-boldp-2 rounded '>
-            Debit Account Transaction History
-          </h3>
-          <TransactionTable
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            accountTable={debitAccount}
-          />
-        </div>
-        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
-          <h3>Savings Account Transaction History</h3>
-          <TransactionTable
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            accountTable={savingsAccount}
-          />
-        </div>
-        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
-          <h3>Credit Card Transaction History</h3>
-          <TransactionTable
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            accountTable={creditAccount}
-          />
-        </div>
-        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
-          <h3>Monthly Expenses</h3>
-          <TransactionTable
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            accountTable={monthlyExpenses}
-          />
-        </div>
-        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
-          <h3>All Transactions</h3>
-          <TransactionTable
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            accountTable={accountList}
-          />
-        </div>
-      </div>
+      <div>Dashboard</div>
+      <TransactionInputDialog
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
+      />
+      <br></br>
+      <CreateBudgetDialog
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
+      />
+      <br></br>
+      <BudgetsTable
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
+      />
+      <h3>
+        Debit Account Transaction History&emsp;&emsp;Current Balance:{" "}
+        {currentAccountBalance("Debit")}
+      </h3>
+      <TransactionTable
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        accountTable={debitAccount}
+      />
+      <br></br>
+      <h3>
+        Savings Account Transaction History&emsp;&emsp;Current Balance:{" "}
+        {currentAccountBalance("Savings")}
+      </h3>
+      <TransactionTable
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        accountTable={savingsAccount}
+      />
+      <br></br>
+      <h3>
+        Credit Card Transaction History&emsp;&emsp;Current Balance:{" "}
+        {currentAccountBalance("Credit")}
+      </h3>
+      <TransactionTable
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        accountTable={creditAccount}
+      />
+      <br></br>
+      <h3>
+        Monthly Expenses: {monthlyExpensesBalance()}
+      </h3>
+      <TransactionTable
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        accountTable={monthlyExpenses}
+      />
+      <br></br>
+      <h3>
+        All Transactions: {currentAccountBalance("")}
+      </h3>
+      <TransactionTable
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        accountTable={accountList}
+      />
     </>
   );
 };
