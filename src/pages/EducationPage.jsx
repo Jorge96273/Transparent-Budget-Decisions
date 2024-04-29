@@ -60,10 +60,10 @@ const Chatbot = () => {
 
         <div className='w-full flex flex-col items-center'>
         {chatHistory.length ? 
-         ( <div className='bg-gray-900 outline p-2 mt-4 rounded shadow-inner flex flex-col items-start xl:1/3 lg:w-1/2 md:3/4 sm:w-3/4 max-h-80 overflow-y-scroll'> 
+         ( <div className='bg-gray-100  p-2 mt-4 rounded shadow  flex flex-col items-start xl:1/3 lg:w-1/2 md:3/4 sm:w-3/4 max-h-80 overflow-y-scroll'> 
             {chatHistory.map((chat, index) => (
-              <div key={index} className='p-2 text-start bg-blue-400 text-white m-2 rounded '>
-                <strong className="text-gray-800">{chat.sender}:</strong> {chat.message}
+              <div key={index} className='p-2 text-start bg-cyan-500 text-white m-2 rounded '>
+                <strong className="text-gray-700">{chat.sender}:</strong> {chat.message}
               </div>
             ))}       <div className='flex justify-center w-full mt-4'>
             <textarea
@@ -74,7 +74,7 @@ const Chatbot = () => {
             placeholder="Type your message here..."
             />
             <button
-              className='ml-4 rounded-full h-10 mt-4 bg-gray-600 hover:bg-blue-500 pt-2 pb-2 pl-6 pr-6 text-white  '
+              className='ml-4 rounded-full h-10 mt-4 bg-cyan-500 hover:bg-cyan-400 pt-2 pb-2 pl-6 pr-6 text-white  '
               onClick={handleSend}
             >
               Send
@@ -92,7 +92,7 @@ const Chatbot = () => {
           placeholder="Type your message here..."
           />
           <button
-            className='ml-4 rounded-full h-10 mt-4 bg-black pt-2 pb-2 pl-6 pr-6 text-white  '
+            className='ml-4 rounded-full h-10 mt-4 bg-cyan-500 hover:bg-cyan-400 pt-2 pb-2 pl-6 pr-6 text-white  '
             onClick={handleSend}
           >
             Send

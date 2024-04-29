@@ -299,10 +299,10 @@ function TransactionTable({
 
   return (
     <>
-      <div className="w-full">
-        <div className="rounded-md border">
+      <div className="w-full ">
+        <div className="bg-blue-50 ">
           <Table>
-            <TableHeader className="text-center">
+            <TableHeader className="text-center bg-blue-300">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {

@@ -24,7 +24,7 @@ const HomePage = () => {
         src={TBD}
         alt="tbd logo"
       />
-    <div className="p-4 top-half">
+    <div className="p-4 mt-2 top-half">
       <img
         className="h-100 rounded-3xl" 
         src={Thinker}

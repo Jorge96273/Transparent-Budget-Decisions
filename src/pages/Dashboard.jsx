@@ -73,76 +73,90 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>Dashboard</div>
-      <TransactionInputDialog
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        setBudgetAccount={setBudgetAccount}
-        budgetAccount={budgetAccount}
-      />
-      <br></br>
-      <CreateBudgetDialog
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        setBudgetAccount={setBudgetAccount}
-        budgetAccount={budgetAccount}
-      />
-      <br></br>
-      <h3>Debit Account Transaction History</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={debitAccount}
-      />
-      <br></br>
-      <h3>Savings Account Transaction History</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={savingsAccount}
-      />
-      <br></br>
-      <h3>Credit Card Transaction History</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={creditAccount}
-      />
-      <br></br>
-      <h3>Monthly Expenses</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={monthlyExpenses}
-      />
-      <br></br>
-      <h3>All Transactions</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={accountList}
-      />
+      <div>
+        <TransactionInputDialog
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          accountList={accountList}
+          setAccountList={setAccountList}
+          setBudgetAccount={setBudgetAccount}
+          budgetAccount={budgetAccount}
+        />
+        <br></br>
+        <CreateBudgetDialog
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          accountList={accountList}
+          setAccountList={setAccountList}
+          setBudgetAccount={setBudgetAccount}
+          budgetAccount={budgetAccount}
+        />
+        <br></br>
+        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
+          <h3 className='font-boldp-2 rounded '>
+            Debit Account Transaction History
+          </h3>
+          <TransactionTable
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            accountTable={debitAccount}
+          />
+        </div>
+        <br></br>
+        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
+          <h3>Savings Account Transaction History</h3>
+          <TransactionTable
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            accountTable={savingsAccount}
+          />
+        </div>
+        <br></br>
+        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
+          <h3>Credit Card Transaction History</h3>
+          <TransactionTable
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            accountTable={creditAccount}
+          />
+        </div>
+        <br></br>
+        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
+          <h3>Monthly Expenses</h3>
+          <TransactionTable
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            accountTable={monthlyExpenses}
+          />
+        </div>
+
+        <br></br>
+        <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
+          <h3>All Transactions</h3>
+          <TransactionTable
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            accountTable={accountList}
+          />
+        </div>
+      </div>
     </>
   );
 };
