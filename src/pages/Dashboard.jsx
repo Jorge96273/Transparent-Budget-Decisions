@@ -5,15 +5,23 @@ import TransactionTable from "@/components/TransactionTable";
 import { useOutletContext } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
-import CreateBudgetDialog from "@/components/CreateBudgetDialog copy";
+import CreateBudgetDialog from "@/components/CreateBudgetDialog";
+import BudgetsTable from "@/components/BudgetsTable";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   const uid = user?.uid;
-  const { triggerFetch, setTriggerFetch, accountList, setAccountList } =
-    useOutletContext();
-  const [budgetAccount, setBudgetAccount] = useState([]);
-  console.log("DSH BUDGET", budgetAccount);
+  const {
+    triggerFetch,
+    setTriggerFetch,
+    accountList,
+    setAccountList,
+    budgetList,
+    setBudgetList,
+    budgetTriggerFetch,
+    setBudgetTriggerFetch,
+  } = useOutletContext();
+
   const firstRenderRef = useRef(true);
 
   const getAccountList = async () => {
@@ -36,14 +44,14 @@ const Dashboard = () => {
         ...doc.data(),
         id: doc.id,
       }));
-      setBudgetAccount(filteredData);
+      setBudgetList(filteredData);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getBudgetList();
-  }, [accountList]);
+  }, [accountList, budgetTriggerFetch]);
 
   const debitAccount = accountList.filter(
     (account) => account.accountType === "Debit"
@@ -80,8 +88,8 @@ const Dashboard = () => {
         setTriggerFetch={setTriggerFetch}
         accountList={accountList}
         setAccountList={setAccountList}
-        setBudgetAccount={setBudgetAccount}
-        budgetAccount={budgetAccount}
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
       />
       <br></br>
       <CreateBudgetDialog
@@ -90,10 +98,19 @@ const Dashboard = () => {
         setTriggerFetch={setTriggerFetch}
         accountList={accountList}
         setAccountList={setAccountList}
-        setBudgetAccount={setBudgetAccount}
-        budgetAccount={budgetAccount}
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
       />
       <br></br>
+      <BudgetsTable
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
+      />
       <h3>Debit Account Transaction History</h3>
       <TransactionTable
         uid={uid}
