@@ -154,6 +154,7 @@ const Dashboard = () => {
         budgetList={budgetList}
       />
       <br></br>
+      <h3>Budget Categories</h3>
       <BudgetsTable
         setBudgetList={setBudgetList}
         budgetList={budgetList}
@@ -164,7 +165,7 @@ const Dashboard = () => {
         setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
       <br></br>
-      <h3>Current Budget</h3>
+      <h3>Current Budget Amounts</h3>
       <BudgetedItemTable
         accountList={accountList}
         budgetList={budgetList}
