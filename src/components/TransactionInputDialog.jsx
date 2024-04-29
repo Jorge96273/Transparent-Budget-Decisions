@@ -182,7 +182,7 @@ function TransactionInputDialog({
                 onChange={(e) => setNewTransactionAmount(e.target.value)}
               />
               <br></br>
-              <label htmlFor="accountType">Transaction Amount:</label>
+              <label htmlFor="accountType">Transaction Date:</label>
               <input
                 aria-label="Date"
                 type="date"
