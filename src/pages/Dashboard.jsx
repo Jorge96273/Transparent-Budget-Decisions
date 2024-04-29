@@ -7,6 +7,7 @@ import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
 import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
+import BudgetedItemTable from "@/components/BudgetedItemTable";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -153,6 +154,7 @@ const Dashboard = () => {
         budgetList={budgetList}
       />
       <br></br>
+      <h3>Budget Categories</h3>
       <BudgetsTable
         setBudgetList={setBudgetList}
         budgetList={budgetList}
@@ -162,6 +164,18 @@ const Dashboard = () => {
         budgetTriggerFetch={budgetTriggerFetch}
         setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
+      <br></br>
+      <h3>Current Budget Amounts</h3>
+      <BudgetedItemTable
+        accountList={accountList}
+        budgetList={budgetList}
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
+      />
+      <br></br>
       <h3>
         Debit Account Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Debit")}
@@ -201,9 +215,7 @@ const Dashboard = () => {
         accountTable={creditAccount}
       />
       <br></br>
-      <h3>
-        Monthly Expenses: {monthlyExpensesBalance()}
-      </h3>
+      <h3>Monthly Expenses: {monthlyExpensesBalance()}</h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -213,9 +225,7 @@ const Dashboard = () => {
         accountTable={monthlyExpenses}
       />
       <br></br>
-      <h3>
-        All Transactions: {currentAccountBalance("")}
-      </h3>
+      <h3>All Transactions: {currentAccountBalance("")}</h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
