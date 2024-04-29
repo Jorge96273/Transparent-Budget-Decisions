@@ -159,6 +159,10 @@
   width: 300px; /* Adjust the width as needed */
   outline: none;
   z-index: 2;
+  border: 2px solid rgb(4, 28, 42);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+  border-radius: 9999px;
 }
 
 .rounded-button {
@@ -182,9 +186,13 @@
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   width: 200px;
   transition: background-color 0.3s;
+  border: 2px solid rgb(170, 147, 99); 
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+  border-radius: 9999px;
   z-index: 2;
 }
 
@@ -196,9 +204,13 @@
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   width: 200px;
   transition: background-color 0.3s;
+  border: 2px solid rgb(4, 28, 42);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+  border-radius: 9999px;
   z-index: 2;
 }
 
@@ -313,6 +325,7 @@
   background-color:rgb(170, 147, 99);
   border-top-left-radius: 52px;
   border-top-right-radius: 52px;  
+  padding: 8px; 
   z-index: 1;
 }
 

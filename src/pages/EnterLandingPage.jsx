@@ -140,12 +140,9 @@ const EnterLandingPage = () => {
   const [showStyle, setShowStyle] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
 
-//   const toggleUserType = () => {
-//     setIsNewUser(!isNewUser);
-//   };
 
 const returningUser = () => {
-    setIsOpen1(!isOpen1); // Toggle isOpen1 state immediately
+    setIsOpen1(!isOpen1); 
     if (isOpen1) {
       setTimeout(() => {
         setIsNewUser(false);
@@ -182,53 +179,10 @@ const returningUser = () => {
     return () => clearTimeout(timer);
   }, [isOpen1]);
 
-  //   const [rtnUser, setRtnUser] = useState(false);
-
-  //   const toggleRtnUser = () => {
-  //     setRtnUser(!rtnUser);
-  //   };
+  
 
   return (
     <>
-      {/* <div className="page-container">
-        <div className="top-half">
-          <div className="login-container">
-            <button className="rounded-button" onClick={signInWithGoogle}>
-              Login/Sign Up with Google
-            </button>
-            <br></br>
-            <p className="font-bold text-lg">OR</p>
-            <div className="rounded-form">
-              <input
-                type="text"
-                className="rounded-input"
-                placeholder="Email..."
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                className="rounded-input"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="bottom-half-login">
-          <div className="column left-column">
-            <p className="font-bold text-lg">Already have an account?</p>
-            <button className="rounded-button" onClick={signin}>
-              Email/Pword Login
-            </button>
-          </div>
-          <div className="column right-column">
-            <p className="font-bold text-lg">Don't have an account?</p>
-            <button className="rounded-button" onClick={register}>
-              Email/Pword Sign Up
-            </button>
-          </div>
-        </div>
-      </div> */}
       <div>
         <div className="user-banner">
           <div
@@ -250,7 +204,6 @@ const returningUser = () => {
                   onClick={signInWithGoogle}
                 >
                   <img
-            
                 src={signupgoogle}
                 alt="Sign up with Google"
       />
@@ -259,20 +212,20 @@ const returningUser = () => {
               <br></br>
 
               <div className="or-sectionrtn">
-                <p className="font-bold text-lg or-sectionrtn">OR</p>
+                <p className="font-bold text-lg or-sectionrtn">Or</p>
               </div>
               <div className="rounded-form">
                 <input
                   type="text"
                   className="rounded-input"
                   placeholder="Email..."
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChangeNew}
                 />
                 <input
                   type="password"
                   placeholder="Password"
                   className="rounded-input"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChangeNew}
                 />
               </div>
             </div>
@@ -283,7 +236,7 @@ const returningUser = () => {
 {showOverlay3 && (
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
             <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
-              Email/Pword Sign up
+              Sign up Email/Pword
             </button>
           </div>
         )}
@@ -299,27 +252,27 @@ const returningUser = () => {
                   <img
             
                 src={continuegoogle}
-                alt="Sign up with Google"
+                alt="Continue with Google"
       />
                 </button>
               </div>
               <br></br>
 
               <div className="or-sectionnew">
-                <p className="font-bold text-lg or-sectionnew">OR</p>
+                <p className="font-bold text-lg or-sectionnew">Or</p>
               </div>
               <div className="rounded-form">
                 <input
                   type="text"
                   className="rounded-input"
                   placeholder="Email..."
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChangeReturning}
                 />
                 <input
                   type="password"
                   placeholder="Password"
                   className="rounded-input"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChangeReturning}
                 />
               </div>
             </div>
@@ -330,7 +283,7 @@ const returningUser = () => {
 {showOverlay3 && (
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
             <button className="rounded-button-rtnuser" onClick={handleSubmitLogin}>
-              Email/Pword Login
+              Continue Email/Pword
             </button>
           </div>
         )}
