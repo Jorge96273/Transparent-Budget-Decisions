@@ -38,8 +38,8 @@ function TransactionInputDialog({
   setTriggerFetch,
   accountList,
   setAccountList,
-  budgetAccount,
-  setBudgetAccount,
+  budgetList,
+  setBudgetList,
 }) {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -70,9 +70,31 @@ function TransactionInputDialog({
 
   const addTransaction = async () => {
     try {
+      // Calculate the new balance directly
+      let totalDeposits = 0;
+      let totalWithdrawals = 0;
+      if (accountList) {
+        accountList.forEach((transaction) => {
+          if (transaction.accountType === accountType) {
+            if (transaction.newTransactionType === "Withdrawl") {
+              totalWithdrawals += Number(transaction.newTransactionAmount);
+            } else if (transaction.newTransactionType === "Deposit") {
+              totalDeposits += Number(transaction.newTransactionAmount);
+            }
+          }
+        });
+      }
+      let recordedBalance = totalDeposits - totalWithdrawals;
+      let newBalance = recordedBalance;
+      if (newTransactionType === "Withdrawl") {
+        newBalance -= Number(newTransactionAmount);
+      } else if (newTransactionType === "Deposit") {
+        newBalance += Number(newTransactionAmount);
+      }
+
       const docRef = await addDoc(transactionCollectionRef, {
         accountType,
-        accountBalance,
+        accountBalance: newBalance, // Use the calculated new balance here
         selectBudget,
         newTransactionName,
         newTransactionAmount,
@@ -96,24 +118,6 @@ function TransactionInputDialog({
 
   const [selectBudget, setSelectBudget] = useState("None");
   const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`);
-  console.log(budgetAccount, "BUDGET");
-
-  const balance = async () => {
-    let totalDeposits = 0;
-    let totalWithdrawals = 0;
-    if (accountList) {
-      accountList.forEach((transaction) => {
-        if (transaction.newTransactionType === "Withdrawl") {
-          totalWithdrawals += Number(transaction.newTransactionAmount);
-        } else if (transaction.newTransactionType === "Deposit") {
-          totalDeposits += Number(transaction.newTransactionAmount);
-        }
-      });
-    }
-
-    const balance = totalDeposits - totalWithdrawals;
-    setAccountBalance(balance);
-  };
 
   return (
     <>
@@ -144,10 +148,11 @@ function TransactionInputDialog({
                 <option value="Credit">Credit</option>
                 <option value="Savings">Savings</option>
               </select>
-              <div>
+              {/* <div>
                 <label htmlFor="accountBalance">Current Account Balance:</label>
                 <span id="accountBalance">{accountBalance.toFixed(2)}</span>
-              </div>
+              </div> */}
+              <br></br>
               <label htmlFor="budgetAccount">Budget Account:</label>
               <select
                 id="budgetAccount"
@@ -156,7 +161,7 @@ function TransactionInputDialog({
               >
                 <br></br>
                 <option value="None">None</option>
-                {budgetAccount.map((budget) => (
+                {budgetList.map((budget) => (
                   <option key={budget.id} value={budget.newBudget}>
                     {budget.newBudget}
                   </option>
