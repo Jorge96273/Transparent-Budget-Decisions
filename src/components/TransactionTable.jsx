@@ -230,7 +230,7 @@ function TransactionTable({
       accessorKey: "monthlyExpense",
       header: "Monthly Expense",
       cell: ({ row }) => (
-        <div className="capitalize text-center">
+        <div className="capitalize text-cente">
           {row.getValue("monthlyExpense")}
         </div>
       ),
@@ -299,10 +299,10 @@ function TransactionTable({
 
   return (
     <>
-      <div className="w-full ">
-        <div className="bg-blue-50 ">
+      <div className="w-full">
+        <div className="bg-blue-50  ">
           <Table>
-            <TableHeader className="text-center bg-blue-300">
+            <TableHeader className="text-center">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {

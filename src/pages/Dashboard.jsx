@@ -6,6 +6,12 @@ import { useOutletContext } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
 import CreateBudgetDialog from "@/components/CreateBudgetDialog copy";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -74,26 +80,80 @@ const Dashboard = () => {
   return (
     <>
       <div>
-        <TransactionInputDialog
-          uid={uid}
-          triggerFetch={triggerFetch}
-          setTriggerFetch={setTriggerFetch}
-          accountList={accountList}
-          setAccountList={setAccountList}
-          setBudgetAccount={setBudgetAccount}
-          budgetAccount={budgetAccount}
-        />
-        <br></br>
-        <CreateBudgetDialog
-          uid={uid}
-          triggerFetch={triggerFetch}
-          setTriggerFetch={setTriggerFetch}
-          accountList={accountList}
-          setAccountList={setAccountList}
-          setBudgetAccount={setBudgetAccount}
-          budgetAccount={budgetAccount}
-        />
-        <br></br>
+        <h2 className='text-4xl font-bold ml-8'>Welcome back!</h2>
+        <div className='flex justify-start ml-10 mb-1'>
+          <TransactionInputDialog
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            setBudgetAccount={setBudgetAccount}
+            budgetAccount={budgetAccount}
+          />
+        </div>
+        <div className='flex justify-start ml-10'>
+          <CreateBudgetDialog
+            uid={uid}
+            triggerFetch={triggerFetch}
+            setTriggerFetch={setTriggerFetch}
+            accountList={accountList}
+            setAccountList={setAccountList}
+            setBudgetAccount={setBudgetAccount}
+            budgetAccount={budgetAccount}
+          />
+        </div>
+
+        <Accordion
+          type='multiple'
+          collapsible
+          className='flex w-full flex-col mt-2 items-center '
+        >
+          <AccordionItem value='item-1'>
+            <AccordionTrigger className='justify-center rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+              Debit Account Transaction History
+            </AccordionTrigger>
+            <AccordionContent className='ml-6 mr-6 '>
+            
+                <TransactionTable
+                  uid={uid}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  accountTable={debitAccount}
+                />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value='item-2' className='w-1/4'>
+            <AccordionTrigger className='justify-center rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+              Savings Account Transaction History
+            </AccordionTrigger>
+            <AccordionContent className='ml-6 mr-6 '>
+              {" "}
+              <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
+                <h3>Savings Account Transaction History</h3>
+                <TransactionTable
+                  uid={uid}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  accountTable={savingsAccount}
+                />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value='item-3'>
+            <AccordionTrigger className='rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+              How can I save money with no job?
+            </AccordionTrigger>
+            <AccordionContent className='ml-6 mr-6'>
+              Step 1. Get a job!
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
         <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
           <h3 className='font-boldp-2 rounded '>
             Debit Account Transaction History
@@ -107,7 +167,6 @@ const Dashboard = () => {
             accountTable={debitAccount}
           />
         </div>
-        <br></br>
         <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
           <h3>Savings Account Transaction History</h3>
           <TransactionTable
@@ -119,7 +178,6 @@ const Dashboard = () => {
             accountTable={savingsAccount}
           />
         </div>
-        <br></br>
         <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
           <h3>Credit Card Transaction History</h3>
           <TransactionTable
@@ -131,7 +189,6 @@ const Dashboard = () => {
             accountTable={creditAccount}
           />
         </div>
-        <br></br>
         <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
           <h3>Monthly Expenses</h3>
           <TransactionTable
@@ -143,8 +200,6 @@ const Dashboard = () => {
             accountTable={monthlyExpenses}
           />
         </div>
-
-        <br></br>
         <div className='p-2 m-4 rounded flex flex-col items-center bg-blue-200 shadow-md'>
           <h3>All Transactions</h3>
           <TransactionTable

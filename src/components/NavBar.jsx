@@ -5,10 +5,10 @@ const NavBar = () => {
     <>
       <div className='w-full mr-4 flex justify-center'>
         <nav className='m-1 rounded-full  nav-background-color'>
-          <div className='flex items-center '>
+          <div className='flex items-center mt-1 mb-3'>
             <a
               href='/'
-              className='w-24 outline  outline-orange-50 shadow p-2 rounded-full'
+              className='w-24 outline  outline-orange-50 shadow p-2 rounded-full '
             >
               <img
                 className='rounded-full outline outline-orange-50 shadow'

@@ -11,9 +11,9 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="bg-orange-50 flex flex-col min-h-screen">
         <NavBar />
-        <div className="flex-grow">
+        <div className="flex-grow bg-orange-50">
           <Outlet
             context={{
               triggerFetch,
