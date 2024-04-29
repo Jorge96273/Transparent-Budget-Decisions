@@ -135,10 +135,24 @@ const EnterLandingPage = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [showOverlay3, setShowOverlay3] = useState(false);
   const [showStyle, setShowStyle] = useState(false);
-  
+  const [isNewUser, setIsNewUser] = useState(true);
+
+//   const toggleUserType = () => {
+//     setIsNewUser(!isNewUser);
+//   };
+
+  const returningUser = () => {
+    setIsOpen1(!isOpen1);
+    setTimeout(() => {
+        setIsNewUser(false);
+    }, 1000);
+  };
 
   const toggleLayer_1_2 = () => {
     setIsOpen1(!isOpen1);
+    setTimeout(() => {
+        setIsNewUser(true);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -212,9 +226,10 @@ const EnterLandingPage = () => {
               New User
             </button>
 
-            <button className="rounded-button">Returning User</button>
+            <button className="rounded-button" onClick={returningUser}>Returning User</button>
           </div>
 
+    {isNewUser ? (
           <div className="login-background-container1">
             <div className="googlebuttondown">
               <div className="or-section">
@@ -257,9 +272,54 @@ const EnterLandingPage = () => {
           </div>
         )}
         </div>
-        </div>
-      </div>
-    </>
+    ) : (
+        <div className="login-background-container2">
+            <div className="googlebuttondown">
+              <div className="or-section">
+                <button
+                  className="rounded-button or-section"
+                  onClick={signInWithGoogle}
+                >
+                  Login with Google
+                </button>
+              </div>
+              <br></br>
+
+              <div className="or-section">
+                <p className="font-bold text-lg or-section">OR</p>
+              </div>
+              <div className="rounded-form">
+                <input
+                  type="text"
+                  className="rounded-input"
+                  placeholder="Email..."
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="rounded-input"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div
+              className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+            ></div>
+
+{showOverlay3 && (
+          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
+            <button className="rounded-button" onClick={handleSubmitLogin}>
+              Email/Pword Login
+            </button>
+          </div>
+        )}
+        </div>   
+    )}
+       </div>   
+       </div>   
+        
+      </>
   );
 };
 

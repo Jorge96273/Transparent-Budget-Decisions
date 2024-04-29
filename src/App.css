@@ -254,20 +254,21 @@
   left: 0;
   width: 100vw;
   height: 80vh;
-
   background-color:  red;
   z-index: 1;
 }
 
 .login-background-container2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
   position: relative;
   bottom: 0;
   left: 0;
   width: 100vw;
   height: 80vh;
-  justify-content: center; 
-  align-items: center;
-  background-color:  green;
+  background-color: green;
   z-index: 1;
 }
 
@@ -276,7 +277,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 95%;
   background-color:  rgb(255, 255, 247); 
   display: flex;
   justify-content: center;
