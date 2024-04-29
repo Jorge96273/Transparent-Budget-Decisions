@@ -5,7 +5,7 @@ import TransactionTable from "@/components/TransactionTable";
 import { useOutletContext } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
-import CreateBudgetDialog from "@/components/CreateBudgetDialog copy";
+import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
 
 const Dashboard = () => {
