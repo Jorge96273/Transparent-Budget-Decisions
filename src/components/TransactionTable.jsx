@@ -103,26 +103,8 @@ function TransactionTable({
         </div>
       ),
     },
-    {
-      accessorKey: "accountBalance",
-      header: () => <div className="text-right">Account Balance</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("accountBalance"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-
-        return <div className="text-center font-medium">{formatted}</div>;
-      },
-    },
-    {
-      accessorKey: "transactionName",
-      header: "Transaction Name",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("transactionName")}</div>
-      ),
-    },
+    //! *********** MUST FIX *****************
+    // TODO FIX THE SORTING OF THE DOLLAR AMOUNT
     {
       accessorKey: "transactionAmount",
       // header: () => <div className="text-right">Transaction Amount</div>,
