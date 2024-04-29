@@ -141,19 +141,28 @@ const EnterLandingPage = () => {
 //     setIsNewUser(!isNewUser);
 //   };
 
-  const returningUser = () => {
-    setIsOpen1(!isOpen1);
-    setTimeout(() => {
+const returningUser = () => {
+    setIsOpen1(!isOpen1); // Toggle isOpen1 state immediately
+    if (isOpen1) {
+      setTimeout(() => {
         setIsNewUser(false);
-    }, 1000);
+      }, 1000);
+    } else {
+      setIsNewUser(false);
+    }
   };
 
   const toggleLayer_1_2 = () => {
-    setIsOpen1(!isOpen1);
-    setTimeout(() => {
+    setIsOpen1(!isOpen1); 
+    if (isOpen1) {
+      setTimeout(() => {
         setIsNewUser(true);
-    }, 1000);
+      }, 1000);
+    } else {
+      setIsNewUser(true);
+    }
   };
+  
 
   useEffect(() => {
     let timer;
