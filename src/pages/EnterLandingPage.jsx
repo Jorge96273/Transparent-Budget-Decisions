@@ -184,9 +184,9 @@ const returningUser = () => {
   return (
     <>
       <div>
-        <div className="user-banner">
+        <div className="user-banner pt-6">
           <div
-            style={{ display: "flex", justifyContent: "center", gap: "100px" }}
+            style={{ display: "flex", justifyContent: "center", gap: "40px" }}
           >
             <button className="rounded-button-newuser" onClick={toggleLayer_1_2}>
               New User
@@ -200,19 +200,20 @@ const returningUser = () => {
             <div className="googlebuttondown">
               <div className="or-section">
                 <button
-                  className="google-button or-section"
+                  className="google-button or-section mr-3"
                   onClick={signInWithGoogle}
                 >
                   <img
                 src={signupgoogle}
                 alt="Sign up with Google"
+                
       />
                 </button>
               </div>
               <br></br>
 
               <div className="or-sectionrtn">
-                <p className="font-bold text-lg or-sectionrtn">Or</p>
+                <p className="font-bold text-lg or-sectionrtn">OR</p>
               </div>
               <div className="rounded-form">
                 <input
@@ -236,7 +237,7 @@ const returningUser = () => {
 {showOverlay3 && (
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
             <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
-              Sign up Email/Pword
+              Sign up with Email
             </button>
           </div>
         )}
@@ -246,7 +247,7 @@ const returningUser = () => {
             <div className="googlebuttondown">
               <div className="or-section">
               <button
-                  className="google-button or-section"
+                  className="google-button or-section mr-3"
                   onClick={signInWithGoogle}
                 >
                   <img
@@ -259,7 +260,7 @@ const returningUser = () => {
               <br></br>
 
               <div className="or-sectionnew">
-                <p className="font-bold text-lg or-sectionnew">Or</p>
+                <p className="font-bold text-lg or-sectionnew">OR</p>
               </div>
               <div className="rounded-form">
                 <input
@@ -283,7 +284,7 @@ const returningUser = () => {
 {showOverlay3 && (
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
             <button className="rounded-button-rtnuser" onClick={handleSubmitLogin}>
-              Continue Email/Pword
+              Continue with Email
             </button>
           </div>
         )}

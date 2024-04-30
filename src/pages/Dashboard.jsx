@@ -7,6 +7,12 @@ import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
 import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
 import BudgetItem from "@/components/BudgetItem";
@@ -263,11 +269,15 @@ const Dashboard = () => {
   
   return (
     <>
-      <div>{lineData ? LineChart(category, year, amounts) : "Loading"}</div>
+      {user && (
+        <>
+        <div>{lineData ? LineChart(category, year, amounts) : "Loading"}</div>
       <div>{lineData ? LineChart(debitCategory, debitYear, debitAmounts) : "Loading"}</div>
       <div>{lineData ? LineChart(creditCategory, creditYear, creditAmounts) : "Loading"}</div>
       <div>{lineData ? LineChart(savingsCategory, savingsYear, savingsAmounts) : "Loading"}</div>
-      <h1>Welcome to Your Financial Dashboard</h1>
+      <h1>Welcome to Your Financial Dashboard, {user.displayName}!</h1>
+      </>
+      )}
       <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
       <TransactionInputDialog
