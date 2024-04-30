@@ -139,7 +139,6 @@ const EnterLandingPage = () => {
   const [showOverlay3, setShowOverlay3] = useState(false);
   const [showStyle, setShowStyle] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
-  
 
   const passwordInputRef = useRef(null);
   const overlayRef = useRef(null);
@@ -152,29 +151,28 @@ const EnterLandingPage = () => {
         overlayRef.current.style.height = `${inputRect.height}px`;
       }
     };
-  
+
     adjustOverlayHeight(); // Initial adjust
-  
+
     // Adjust on resize and on visual state changes
     const handleResize = () => adjustOverlayHeight();
-    window.addEventListener('resize', handleResize);
-  
+    window.addEventListener("resize", handleResize);
+
     // Listen for transitions or animations to end (if applicable)
     const passwordInput = passwordInputRef.current;
     if (passwordInput) {
-      passwordInput.addEventListener('transitionend', adjustOverlayHeight);
-      passwordInput.addEventListener('animationend', adjustOverlayHeight);
+      passwordInput.addEventListener("transitionend", adjustOverlayHeight);
+      passwordInput.addEventListener("animationend", adjustOverlayHeight);
     }
-  
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       if (passwordInput) {
-        passwordInput.removeEventListener('transitionend', adjustOverlayHeight);
-        passwordInput.removeEventListener('animationend', adjustOverlayHeight);
+        passwordInput.removeEventListener("transitionend", adjustOverlayHeight);
+        passwordInput.removeEventListener("animationend", adjustOverlayHeight);
       }
     };
-  }, [isOpen1, isNewUser, showOverlay3]); 
-    
+  }, [isOpen1, isNewUser, showOverlay3]);
 
   const returningUser = () => {
     setIsOpen1(!isOpen1);
@@ -269,17 +267,17 @@ const EnterLandingPage = () => {
 
               {showOverlay3 && (
                 <div
-                ref={overlayRef}
-                className={`login-overlay3 ${
+                  ref={overlayRef}
+                  className={`login-overlay3 ${
                     showStyle ? "ease-overlay" : ""
                   }`}
-                  
                 >
                   <button
                     className="rounded-button-newuser"
                     onClick={handleSubmitSignUp}
+                    style={{ transform: "translateY(-100px)" }}
                   >
-                    Sign up Email/Pword
+                    Sign up Email/Password
                   </button>
                 </div>
               )}
@@ -329,8 +327,9 @@ const EnterLandingPage = () => {
                   <button
                     className="rounded-button-rtnuser"
                     onClick={handleSubmitLogin}
+                    style={{ transform: "translateY(-100px)" }}
                   >
-                    Continue Email/Pword
+                    Continue Email/Password
                   </button>
                 </div>
               )}
