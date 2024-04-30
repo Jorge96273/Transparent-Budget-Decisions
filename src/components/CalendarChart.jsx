@@ -10,12 +10,12 @@ const getAdjustedDate = (days) => {
   return date;
 };
 
-//CalendarChart is going to take in 
-export default function CalendarChart(month, specificDate) {
+export default function CalendarChart() {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [eventTitle, setEventTitle] = useState('');
   const [eventDate, setEventDate] = useState('');
+  const[isMonthly, setIsMonthly] = useState(false);
 
   const {
     triggerFetch,
@@ -49,17 +49,27 @@ export default function CalendarChart(month, specificDate) {
     const eventDateObject = new Date(eventDate + 'T00:00:00');
     const estDate = new Date(eventDateObject.getTime() + (11 * 60 * 60 * 1000))
     const newEvent = {
+      id: new Date().getTime(),
+      title: eventTitle,
       date: new Date(estDate).toDateString(),
-      title: eventTitle
+      isMonthly: isMonthly
     };
     console.log(newEvent)
     setEvents([...events, newEvent]);
     setEventTitle('');
     setEventDate('');
+    setIsMonthly(false);
   };
+
 
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
+      events.filter(event => {
+        if (event.isMonthly) {
+          return new Date(event.date).getDate() === date; 
+        }
+      })
+
       const dayEvents = events.filter(event => event.date === date.toDateString());
       return <ul>{dayEvents.map((event, index) => <li key={index}>{event.title}</li>)}</ul>;
     }
@@ -72,9 +82,6 @@ export default function CalendarChart(month, specificDate) {
 
       if (eventDate.getTime() === today.getTime()) {
         alert(`You have an event today: ${eve.title}`);
-      }
-      else{
-        alert('You have nothing today')
       }
       
     });
@@ -101,6 +108,7 @@ export default function CalendarChart(month, specificDate) {
       />
       <form onSubmit={handleAddEvent} style={{ marginTop: '20px' }}>
         <input
+          className='title'
           type="text"
           placeholder="Event Title"
           value={eventTitle}
@@ -108,14 +116,24 @@ export default function CalendarChart(month, specificDate) {
           required
         />
         <input
+        className='title'
           type="date"
           value={eventDate}
           onChange={(e) => setEventDate(e.target.value)}
           required
         />
-        <button type="submit">Add Event</button>
+        <label>
+          <input
+          className='title'
+          type= "checkbox"
+          checked={isMonthly}
+          onChange={e => setIsMonthly(e.target.checked)}
+          />
+          Happens Monthly?
+        </label> 
+        <button className='button' type="submit">Add Event</button>
       </form>
-      <button onClick={isEventToday} class="button" type="submit">Alerts for today</button>
+      <button onClick={isEventToday} className="button" type="submit">Alerts for today</button>
 
     </div>
   );

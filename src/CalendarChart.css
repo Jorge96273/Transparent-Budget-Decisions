@@ -30,11 +30,7 @@
     box-sizing: border-box;
 }
 
-.react-calendar button {
-    margin: 0;
-    border: 0;
-    outline: none;
-}
+
 
 .react-calendar button:enabled:hover {
     cursor: pointer;
@@ -157,14 +153,15 @@
 
 .button {
     background-color: lightslategray;
-    border: none;
+    margin: 10px;
+    border-color: black;
+    border-width: 2px;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
     transition: background 0.5s;
 }
@@ -175,4 +172,24 @@
 
 .button:active {
     transform: translateY(2px);
+}
+
+.title {
+    background-color: white;
+    border-color: black;
+    border-width: 2px;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background 0.5s;
+    margin: 10px;
+}
+
+.title:hover {
+    background-color: gray;
 }
