@@ -8,6 +8,7 @@ import TransactionInputDialog from "@/components/TransactionInputDialog";
 import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
 import BudgetedItemTable from "@/components/BudgetedItemTable";
+import { AccordionElement } from "@/components/Accordion";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -154,7 +155,24 @@ const Dashboard = () => {
         budgetList={budgetList}
       />
       <br></br>
-      <h3>Budget Categories</h3>
+      <AccordionElement
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
+        uid={uid}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
+        currentAccountBalance={currentAccountBalance}
+        debitAccount={debitAccount}
+        savingsAccount={savingsAccount}
+        creditAccount={creditAccount}
+        monthlyExpensesBalance={monthlyExpensesBalance}
+        monthlyExpenses={monthlyExpenses}
+      />
+      {/* <h3>Budget Categories</h3>
       <BudgetsTable
         setBudgetList={setBudgetList}
         budgetList={budgetList}
@@ -163,8 +181,8 @@ const Dashboard = () => {
         setTriggerFetch={setTriggerFetch}
         budgetTriggerFetch={budgetTriggerFetch}
         setBudgetTriggerFetch={setBudgetTriggerFetch}
-      />
-      <br></br>
+      /> */}
+      {/* <br></br>
       <h3>Current Budget Amounts</h3>
       <BudgetedItemTable
         accountList={accountList}
@@ -175,8 +193,8 @@ const Dashboard = () => {
         budgetTriggerFetch={budgetTriggerFetch}
         setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
-      <br></br>
-      <h3>
+      <br></br> */}
+      {/* <h3>
         Debit Account Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Debit")}
       </h3>
@@ -188,8 +206,8 @@ const Dashboard = () => {
         setAccountList={setAccountList}
         accountTable={debitAccount}
       />
-      <br></br>
-      <h3>
+      <br></br> */}
+      {/* <h3>
         Savings Account Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Savings")}
       </h3>
@@ -201,8 +219,8 @@ const Dashboard = () => {
         setAccountList={setAccountList}
         accountTable={savingsAccount}
       />
-      <br></br>
-      <h3>
+      <br></br> */}
+      {/* <h3>
         Credit Card Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Credit")}
       </h3>
@@ -212,9 +230,9 @@ const Dashboard = () => {
         setTriggerFetch={setTriggerFetch}
         accountList={accountList}
         setAccountList={setAccountList}
-        accountTable={creditAccount}
-      />
-      <br></br>
+        accountTable={creditAccount} */}
+      {/* /> */}
+      {/* <br></br>
       <h3>Monthly Expenses: {monthlyExpensesBalance()}</h3>
       <TransactionTable
         uid={uid}
@@ -224,8 +242,8 @@ const Dashboard = () => {
         setAccountList={setAccountList}
         accountTable={monthlyExpenses}
       />
-      <br></br>
-      <h3>All Transactions: {currentAccountBalance("")}</h3>
+      <br></br> */}
+      {/* <h3>All Transactions: {currentAccountBalance("")}</h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -233,7 +251,7 @@ const Dashboard = () => {
         accountList={accountList}
         setAccountList={setAccountList}
         accountTable={accountList}
-      />
+      /> */}
     </>
   );
 };

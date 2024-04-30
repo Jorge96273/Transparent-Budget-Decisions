@@ -406,3 +406,10 @@
   margin-top: 4rem;
 }
 
+.background-color-div {
+  background-color: rgb(170, 147, 99);
+  color: rgb(4, 28, 42);
+  padding: 20px;
+
+  /* Optional: change text color to white for better contrast */
+}
