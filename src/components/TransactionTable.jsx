@@ -200,7 +200,7 @@ function TransactionTable({
       accessorKey: "monthlyExpense",
       header: "Monthly Expense",
       cell: ({ row }) => (
-        <div className="capitalize text-cente">
+        <div className="capitalize text-center">
           {row.getValue("monthlyExpense")}
         </div>
       ),
