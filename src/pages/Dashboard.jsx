@@ -16,9 +16,17 @@ import {
 import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
 import BudgetItem from "@/components/BudgetItem";
+import LineChart from "@/components/LineChart";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
+  // const [lineData, setLineData] = useState([{ dates: "", balances: 0 }]);
+  const [lineData, setLineData] = useState([]);
+  const [debitLine, setDebitLine] = useState([]);
+  const [creditLine, setCreditLine] = useState([]);
+  const [savingsLine, setSavingsLine] = useState([]);
+  // const [date, setDate] = useState([])
+  // const [balance, setBalance] = useState([])
   const uid = user?.uid;
   const {
     triggerFetch,
@@ -125,7 +133,122 @@ const Dashboard = () => {
     }).format(recordedBalance);
     return formatted;
   };
+  const category = "Total";
+  const year = lineData.map((item) => item.dates);
+  const amounts = lineData.map((item) => item.balances);
 
+  const debitCategory = "Debit";
+  const debitYear = debitLine.map((item) => item.dates);
+  const debitAmounts = debitLine.map((item) => item.balances)
+
+  const creditCategory = "Credit";
+  const creditYear = creditLine.map((item) => item.dates);
+  const creditAmounts = creditLine.map((item) => item.balances)
+
+  const savingsCategory = "Savings";
+  const savingsYear = savingsLine.map((item) => item.dates);
+  const savingsAmounts = savingsLine.map((item) => item.balances)
+
+  const lineGraphAccount = (accountType) => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      let sorted = accountList.sort((a, b) =>
+        a.newTransactionDate.localeCompare(b.newTransactionDate)
+      );
+      if (accountType === "Debit"){
+      setDebitLine([]);
+      }else if (accountType === "Credit"){
+        setCreditLine([])
+      }else if (accountType === "Savings"){
+        setSavingsLine([])
+      }
+      sorted.forEach((transaction) => {
+        if (transaction.accountType === accountType) {
+          if (transaction.newTransactionType === "Withdrawl") {
+            totalWithdrawals += Number(transaction.newTransactionAmount);
+            let date = transaction.newTransactionDate;
+
+            let formatted = totalDeposits - totalWithdrawals;
+
+            if(accountType === "Debit"){
+              setDebitLine((lineData) => [
+              ...lineData,
+              { dates: date, balances: formatted },
+            ]);
+            }else if (accountType === "Credit"){
+              setCreditLine((lineData) => [
+                ...lineData,
+                { dates: date, balances: formatted },
+              ]);
+            }else if (accountType === "Savings"){
+              setSavingsLine((lineData) => [
+                ...lineData,
+                { dates: date, balances: formatted },
+              ]);
+            }
+            
+          } else if (transaction.newTransactionType === "Deposit") {
+            totalDeposits += Number(transaction.newTransactionAmount);
+            let date = transaction.newTransactionDate;
+
+            let formatted = totalDeposits - totalWithdrawals;
+
+            if(accountType === "Debit"){
+              setDebitLine((lineData) => [
+              ...lineData,
+              { dates: date, balances: formatted },
+            ]);
+            }else if (accountType === "Credit"){
+              setCreditLine((lineData) => [
+                ...lineData,
+                { dates: date, balances: formatted },
+              ]);
+            }else if (accountType === "Savings"){
+              setSavingsLine((lineData) => [
+                ...lineData,
+                { dates: date, balances: formatted },
+              ]);
+            }
+          }
+        }
+      });
+    }
+  };
+
+  const getTotalBalance = () => {
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      let sorted = accountList.sort((a, b) =>
+        a.newTransactionDate.localeCompare(b.newTransactionDate)
+      );
+      setLineData([]);
+      sorted.forEach((transaction) => {
+        if (transaction.newTransactionType === "Withdrawl") {
+          totalWithdrawals += Number(transaction.newTransactionAmount);
+          let date = transaction.newTransactionDate;
+
+          let formatted = totalDeposits - totalWithdrawals;
+
+          setLineData((lineData) => [
+            ...lineData,
+            { dates: date, balances: formatted },
+          ]);
+        } else if (transaction.newTransactionType === "Deposit") {
+          totalDeposits += Number(transaction.newTransactionAmount);
+          let date = transaction.newTransactionDate;
+
+          let formatted = totalDeposits - totalWithdrawals;
+
+          setLineData((lineData) => [
+            ...lineData,
+            { dates: date, balances: formatted },
+          ]);
+        }
+      });
+    }
+  };
   useEffect(() => {
     if (!firstRenderRef.current) {
       getAccountList(); // Call getAccountList on subsequent renders
@@ -139,10 +262,21 @@ const Dashboard = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    getTotalBalance(), lineGraphAccount("Debit"), lineGraphAccount("Credit"), lineGraphAccount("Savings");
+  }, [accountList, budgetTriggerFetch]);
+
+  
   return (
     <>
       {user && (
-        <h1>Welcome to Your Financial Dashboard, {user.displayName}!</h1>
+        <>
+        <div>{lineData ? LineChart(category, year, amounts) : "Loading"}</div>
+      <div>{lineData ? LineChart(debitCategory, debitYear, debitAmounts) : "Loading"}</div>
+      <div>{lineData ? LineChart(creditCategory, creditYear, creditAmounts) : "Loading"}</div>
+      <div>{lineData ? LineChart(savingsCategory, savingsYear, savingsAmounts) : "Loading"}</div>
+      <h1>Welcome to Your Financial Dashboard, {user.displayName}!</h1>
+      </>
       )}
       <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
