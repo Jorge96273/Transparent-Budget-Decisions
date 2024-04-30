@@ -7,6 +7,9 @@ import { getDocs, collection } from "firebase/firestore";
 import TransactionInputDialog from "@/components/TransactionInputDialog";
 import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
+import BudgetedItemTable from "@/components/BudgetedItemTable";
+import { AccordionElement } from "@/components/Accordion";
+import BudgetItem from "@/components/BudgetItem";
 import LineChart from "@/components/LineChart";
 
 const Dashboard = () => {
@@ -188,7 +191,9 @@ const getTotalBalance = () => {
       {(lineData)?LineChart(category, year, amounts):"Loading"}
        
       </div>
-      <div>Dashboard</div>
+      <h1>Welcome to Your Financial Dashboard</h1>
+      <BudgetItem budgetList={budgetList} accountList={accountList} />
+      <br></br>
       <TransactionInputDialog
         uid={uid}
         triggerFetch={triggerFetch}
@@ -209,6 +214,24 @@ const getTotalBalance = () => {
         budgetList={budgetList}
       />
       <br></br>
+      <AccordionElement
+        setBudgetList={setBudgetList}
+        budgetList={budgetList}
+        uid={uid}
+        accountList={accountList}
+        setAccountList={setAccountList}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
+        currentAccountBalance={currentAccountBalance}
+        debitAccount={debitAccount}
+        savingsAccount={savingsAccount}
+        creditAccount={creditAccount}
+        monthlyExpensesBalance={monthlyExpensesBalance}
+        monthlyExpenses={monthlyExpenses}
+      />
+      {/* <h3>Budget Categories</h3>
       <BudgetsTable
         setBudgetList={setBudgetList}
         budgetList={budgetList}
@@ -217,8 +240,20 @@ const getTotalBalance = () => {
         setTriggerFetch={setTriggerFetch}
         budgetTriggerFetch={budgetTriggerFetch}
         setBudgetTriggerFetch={setBudgetTriggerFetch}
+      /> */}
+      {/* <br></br>
+      <h3>Current Budget Amounts</h3>
+      <BudgetedItemTable
+        accountList={accountList}
+        budgetList={budgetList}
+        uid={uid}
+        triggerFetch={triggerFetch}
+        setTriggerFetch={setTriggerFetch}
+        budgetTriggerFetch={budgetTriggerFetch}
+        setBudgetTriggerFetch={setBudgetTriggerFetch}
       />
-      <h3>
+      <br></br> */}
+      {/* <h3>
         Debit Account Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Debit")}
       </h3>
@@ -230,8 +265,8 @@ const getTotalBalance = () => {
         setAccountList={setAccountList}
         accountTable={debitAccount}
       />
-      <br></br>
-      <h3>
+      <br></br> */}
+      {/* <h3>
         Savings Account Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Savings")}
       </h3>
@@ -243,8 +278,8 @@ const getTotalBalance = () => {
         setAccountList={setAccountList}
         accountTable={savingsAccount}
       />
-      <br></br>
-      <h3>
+      <br></br> */}
+      {/* <h3>
         Credit Card Transaction History&emsp;&emsp;Current Balance:{" "}
         {currentAccountBalance("Credit")}
       </h3>
@@ -254,9 +289,9 @@ const getTotalBalance = () => {
         setTriggerFetch={setTriggerFetch}
         accountList={accountList}
         setAccountList={setAccountList}
-        accountTable={creditAccount}
-      />
-      <br></br>
+        accountTable={creditAccount} */}
+      {/* /> */}
+      {/* <br></br>
       <h3>Monthly Expenses: {monthlyExpensesBalance()}</h3>
       <TransactionTable
         uid={uid}
@@ -266,8 +301,8 @@ const getTotalBalance = () => {
         setAccountList={setAccountList}
         accountTable={monthlyExpenses}
       />
-      <br></br>
-      <h3>All Transactions: {currentAccountBalance("")}</h3>
+      <br></br> */}
+      {/* <h3>All Transactions: {currentAccountBalance("")}</h3>
       <TransactionTable
         uid={uid}
         triggerFetch={triggerFetch}
@@ -275,7 +310,7 @@ const getTotalBalance = () => {
         accountList={accountList}
         setAccountList={setAccountList}
         accountTable={accountList}
-      />
+      /> */}
     </>
   );
 };
