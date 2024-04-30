@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import CalendarChart from './CalendarChart';
+import CalendarChart from '../components/CalendarChart';
 
 
 export default function TestChart() {
     return (
+        <>
+        <h1>Calendar</h1>
         <div>
             {CalendarChart()}
         </div>
+        </>
     );
 }
 

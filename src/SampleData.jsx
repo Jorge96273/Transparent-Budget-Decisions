@@ -3,14 +3,14 @@ export const SampleData = [
         id: 1,
         category: "Income",
         description: "Salary",
-        amount: 50000,
+        amount: '50000',
         year: 2020
     },
     {
         id: 2,
         category: "Income",
         description: "Freelance Work",
-        amount: 15000,
+        amount: '$15000',
         year: 2020
     },
     {
