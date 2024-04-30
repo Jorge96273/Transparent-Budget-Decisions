@@ -191,7 +191,9 @@ const getTotalBalance = () => {
       {(lineData)?LineChart(category, year, amounts):"Loading"}
        
       </div>
-      <h1>Welcome to Your Financial Dashboard</h1>
+      <br></br>
+      <h2>Welcome to Your Financial Dashboard</h2>
+      <br></br>
       <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
       <TransactionInputDialog

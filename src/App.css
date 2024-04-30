@@ -293,6 +293,7 @@
   justify-content: center; 
   align-items: center;
   background-color:  rgb(255, 255, 247);
+  
 }
 
 
@@ -302,10 +303,11 @@
   align-items: center;
   justify-content: flex-start; 
   position: relative;
-  bottom: 0;
+  bottom: 15px;
+  top: 5px;
   left: 0;
   width: 100vw;
-  height: 80vh;
+  height: 70vh;
   background-color:  rgb(4, 28, 42);  
   border-top-left-radius: 52px;
   border-top-right-radius: 52px; 
@@ -318,10 +320,11 @@
   align-items: center;
   justify-content: flex-start; 
   position: relative;
-  bottom: 0;
+  bottom: 20px;
+  top: 5px;
   left: 0;
   width: 100vw;
-  height: 80vh;
+  height: 70vh;
   background-color:rgb(170, 147, 99);
   border-top-left-radius: 52px;
   border-top-right-radius: 52px;  
@@ -406,10 +409,19 @@
   margin-top: 4rem;
 }
 
-.background-color-div {
-  background-color: rgb(170, 147, 99);
-  color: rgb(4, 28, 42);
-  padding: 20px;
+.errortxtnew {
+  color:  rgb(170, 147, 99);
+}
 
+.errortxtrtn {
+  color: rgb(4, 28, 42);
+}
+
+
+.background-color-div {
+  background-color: rgb(4, 28, 42);
+  color: white;
+  padding: 20px;
+  
   /* Optional: change text color to white for better contrast */
 }
