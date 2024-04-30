@@ -9,8 +9,10 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
+import signupgoogle from "../images/signupgoogle.png";
+import continuegoogle from "../images/continuegoogle.png";
 
 const EnterLandingPage = () => {
   const [email, setEmail] = useState("");
@@ -80,16 +82,23 @@ const EnterLandingPage = () => {
       console.log(`User: ${user}`);
       if (user) {
         navigate("/dashboard");
+      }
+    } catch (err) {
+      if (
+        err.code === "auth/invalid-credential" ||
+        err.code === "auth/invalid-email"
+      ) {
+        console.log(
+          "Invalid credentials. Please check your email and password"
+        );
+        setErrorMessage(
+          "Invalid credentials. Please check your email and password."
+        );
+      } else {
+        console.log(err);
+      }
     }
-  } catch (err) {
-    if (err.code === "auth/invalid-credential" || err.code === "auth/invalid-email") {
-      console.log("Invalid credentials. Please check your email and password"); 
-      setErrorMessage("Invalid credentials. Please check your email and password.");   
-    } else {
-    console.log(err);
-    }
-  }
-};
+  };
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
@@ -100,8 +109,8 @@ const EnterLandingPage = () => {
         console.log(`User: ${user}`);
         if (user) {
           navigate("/dashboard");
-        } 
-      } 
+        }
+      }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         console.log("This email is already in use.");
@@ -110,9 +119,9 @@ const EnterLandingPage = () => {
         console.log("Please enter a valid email");
         setErrorMessage("Please enter a valid email");
       } else {
-      console.log(err);
-      };
-    };
+        console.log(err);
+      }
+    }
   };
 
   useEffect(() => {
@@ -124,43 +133,166 @@ const EnterLandingPage = () => {
 
     return () => unsubscribe();
   }, [navigate]);
-    
-    return (
-      <>
-      <div className="page-container">EnterLandingPage
-      <div className="top-half">
-      <div className="rounded-form">
-      <p className='font-bold text-lg'>Already have an account?</p>
-            
-            <input type="text" className="rounded-input" 
-            placeholder="Email..."
-            onChange={handleEmailChangeReturning}
-            />
-            <input type="password" placeholder="Password" className="rounded-input" 
-            onChange={handlePasswordChangeReturning}
-            />
-            <div>{errorMessage}</div>
-            <button className="rounded-button" onClick={handleSubmitLogin}>Login</button>
-            <p className='font-bold text-lg'>OR</p>
-            <button className="rounded-button" onClick={signInWithGoogle}>Login with Google</button>
+
+  // Begin slider Functionality
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [showOverlay3, setShowOverlay3] = useState(false);
+  const [showStyle, setShowStyle] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(true);
+
+
+const returningUser = () => {
+    setIsOpen1(!isOpen1); 
+    if (isOpen1) {
+      setTimeout(() => {
+        setIsNewUser(false);
+      }, 1000);
+    } else {
+      setIsNewUser(false);
+    }
+  };
+
+  const toggleLayer_1_2 = () => {
+    setIsOpen1(!isOpen1); 
+    if (isOpen1) {
+      setTimeout(() => {
+        setIsNewUser(true);
+      }, 1000);
+    } else {
+      setIsNewUser(true);
+    }
+  };
+  
+
+  useEffect(() => {
+    let timer;
+    if (isOpen1) {
+        timer = setTimeout(() => {
+        setShowOverlay3(true);
+        setShowStyle(true);
+      }, 1000); // Delay of 1 second
+      
+    } else {
+        setShowStyle(false);
+        setTimeout(() => setShowOverlay3(false), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [isOpen1]);
+
+  
+
+  return (
+    <>
+      <div>
+        <div className="user-banner">
+          <div
+            style={{ display: "flex", justifyContent: "center", gap: "100px" }}
+          >
+            <button className="rounded-button-newuser" onClick={toggleLayer_1_2}>
+              New User
+            </button>
+
+            <button className="rounded-button-rtnuser" onClick={returningUser}>Returning User</button>
+          </div>
+
+    {isNewUser ? (
+          <div className="login-background-container1">
+            <div className="googlebuttondown">
+              <div className="or-section">
+                <button
+                  className="google-button or-section"
+                  onClick={signInWithGoogle}
+                >
+                  <img
+                src={signupgoogle}
+                alt="Sign up with Google"
+      />
+                </button>
+              </div>
+              <br></br>
+
+              <div className="or-sectionrtn">
+                <p className="font-bold text-lg or-sectionrtn">Or</p>
+              </div>
+              <div className="rounded-form">
+                <input
+                  type="text"
+                  className="rounded-input"
+                  placeholder="Email..."
+                  onChange={handleEmailChangeNew}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="rounded-input"
+                  onChange={handlePasswordChangeNew}
+                />
+              </div>
+            </div>
+            <div
+              className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+            ></div>
+
+{showOverlay3 && (
+          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
+            <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
+              Sign up Email/Pword
+            </button>
+          </div>
+        )}
         </div>
-      </div>
-      <div className="bottom-half">
-      <p className='font-bold text-lg'>Don't have an account?</p>
+    ) : (
+        <div className="login-background-container2">
+            <div className="googlebuttondown">
+              <div className="or-section">
+              <button
+                  className="google-button or-section"
+                  onClick={signInWithGoogle}
+                >
+                  <img
+            
+                src={continuegoogle}
+                alt="Continue with Google"
+      />
+                </button>
+              </div>
+              <br></br>
 
-      <input type="text" className="rounded-input" 
-            placeholder="Email..."
-            onChange={handleEmailChangeNew}
-            />
-            <input type="password" placeholder="Password" className="rounded-input" 
-            onChange={handlePasswordChangeNew}
-            />
-            <div>{errorMessage}</div>
+              <div className="or-sectionnew">
+                <p className="font-bold text-lg or-sectionnew">Or</p>
+              </div>
+              <div className="rounded-form">
+                <input
+                  type="text"
+                  className="rounded-input"
+                  placeholder="Email..."
+                  onChange={handleEmailChangeReturning}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="rounded-input"
+                  onChange={handlePasswordChangeReturning}
+                />
+              </div>
+            </div>
+            <div
+              className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+            ></div>
 
-      <button className="rounded-button" onClick={handleSubmitSignUp}>Sign Up</button>
-      </div>      
-      </div>
-    </>
+{showOverlay3 && (
+          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
+            <button className="rounded-button-rtnuser" onClick={handleSubmitLogin}>
+              Continue Email/Pword
+            </button>
+          </div>
+        )}
+        </div>   
+    )}
+       </div>   
+       </div>   
+        
+      </>
   );
 };
 

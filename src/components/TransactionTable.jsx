@@ -24,7 +24,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
+import { Button } from "react-bootstrap";
 import {
   Table,
   TableBody,
@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/table";
 import { useMemo } from "react";
 import { TransAmtDialog } from "@/components/TransAmtDialog";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 function TransactionTable({
   uid,
@@ -44,46 +45,7 @@ function TransactionTable({
   setAccountList,
   accountTable,
 }) {
-  // ! added trigger to prevent infinite loop for rerendering accounts
-  // const [triggerFetch, setTriggerFetch] = useState(false);
-  // const [accountList, setAccountList] = useState([]);
-  // !  Had to deconstruct to properly get user!!!!!
-  // const [user, loading] = useAuthState(auth);
-  // const uid = user?.uid; // Correctly get the uid from the user object
-  // const [accountType, setAccountType] = useState("");
-  // const [accountBalance, setAccountBalance] = useState(0);
-  // const [newTransactionName, setNewTransactionName] = useState("");
-  // const [newTransactionDate, setNewTransactionDate] = useState("");
-  // const [newTransactionType, setNewTransactionType] = useState("withdrawl");
-  // const [newTransactionAmount, setNewTransactionAmount] = useState(0);
-  // const [monthlyExpense, setMonthlyExpense] = useState(false);
-  // const [updatedTransactionAmount, setUpdatedTransactionAmount] =
-  //   useState(newTransactionAmount);
-
-  // const firstRenderRef = useRef(true);
-
   const transactionCollectionRef = collection(db, `${uid}`);
-
-  // const debounce = (func, delay) => {
-  //   let debounceTimer;
-  //   return function (...args) {
-  //     clearTimeout(debounceTimer);
-  //     debounceTimer = setTimeout(() => func.apply(this, args), delay);
-  //   };
-  // };
-
-  // const getAccountList = async () => {
-  //   try {
-  //     const data = await getDocs(collection(db, `${uid}`));
-  //     const filteredData = data.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-  //     setAccountList(filteredData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const deleteTransaction = async (id) => {
     await deleteDoc(doc(db, `${uid}`, id));
@@ -100,23 +62,6 @@ function TransactionTable({
     setTriggerFetch(!triggerFetch);
   };
 
-  // const debouncedSetAccountType = useCallback(
-  //   debounce((value) => setAccountType(value), 300),
-  //   []
-  // );
-
-  // useEffect(() => {
-  //   if (!firstRenderRef.current) {
-  //     getAccountList(); // Call getAccountList on subsequent renders
-  //   }
-  //   firstRenderRef.current = false; // Ensure this runs only once after the first render
-  // }, [triggerFetch]);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     getAccountList(); // Call getAccountList on initial render or when user changes
-  //   }
-  // }, [user]);
   if (accountList) {
     const debitAccount = accountList.filter(
       (account) => account.accountType === "Debit"
@@ -133,7 +78,7 @@ function TransactionTable({
   }
   function transformAccountList(list) {
     return list.map((transaction) => {
-      console.log(transaction.id); // Directly log the transaction.id
+      // console.log(transaction.id); // Directly log the transaction.id
       return {
         accountType: transaction.accountType,
         accountBalance: transaction.accountBalance,
@@ -143,6 +88,7 @@ function TransactionTable({
         transactionType: transaction.newTransactionType,
         monthlyExpense: transaction.monthlyExpense,
         transactionId: String(transaction.id),
+        budgetCategory: transaction.selectBudget,
       };
     });
   }
@@ -157,29 +103,26 @@ function TransactionTable({
         </div>
       ),
     },
-    {
-      accessorKey: "accountBalance",
-      header: () => <div className="text-right">Account Balance</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("accountBalance"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-
-        return <div className="text-center font-medium">{formatted}</div>;
-      },
-    },
-    {
-      accessorKey: "transactionName",
-      header: "Transaction Name",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("transactionName")}</div>
-      ),
-    },
+    //! *********** MUST FIX *****************
+    // TODO FIX THE SORTING OF THE DOLLAR AMOUNT
     {
       accessorKey: "transactionAmount",
-      header: () => <div className="text-right">Transaction Amount</div>,
+      // header: () => <div className="text-right">Transaction Amount</div>,
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center">Transaction Amount</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("transactionAmount"));
         const formatted = new Intl.NumberFormat("en-US", {
@@ -211,7 +154,21 @@ function TransactionTable({
     },
     {
       accessorKey: "transactionDate",
-      header: "Transaction Date",
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center">Transaction Date</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
       cell: ({ row }) => (
         <div className="capitalize text-center">
           {row.getValue("transactionDate")}
@@ -220,7 +177,21 @@ function TransactionTable({
     },
     {
       accessorKey: "transactionType",
-      header: "Transaction Type",
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center">Transaction Type</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("transactionType")}</div>
       ),
@@ -231,6 +202,29 @@ function TransactionTable({
       cell: ({ row }) => (
         <div className="capitalize text-center">
           {row.getValue("monthlyExpense")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "budgetCategory",
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center">Budget Category</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize text-center">
+          {row.getValue("budgetCategory")}
         </div>
       ),
     },
@@ -261,8 +255,9 @@ function TransactionTable({
     [accountTable]
   );
 
-  //* utilizes the useMemo hook from React to memoize the result of the transformAccountList function, which is applied to the accountList variable. This means that the transformAccountList function will only be executed when the accountList changes, rather than on every render of the component. This is particularly useful for optimizing performance, especially when dealing with expensive computations or large datasets.
+  //* utilizes the useMemo hook from React to memorize the result of the transformAccountList function, which is applied to the accountList variable. This means that the transformAccountList function will only be executed when the accountList changes, rather than on every render of the component. This is particularly useful for optimizing performance, especially when dealing with expensive computations or large datasets.
 
+  // used in sorting the table
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -279,6 +274,7 @@ function TransactionTable({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+
     state: {
       sorting,
       columnFilters,
