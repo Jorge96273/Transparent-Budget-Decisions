@@ -141,7 +141,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1>Welcome to Your Financial Dashboard</h1>
+      {user && (
+        <h1>Welcome to Your Financial Dashboard, {user.displayName}!</h1>
+      )}
       <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
       <TransactionInputDialog

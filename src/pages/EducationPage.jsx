@@ -51,7 +51,7 @@ const Chatbot = () => {
 
   return (
     <>
-      <div className='mt-8 flex flex-col items-center'>
+      <div className='flex flex-col items-center'>
         <img src={bot} className='w-20'></img>
         <span className='font-bold text-3xl'>
           Ask TBD any financial question
@@ -104,7 +104,7 @@ const Chatbot = () => {
           )}
         </div>
 
-        <div className=' rounded mt-10 lg:w-1/2 md:w-2/3 sm:w-3/4 xs:w-11/12'>
+        <div className=' rounded mt-4 lg:w-1/2 md:w-2/3 sm:w-3/4 xs:w-11/12'>
           <Accordion type='single' collapsible>
               <AccordionItem value='item-1'>
                 <AccordionTrigger className=' rounded shadow bg-white pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
