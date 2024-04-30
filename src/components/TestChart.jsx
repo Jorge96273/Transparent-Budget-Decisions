@@ -6,10 +6,10 @@ import CalendarChart from '../components/CalendarChart';
 export default function TestChart() {
     return (
         <>
-        <h1>Calendar</h1>
-        <div>
-            {CalendarChart()}
-        </div>
+            <h1>Calendar</h1>
+            <div>
+                {CalendarChart()}
+            </div>
         </>
     );
 }
