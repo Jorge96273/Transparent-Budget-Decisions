@@ -27,7 +27,7 @@ export function AccordionElement({
 }) {
   return (
     <div>
-      <Accordion type="double" collapsible className="w-full">
+      <Accordion type="multiple" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger className="background-color-div">
             <h4>Click to View Budget Categories</h4>
