@@ -45,8 +45,6 @@ function App() {
   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
     useState(newTransactionAmount);
 
-  const [newBudget, setNewBudget] = useState("");
-  const [newBudgetAmount, setNewBudgetAmount] = useState(0);
   const [budgetAccount, setBudgetAccount] = useState([]);
   const [selectBudget, setSelectBudget] = useState("None");
 
