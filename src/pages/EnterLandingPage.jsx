@@ -213,9 +213,9 @@ const EnterLandingPage = () => {
   return (
     <>
       <div>
-        <div className="user-banner">
+        <div className="user-banner pt-6">
           <div
-            style={{ display: "flex", justifyContent: "center", gap: "100px" }}
+            style={{ display: "flex", justifyContent: "center", gap: "40px" }}
           >
             <button
               className="rounded-button-newuser"
@@ -224,8 +224,57 @@ const EnterLandingPage = () => {
               New User
             </button>
 
+<<<<<<< HEAD
             <button className="rounded-button-rtnuser" onClick={returningUser}>
               Returning User
+=======
+            <button className="rounded-button-rtnuser" onClick={returningUser}>Returning User</button>
+          </div>
+
+    {isNewUser ? (
+          <div className="login-background-container1">
+            <div className="googlebuttondown">
+              <div className="or-section">
+                <button
+                  className="google-button or-section mr-3"
+                  onClick={signInWithGoogle}
+                >
+                  <img
+                src={signupgoogle}
+                alt="Sign up with Google"
+                
+      />
+                </button>
+              </div>
+              <br></br>
+
+              <div className="or-sectionrtn">
+                <p className="font-bold text-lg or-sectionrtn">OR</p>
+              </div>
+              <div className="rounded-form">
+                <input
+                  type="text"
+                  className="rounded-input"
+                  placeholder="Email..."
+                  onChange={handleEmailChangeNew}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="rounded-input"
+                  onChange={handlePasswordChangeNew}
+                />
+              </div>
+            </div>
+            <div
+              className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+            ></div>
+
+{showOverlay3 && (
+          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
+            <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
+              Sign up with Email
+>>>>>>> main
             </button>
           </div>
 
@@ -336,8 +385,63 @@ const EnterLandingPage = () => {
             </div>
           )}
         </div>
+<<<<<<< HEAD
       </div>
     </>
+=======
+    ) : (
+        <div className="login-background-container2">
+            <div className="googlebuttondown">
+              <div className="or-section">
+              <button
+                  className="google-button or-section mr-3"
+                  onClick={signInWithGoogle}
+                >
+                  <img
+            
+                src={continuegoogle}
+                alt="Continue with Google"
+      />
+                </button>
+              </div>
+              <br></br>
+
+              <div className="or-sectionnew">
+                <p className="font-bold text-lg or-sectionnew">OR</p>
+              </div>
+              <div className="rounded-form">
+                <input
+                  type="text"
+                  className="rounded-input"
+                  placeholder="Email..."
+                  onChange={handleEmailChangeReturning}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="rounded-input"
+                  onChange={handlePasswordChangeReturning}
+                />
+              </div>
+            </div>
+            <div
+              className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+            ></div>
+
+{showOverlay3 && (
+          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
+            <button className="rounded-button-rtnuser" onClick={handleSubmitLogin}>
+              Continue with Email
+            </button>
+          </div>
+        )}
+        </div>   
+    )}
+       </div>   
+       </div>   
+        
+      </>
+>>>>>>> main
   );
 };
 

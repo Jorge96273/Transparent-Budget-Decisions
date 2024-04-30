@@ -17,21 +17,21 @@ const HomePage = () => {
   }, []);
 
   return (
-
-    <div className="page-container">
+    <div className="">
+    <div className="">
       <img
         className={imageVisible ? "full-view-image" : "invisible-image"}
         src={TBD}
         alt="tbd logo"
       />
-    <div className="p-4 top-half">
+    <div className="p-4 mt-2 top-half">
       <img
         className="h-100 rounded-3xl" 
         src={Thinker}
         alt="greek statue"
       />
     </div>
-      <div className="bottom-half shadow-2xl">
+      <div className="bottom-half shadow-2xl ">
         <p className='font-bold text-lg'>Transparent Budget Decisions</p>
         <p className='quote-style'>&quot;Breaking the stigma that focusing on your money is difficult.&quot;</p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '80px', margin: '60px' }}>
@@ -42,7 +42,7 @@ const HomePage = () => {
         </div>
       </div>
     </div>
-
+    </div>
   );
 }
 
