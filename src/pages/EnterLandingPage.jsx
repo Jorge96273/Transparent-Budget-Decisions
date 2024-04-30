@@ -6,7 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Button } from "@/components/ui/button";
@@ -140,9 +140,42 @@ const EnterLandingPage = () => {
   const [showStyle, setShowStyle] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
 
+  const passwordInputRef = useRef(null);
+  const overlayRef = useRef(null);
 
-const returningUser = () => {
-    setIsOpen1(!isOpen1); 
+  useEffect(() => {
+    const adjustOverlayHeight = () => {
+      if (passwordInputRef.current && overlayRef.current) {
+        const inputRect = passwordInputRef.current.getBoundingClientRect();
+        overlayRef.current.style.top = `${inputRect.bottom}px`;
+        overlayRef.current.style.height = `${inputRect.height}px`;
+      }
+    };
+
+    adjustOverlayHeight(); // Initial adjust
+
+    // Adjust on resize and on visual state changes
+    const handleResize = () => adjustOverlayHeight();
+    window.addEventListener("resize", handleResize);
+
+    // Listen for transitions or animations to end (if applicable)
+    const passwordInput = passwordInputRef.current;
+    if (passwordInput) {
+      passwordInput.addEventListener("transitionend", adjustOverlayHeight);
+      passwordInput.addEventListener("animationend", adjustOverlayHeight);
+    }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (passwordInput) {
+        passwordInput.removeEventListener("transitionend", adjustOverlayHeight);
+        passwordInput.removeEventListener("animationend", adjustOverlayHeight);
+      }
+    };
+  }, [isOpen1, isNewUser, showOverlay3]);
+
+  const returningUser = () => {
+    setIsOpen1(!isOpen1);
     if (isOpen1) {
       setTimeout(() => {
         setIsNewUser(false);
@@ -153,7 +186,7 @@ const returningUser = () => {
   };
 
   const toggleLayer_1_2 = () => {
-    setIsOpen1(!isOpen1); 
+    setIsOpen1(!isOpen1);
     if (isOpen1) {
       setTimeout(() => {
         setIsNewUser(true);
@@ -162,24 +195,20 @@ const returningUser = () => {
       setIsNewUser(true);
     }
   };
-  
 
   useEffect(() => {
     let timer;
     if (isOpen1) {
-        timer = setTimeout(() => {
+      timer = setTimeout(() => {
         setShowOverlay3(true);
         setShowStyle(true);
       }, 1000); // Delay of 1 second
-      
     } else {
-        setShowStyle(false);
-        setTimeout(() => setShowOverlay3(false), 1000);
+      setShowStyle(false);
+      setTimeout(() => setShowOverlay3(false), 1000);
     }
     return () => clearTimeout(timer);
   }, [isOpen1]);
-
-  
 
   return (
     <>
@@ -188,10 +217,17 @@ const returningUser = () => {
           <div
             style={{ display: "flex", justifyContent: "center", gap: "40px" }}
           >
-            <button className="rounded-button-newuser" onClick={toggleLayer_1_2}>
+            <button
+              className="rounded-button-newuser"
+              onClick={toggleLayer_1_2}
+            >
               New User
             </button>
 
+<<<<<<< HEAD
+            <button className="rounded-button-rtnuser" onClick={returningUser}>
+              Returning User
+=======
             <button className="rounded-button-rtnuser" onClick={returningUser}>Returning User</button>
           </div>
 
@@ -238,10 +274,121 @@ const returningUser = () => {
           <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
             <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
               Sign up with Email
+>>>>>>> main
             </button>
           </div>
-        )}
+
+          {isNewUser ? (
+            <div className="login-background-container1">
+              <div className="googlebuttondown">
+                <div className="or-section">
+                  <button
+                    className="google-button or-section"
+                    onClick={signInWithGoogle}
+                  >
+                    <img src={signupgoogle} alt="Sign up with Google" />
+                  </button>
+                </div>
+                <br></br>
+
+                <div className="or-sectionrtn">
+                  <p className="font-bold text-lg or-sectionrtn">Or</p>
+                </div>
+                <div className="rounded-form">
+                  <input
+                    type="text"
+                    className="rounded-input"
+                    placeholder="Email..."
+                    onChange={handleEmailChangeNew}
+                  />
+                  <div className="errortxtnew">{errorMessage}</div>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    className="rounded-input"
+                    onChange={handlePasswordChangeNew}
+                  />
+                </div>
+              </div>
+              <div
+                className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+              ></div>
+
+              {showOverlay3 && (
+                <div
+                  ref={overlayRef}
+                  className={`login-overlay3 ${
+                    showStyle ? "ease-overlay" : ""
+                  }`}
+                >
+                  <button
+                    className="rounded-button-newuser"
+                    onClick={handleSubmitSignUp}
+                    // style={{ transform: "translateY(-100px)" }}
+                  >
+                    Sign up Email/Password
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="login-background-container2">
+              <div className="googlebuttondown">
+                <div className="or-section">
+                  <button
+                    className="google-button or-section"
+                    onClick={signInWithGoogle}
+                  >
+                    <img src={continuegoogle} alt="Continue with Google" />
+                  </button>
+                </div>
+                <br></br>
+
+                <div className="or-sectionnew">
+                  <p className="font-bold text-lg or-sectionnew">Or</p>
+                </div>
+                <div className="rounded-form">
+                  <input
+                    type="text"
+                    className="rounded-input"
+                    placeholder="Email..."
+                    onChange={handleEmailChangeReturning}
+                  />
+                  <div className="errortxtrtn">{errorMessage}</div>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    className="rounded-input"
+                    onChange={handlePasswordChangeReturning}
+                  />
+                </div>
+              </div>
+              <div
+                className={isOpen1 ? "login-overlay2" : "login-overlay1"}
+              ></div>
+
+              {showOverlay3 && (
+                <div
+                  className={`login-overlay3 ${
+                    showStyle ? "ease-overlay" : ""
+                  }`}
+                >
+                  <button
+                    className="rounded-button-rtnuser"
+                    onClick={handleSubmitLogin}
+                    // style={{ transform: "translateY(-100px)" }}
+                  >
+                    Continue Email/Password
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
+<<<<<<< HEAD
+      </div>
+    </>
+=======
     ) : (
         <div className="login-background-container2">
             <div className="googlebuttondown">
@@ -294,6 +441,7 @@ const returningUser = () => {
        </div>   
         
       </>
+>>>>>>> main
   );
 };
 
