@@ -275,7 +275,7 @@ const EnterLandingPage = () => {
                   <button
                     className="rounded-button-newuser"
                     onClick={handleSubmitSignUp}
-                    style={{ transform: "translateY(-100px)" }}
+                    // style={{ transform: "translateY(-100px)" }}
                   >
                     Sign up Email/Password
                   </button>
@@ -327,7 +327,7 @@ const EnterLandingPage = () => {
                   <button
                     className="rounded-button-rtnuser"
                     onClick={handleSubmitLogin}
-                    style={{ transform: "translateY(-100px)" }}
+                    // style={{ transform: "translateY(-100px)" }}
                   >
                     Continue Email/Password
                   </button>
