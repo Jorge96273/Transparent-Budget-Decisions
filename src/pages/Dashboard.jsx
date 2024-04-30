@@ -10,9 +10,14 @@ import BudgetsTable from "@/components/BudgetsTable";
 import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
 import BudgetItem from "@/components/BudgetItem";
+import LineChart from "@/components/LineChart";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
+  // const [lineData, setLineData] = useState([{ dates: "", balances: 0 }]);
+  const [lineData, setLineData] = useState([]);
+  // const [date, setDate] = useState([])
+  // const [balance, setBalance] = useState([])
   const uid = user?.uid;
   const {
     triggerFetch,
@@ -96,6 +101,8 @@ const Dashboard = () => {
     }).format(recordedBalance);
     return formatted;
   };
+  
+
 
   const monthlyExpensesBalance = () => {
     let totalDeposits = 0;
@@ -119,7 +126,48 @@ const Dashboard = () => {
     }).format(recordedBalance);
     return formatted;
   };
+  const category = "Total";
+  const year = lineData.map(item => item.dates)
+  
+  const amounts = lineData.map(item => item.balances)
+  
+const getTotalBalance = () => {
+  
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
+    if (accountList) {
+      
+      let sorted = accountList.sort((a, b) =>
+        a.newTransactionDate.localeCompare(b.newTransactionDate)
+      );
+      setLineData([])
+      sorted.forEach((transaction) => {
+        if (transaction.newTransactionType === "Withdrawl") {
+          totalWithdrawals += Number(transaction.newTransactionAmount);
+          let date = transaction.newTransactionDate;
 
+          let formatted = totalDeposits - totalWithdrawals;
+          
+          setLineData((lineData) => [
+            ...lineData,
+            { dates: date, balances: formatted },
+          ]);
+
+        } else if (transaction.newTransactionType === "Deposit") {
+          totalDeposits += Number(transaction.newTransactionAmount);
+          let date = transaction.newTransactionDate;
+
+          let formatted = totalDeposits - totalWithdrawals;
+          
+          setLineData((lineData) => [
+            ...lineData,
+            { dates: date, balances: formatted },
+          ]);
+
+        }
+      });
+    }
+  };
   useEffect(() => {
     if (!firstRenderRef.current) {
       getAccountList(); // Call getAccountList on subsequent renders
@@ -132,9 +180,17 @@ const Dashboard = () => {
       getAccountList(); // Call getAccountList on initial render or when user changes
     }
   }, [user]);
+ 
+  useEffect(() => {
+    getTotalBalance();
+  }, [accountList, budgetTriggerFetch]);
 
   return (
     <>
+      <div>
+      {(lineData)?LineChart(category, year, amounts):"Loading"}
+       
+      </div>
       <h1>Welcome to Your Financial Dashboard</h1>
       <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
