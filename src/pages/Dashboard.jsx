@@ -9,6 +9,7 @@ import CreateBudgetDialog from "@/components/CreateBudgetDialog";
 import BudgetsTable from "@/components/BudgetsTable";
 import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
+import BudgetItem from "@/components/BudgetItem";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -134,7 +135,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>Dashboard</div>
+      <h1>Welcome to Your Financial Dashboard</h1>
+      <BudgetItem budgetList={budgetList} accountList={accountList} />
+      <br></br>
       <TransactionInputDialog
         uid={uid}
         triggerFetch={triggerFetch}
