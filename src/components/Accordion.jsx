@@ -7,6 +7,7 @@ import {
 import BudgetsTable from "./BudgetsTable";
 import BudgetedItemTable from "./BudgetedItemTable";
 import TransactionTable from "./TransactionTable";
+import LineChart from "@/components/LineChart";
 
 export function AccordionElement({
   setBudgetList,
@@ -24,27 +25,55 @@ export function AccordionElement({
   savingsAccount,
   monthlyExpensesBalance,
   monthlyExpenses,
+  lineData,
+  category,
+  amounts,
+  year,
+  debitCategory,
+  debitAmounts,
+  debitYear,
+  savingsCategory,
+  savingsAmounts,
+  savingsYear,
+  creditCategory,
+  creditAmounts,
+  creditYear,
 }) {
   return (
-    <div>
-      <Accordion type="multiple" collapsible className="w-full">
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center", // Center items horizontally
+        alignItems: "center", // Center items vertically
+      }}
+    >
+      <Accordion type="multiple" collapsible="true" className="w-75">
         <AccordionItem value="item-1">
           <AccordionTrigger className="background-color-div">
-            <h4>Click to View Budget Categories</h4>
+            <h4>Click to View Budget Categories And Amounts</h4>
           </AccordionTrigger>
           <AccordionContent>
-            <BudgetsTable
-              setBudgetList={setBudgetList}
-              budgetList={budgetList}
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              budgetTriggerFetch={budgetTriggerFetch}
-              setBudgetTriggerFetch={setBudgetTriggerFetch}
-            />
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center", // Center items horizontally
+              }}
+            >
+              <BudgetedItemTable
+                accountList={accountList}
+                budgetList={budgetList}
+                uid={uid}
+                triggerFetch={triggerFetch}
+                setTriggerFetch={setTriggerFetch}
+                budgetTriggerFetch={budgetTriggerFetch}
+                setBudgetTriggerFetch={setBudgetTriggerFetch}
+              />
+            </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-2">
+        {/* <AccordionItem value="item-2">
           <AccordionTrigger className="background-color-div">
             <h4>Click to View Current Budget Amounts</h4>
           </AccordionTrigger>
@@ -59,7 +88,7 @@ export function AccordionElement({
               setBudgetTriggerFetch={setBudgetTriggerFetch}
             />
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
         <AccordionItem value="item-3">
           <AccordionTrigger className="background-color-div">
             {" "}
@@ -69,6 +98,12 @@ export function AccordionElement({
             </h4>
           </AccordionTrigger>
           <AccordionContent>
+            <div>
+              {lineData
+                ? LineChart(debitCategory, debitYear, debitAmounts)
+                : "Loading"}
+            </div>
+            <br></br>
             <TransactionTable
               uid={uid}
               triggerFetch={triggerFetch}
@@ -89,6 +124,12 @@ export function AccordionElement({
             </h4>
           </AccordionTrigger>
           <AccordionContent>
+            <div>
+              {lineData
+                ? LineChart(savingsCategory, savingsYear, savingsAmounts)
+                : "Loading"}
+            </div>
+            <br></br>
             <TransactionTable
               uid={uid}
               triggerFetch={triggerFetch}
@@ -108,6 +149,12 @@ export function AccordionElement({
             </h4>
           </AccordionTrigger>
           <AccordionContent>
+            <div>
+              {lineData
+                ? LineChart(creditCategory, creditYear, creditAmounts)
+                : "Loading"}
+            </div>
+            <br></br>
             <TransactionTable
               uid={uid}
               triggerFetch={triggerFetch}
@@ -145,6 +192,10 @@ export function AccordionElement({
             </h4>
           </AccordionTrigger>
           <AccordionContent>
+            <div>
+              {lineData ? LineChart(category, year, amounts) : "Loading"}
+            </div>
+            <br></br>
             <TransactionTable
               uid={uid}
               triggerFetch={triggerFetch}

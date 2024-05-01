@@ -83,7 +83,10 @@ function TransactionTable({
         accountType: transaction.accountType,
         accountBalance: transaction.accountBalance,
         transactionName: transaction.newTransactionName,
-        transactionAmount: transaction.newTransactionAmount,
+        transactionAmount: [
+          transaction.newTransactionAmount,
+          transaction.newTransactionType,
+        ],
         transactionDate: transaction.newTransactionDate,
         transactionType: transaction.newTransactionType,
         monthlyExpense: transaction.monthlyExpense,
@@ -94,45 +97,62 @@ function TransactionTable({
   }
 
   const columns = [
-    {
-      accessorKey: "accountType",
-      header: "Account Type",
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("accountType")}
-        </div>
-      ),
-    },
+    // {
+    //   accessorKey: "accountType",
+    //   header: "Account Type",
+    //   cell: ({ row }) => (
+    //     <div className="capitalize text-center">
+    //       {row.getValue("accountType")}
+    //     </div>
+    //   ),
+    // },
     //! *********** MUST FIX *****************
     // TODO FIX THE SORTING OF THE DOLLAR AMOUNT
     {
       accessorKey: "transactionAmount",
-      // header: () => <div className="text-right">Transaction Amount</div>,
       header: ({ column }) => {
         return (
           <div className="d-flex align-items-center">
             <div className="text-center">Transaction Amount</div>
-            <Button
+            {/* <Button
               variant="ghost"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
             >
               <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
+            </Button> */}
           </div>
         );
       },
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("transactionAmount"));
+        // Define your color variables
+        const green = "#008000"; // Example green color
+        const red = "#FF0000"; // Example red color
+        const amountData = ("Transaction", row.getValue("transactionAmount"));
+
+        // Correctly assign the color based on the transaction type
+        const textColor = amountData[1] === "Withdrawal" ? red : green;
+
+        const amount = parseFloat(amountData[0]);
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
         }).format(amount);
 
-        return <div className="text-center font-medium">{formatted}</div>;
+        // Conditionally prepend "-" if the transaction type is "Withdrawal"
+        const formattedWithPrefix =
+          amountData[1] === "Withdrawal" ? `- ${formatted}` : formatted;
+
+        // Apply the text color to the cell content
+        return (
+          <div className="text-center font-medium" style={{ color: textColor }}>
+            {formattedWithPrefix}
+          </div>
+        );
       },
     },
+
     {
       accessorKey: "updateTransaction",
       header: () => <div className="text-center">Update Transaction</div>,
@@ -152,6 +172,37 @@ function TransactionTable({
         );
       },
     },
+    {
+      accessorKey: "transactionName",
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center">Transaction Name</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("transactionName")}</div>
+      ),
+    },
+    // {
+    //   accessorKey: "monthlyExpense",
+    //   header: "Monthly Expense",
+    //   cell: ({ row }) => (
+    //     <div className="capitalize text-center">
+    //       {row.getValue("monthlyExpense")}
+    //     </div>
+    //   ),
+    // },
+
     {
       accessorKey: "transactionDate",
       header: ({ column }) => {
@@ -175,59 +226,59 @@ function TransactionTable({
         </div>
       ),
     },
-    {
-      accessorKey: "transactionType",
-      header: ({ column }) => {
-        return (
-          <div className="d-flex align-items-center">
-            <div className="text-center">Transaction Type</div>
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("transactionType")}</div>
-      ),
-    },
-    {
-      accessorKey: "monthlyExpense",
-      header: "Monthly Expense",
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("monthlyExpense")}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "budgetCategory",
-      header: ({ column }) => {
-        return (
-          <div className="d-flex align-items-center">
-            <div className="text-center">Budget Category</div>
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("budgetCategory")}
-        </div>
-      ),
-    },
+    // {
+    //   accessorKey: "transactionType",
+    //   header: ({ column }) => {
+    //     return (
+    //       <div className="d-flex align-items-center">
+    //         <div className="text-center">Transaction Type</div>
+    //         <Button
+    //           variant="ghost"
+    //           onClick={() =>
+    //             column.toggleSorting(column.getIsSorted() === "asc")
+    //           }
+    //         >
+    //           <ArrowUpDown className="ml-2 h-4 w-4" />
+    //         </Button>
+    //       </div>
+    //     );
+    //   },
+    //   cell: ({ row }) => (
+    //     <div className="capitalize">{row.getValue("transactionType")}</div>
+    //   ),
+    // },
+    // {
+    //   accessorKey: "monthlyExpense",
+    //   header: "Monthly Expense",
+    //   cell: ({ row }) => (
+    //     <div className="capitalize text-center">
+    //       {row.getValue("monthlyExpense")}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   accessorKey: "budgetCategory",
+    //   header: ({ column }) => {
+    //     return (
+    //       <div className="d-flex align-items-center">
+    //         <div className="text-center">Budget Category</div>
+    //         <Button
+    //           variant="ghost"
+    //           onClick={() =>
+    //             column.toggleSorting(column.getIsSorted() === "asc")
+    //           }
+    //         >
+    //           <ArrowUpDown className="ml-2 h-4 w-4" />
+    //         </Button>
+    //       </div>
+    //     );
+    //   },
+    //   cell: ({ row }) => (
+    //     <div className="capitalize text-center">
+    //       {row.getValue("budgetCategory")}
+    //     </div>
+    //   ),
+    // },
     {
       accessorKey: "transactionId",
       header: () => <div className="text-center">Delete Transaction</div>,

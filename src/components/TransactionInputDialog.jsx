@@ -50,7 +50,7 @@ function TransactionInputDialog({
   const [accountBalance, setAccountBalance] = useState(0);
   const [newTransactionName, setNewTransactionName] = useState("");
   const [newTransactionDate, setNewTransactionDate] = useState(formattedDate);
-  const [newTransactionType, setNewTransactionType] = useState("Withdrawl");
+  const [newTransactionType, setNewTransactionType] = useState("Withdrawal");
   const [newTransactionAmount, setNewTransactionAmount] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState("No");
   //   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
@@ -197,7 +197,7 @@ function TransactionInputDialog({
                 value={newTransactionType}
                 onChange={(event) => setNewTransactionType(event.target.value)}
               >
-                <option value="Withdrawl">Withdrawl</option>
+                <option value="Withdrawl">Withdrawal</option>
                 <option value="Deposit">Deposit</option>
               </select>
               <br></br>
