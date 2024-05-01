@@ -18,6 +18,8 @@ import { AccordionElement } from "@/components/Accordion";
 import BudgetItem from "@/components/BudgetItem";
 import LineChart from "@/components/LineChart";
 import CalendarChart from "@/components/CalendarChart";
+import { BudgetSheet } from "@/components/BudgetSheet";
+import { MonthlyExpensesSheet } from "@/components/MonthlyExpenseSheet";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -288,28 +290,52 @@ const Dashboard = () => {
 
   return (
     <>
-      <TransactionInputDialog
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        setBudgetList={setBudgetList}
-        budgetList={budgetList}
-      />
-      <br></br>
-      <CreateBudgetDialog
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        setBudgetList={setBudgetList}
-        budgetList={budgetList}
-      />{" "}
-      <br></br>
+      <div
+        className="w-full"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+        }}
+      >
+        <TransactionInputDialog
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          accountList={accountList}
+          setAccountList={setAccountList}
+          setBudgetList={setBudgetList}
+          budgetList={budgetList}
+        />
+        <CreateBudgetDialog
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          accountList={accountList}
+          setAccountList={setAccountList}
+          setBudgetList={setBudgetList}
+          budgetList={budgetList}
+        />{" "}
+        <BudgetSheet
+          accountList={accountList}
+          budgetList={budgetList}
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          budgetTriggerFetch={budgetTriggerFetch}
+          setBudgetTriggerFetch={setBudgetTriggerFetch}
+        />{" "}
+        <MonthlyExpensesSheet
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          accountList={accountList}
+          setAccountList={setAccountList}
+          monthlyExpenses={monthlyExpenses}
+        />
+      </div>
+      <br></br> <br></br>
       <BudgetItem budgetList={budgetList} accountList={accountList} />
-      <br></br>
       <AccordionElement
         setBudgetList={setBudgetList}
         budgetList={budgetList}
