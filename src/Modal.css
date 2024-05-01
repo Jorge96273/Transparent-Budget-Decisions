@@ -1,0 +1,43 @@
+.modal-backdrop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s forwards;
+}
+
+.modal-content {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 15px 50px rgba(241, 193, 19, 0.2);
+    max-width: 500px;
+    animation: scaleIn 0.3s forwards;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: .9;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}

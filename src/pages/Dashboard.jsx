@@ -17,6 +17,8 @@ import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
 import BudgetItem from "@/components/BudgetItem";
 import LineChart from "@/components/LineChart";
+import CalendarChart from "@/components/CalendarChart";
+
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -25,6 +27,7 @@ const Dashboard = () => {
   const [debitLine, setDebitLine] = useState([]);
   const [creditLine, setCreditLine] = useState([]);
   const [savingsLine, setSavingsLine] = useState([]);
+  const [monthlyCalendar, setMonthlyCalendar] = useState([]);
   // const [date, setDate] = useState([])
   // const [balance, setBalance] = useState([])
   const uid = user?.uid;
@@ -249,6 +252,19 @@ const Dashboard = () => {
       });
     }
   };
+
+  const monthlyCalendarfunction = () => { 
+    if (monthlyExpenses) {
+      console.log(`Monthly expenses: ${monthlyExpenses}`)
+      const monthlyExpenseData = monthlyExpenses.map((item) => ({transactionDate: item.newTransactionDate, transactionName: item.newTransactionName, transactionAmount: item.newTransactionAmount}))
+      console.log(monthlyExpenseData)
+      setMonthlyCalendar(monthlyExpenseData)
+      }
+    }
+    console.log("***MONTHLY CALENDER***", monthlyCalendar)
+    // console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
+
+
   useEffect(() => {
     if (!firstRenderRef.current) {
       getAccountList(); // Call getAccountList on subsequent renders
@@ -263,8 +279,13 @@ const Dashboard = () => {
   }, [user]);
 
   useEffect(() => {
-    getTotalBalance(), lineGraphAccount("Debit"), lineGraphAccount("Credit"), lineGraphAccount("Savings");
+    getTotalBalance(), lineGraphAccount("Debit"), lineGraphAccount("Credit"), lineGraphAccount("Savings"), monthlyCalendarfunction();
+
   }, [accountList, budgetTriggerFetch]);
+
+  useEffect(() => {
+    monthlyCalendarfunction();
+  }, [accountList]);
 
   
   return (
