@@ -16,6 +16,7 @@ export default function TestChart() {
             <div>
                 <CalendarChart
                     sampleData={SampleData}
+                    happensMonthly={true}
                 />
             </div>
         </>

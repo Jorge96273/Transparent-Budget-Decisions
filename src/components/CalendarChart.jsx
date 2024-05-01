@@ -5,20 +5,19 @@ import { format as formatDate, addDays, addMonths } from 'date-fns';
 import { format as formateTz} from 'date-fns-tz';
 import Modal from '@/components/Modal'
 
-
-export default function CalendarChart({ sampleData }) {
+//sampleData is a list of Objects  //happensMonthly is a boolean
+export default function CalendarChart({ sampleData, happensMonthly }) {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
-
+  console.log(sampleData)
 
   useEffect(()=>{
     const breakDown = sampleData.map(data => ({
       title: data.transactionName,
       date: addDays(new Date (data.transactionDate), 1),
       amount: data.transactionAmount,
-      happensMonthly: true
     }))
     setEvents(breakDown);
   },[sampleData])
@@ -27,17 +26,17 @@ export default function CalendarChart({ sampleData }) {
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
       const dayEvents = events.filter(event =>{
-        return event.happensMonthly ?
+        return happensMonthly ?
         (date.getDate() === event.date.getDate()) :
         formatDate(event.date, 'yyyy-MM-dd') === formatDate(date, 'yyyy-MM-dd')
     });
-      return <ul>{dayEvents.map((event, index) => <li key={index}>{event.title}</li>)}</ul>;
+      return <ul>{dayEvents.map((event, index) => <li key={index}>🎯{event.title}: ${event.amount}</li>)}</ul>;
     }
   };
 
   const handleDayClick = (clickedDate) => {
     const dayEvents = events.filter(event => {
-      return event.happensMonthly ? 
+      return happensMonthly ? 
       (clickedDate.getDate() === event.date.getDate()) :
       formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
   });
