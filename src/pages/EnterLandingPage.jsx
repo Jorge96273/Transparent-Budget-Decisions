@@ -272,7 +272,7 @@ const EnterLandingPage = () => {
             <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
               Sign up with Email
 {/* >>>>>>> main */}
-{/*             </button> */} */}
+{/*             </button> */} 
           </div>
 
           {isNewUser ? (
@@ -435,7 +435,7 @@ const EnterLandingPage = () => {
         </div>   
     )}
        </div>   
-       </div>   
+       
         
       </>
 // >>>>>>> main
