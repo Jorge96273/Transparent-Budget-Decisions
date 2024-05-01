@@ -1,13 +1,37 @@
 import LogoutButton from "./LogoutButton";
 import { React, useState, useEffect } from "react";
 import { auth } from "@/config/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link } from "react-router-dom";
+import userPhoto from "../images/userPhoto.svg";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
 
 const NavBar = () => {
   const [isloggedIn, setIsLoggedIn] = useState(false);
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
       } else {
@@ -19,76 +43,151 @@ const NavBar = () => {
 
   return (
     <>
-      <div className='w-full mr-4 flex justify-center'>
-        <nav className='m-1 rounded-full  nav-background-color'>
-          <div className='flex items-center '>
-            <a
-              href='/'
-              className='w-24 outline  outline-orange-50 shadow p-2 rounded-full'
-            >
-              <img
-                className='rounded-full outline outline-orange-50 shadow'
-                src='/src/assets/tbd_logo.png'
-              ></img>
-            </a>
-            <div className='m-2 text-decoration-line: none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
-              <ul className='flex  flex-col font-medium md:p-0 mt-2 pt-2  md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
-                <li className='shadow-md  rounded-full bg-orange-100 hover:bg-orange-100'>
-                  <a
-                    href='/about/'
-                    className='no-underline block py-2 px-3 text-gray-900 rounded'
-                  >
-                    About
-                  </a>
-                </li>
-              {isloggedIn && (
-                <>
-                <li className='shadow-md rounded-full hover:bg-orange-100'>
-                  <a
-                    href='/dashboard/'
-                    className='no-underline block py-2 px-3 text-gray-900 rounded'
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li className='shadow-md  rounded-full  hover:bg-orange-100'>
-                  <a
-                    href='/'
-                    className='no-underline block py-2 px-3 text-gray-900 rounded'
-                  >
-                    Learning Center
-                  </a>
-                </li>
-                <li className='shadow-md  rounded-full  hover:bg-orange-100'>
-                  <a
-                    href='/temp/'
-                    className='no-underline block py-2 px-3 text-gray-900 rounded'
-                  >
-                    Temp
-                  </a>
-                </li>
-                <li className='shadow-md  rounded-full  hover:bg-orange-100'>
-                  <a
-                    href='/education/'
-                    className='no-underline block py-2 px-3 text-gray-900 rounded'
-                  >
-                    Education
-                  </a>
-                </li>
-                <li className="shadow-md  rounded-full  hover:bg-orange-100">
-                <a
-                  className="no-underline block py-2 px-3 text-gray-900 rounded"
-                  >
-                <LogoutButton />
-                </a>
-              </li>
-              </>
-              )}
-              </ul>
-            </div>
+      {isloggedIn && (
+        <nav className='flex p-2'>
+          <div className='w-32 mt-1 ml-2'>
+            {isloggedIn ? (
+              <Link to='/dashboard/'>
+                <img
+                  className='rounded-full outline outline-orange-50 shadow'
+                  src='/src/assets/tbd_logo.png'
+                ></img>
+              </Link>
+            ) : (
+              <Link to='/'>
+                <img
+                  className='rounded-full outline outline-orange-50 shadow'
+                  src='/src/assets/tbd_logo.png'
+                ></img>
+              </Link>
+            )}
+          </div>
+          <div className='w-full mr-4 h-40 flex justify-center'>
+            <nav className=' h-20 rounded-full'>
+              <div className=''>
+                <div className='text-decoration-line: none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
+                  <ul className='flex  flex-col font-medium md:p-0 mt-2 pt-2  md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
+                    {isloggedIn && (
+                      <>
+                        <li>
+                          <a
+                            href='/about/'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                          >
+                            About
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            href='/dashboard/'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                          >
+                            Dashboard
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            href='/temp/'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                          >
+                            Temp
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href='/education/'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                          >
+                            Education
+                          </a>
+                        </li>
+                      </>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <div className='pr-10 pt-1'>
+            {user && (
+              <div className='flex '>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <div className='flex justify-center'>
+                      <Avatar>
+                        {user?.photoURL ? (
+                          <AvatarImage
+                            src={user.photoURL}
+                            referrerPolicy='no-referrer'
+                          />
+                        ) : (
+                          <AvatarImage
+                            src={userPhoto}
+                            referrerPolicy='no-referrer'
+                          />
+                        )}
+                      </Avatar>
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    {user.displayName ? (
+                      <h1 className='text-sm pl-2'>{user.displayName}</h1>
+                    ) : (
+                      <h1 className='text-sm'>{user.email}</h1>
+                    )}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Link className='no-underline text-black w-full' to='/profile/'>
+                        Profile
+                      </Link>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem>Team</DropdownMenuItem>
+                    
+                      <div className="w-full bg-red-400 rounded p-1 text-sm mb-1 mt-1">
+                      <LogoutButton />
+                      </div>
+       
+
+                    <div >
+                      <Drawer>
+                        <DrawerTrigger className='rounded text-sm bg-sky-400 hover:bg-sky-500 shadow w-full p-1'>
+                          Notifications
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>Notifications</DrawerTitle>
+
+                            <ul className='flex flex-col items-center w-full'>
+                              <li className='bg-slate-500 text-white shadow-md rounded p-1 w-1/2 flex justify-center'>
+                                Rent is due in 2 days!
+                              </li>
+                              <li className='bg-slate-500 mt-2 text-white shadow-md rounded p-1 w-1/2 flex justify-center'>
+                                Credit Card card due in 5 days!
+                              </li>
+                            </ul>
+                          </DrawerHeader>
+                          <DrawerFooter className='flex items-center'>
+                            <Button className='w-max bg-red-300 hover:bg-red-500'>
+                              Clear Notifications
+                            </Button>
+                            <DrawerClose>
+                              <Button variant='outline'>Close</Button>
+                            </DrawerClose>
+                          </DrawerFooter>
+                        </DrawerContent>
+                      </Drawer>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
           </div>
         </nav>
-      </div>
+      )}
     </>
   );
 };

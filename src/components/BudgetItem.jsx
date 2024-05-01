@@ -56,7 +56,8 @@ const BudgetItem = ({ budgetList, accountList }) => {
             style={{
               border: "2px solid rgb(4, 28, 42)",
               borderRadius: "10px", // Add rounded corners
-              backgroundColor: "rgb(170, 147, 99)",
+              backgroundColor: "rgb(4, 28, 42)",
+              color: "white",
               flex: "1 0 25%",
               marginBottom: "20px",
               marginRight: "10px", // Add space to the right of each item

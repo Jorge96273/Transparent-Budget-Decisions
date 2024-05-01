@@ -9,7 +9,7 @@ import AboutPage from "./pages/AboutPage.jsx";
 import TempPage from "./pages/TempPage.jsx"
 import DashboardPage from "./pages/Dashboard.jsx";
 import EducationPage from "./pages/EducationPage.jsx";
-
+import ProfilePage from "./pages/ProfilePage.jsx"
 import TestChart from "./components/TestChart.jsx";
 
 
@@ -42,6 +42,10 @@ const router = createBrowserRouter([
         path: "education/",
         element: <EducationPage />,
       },     
+      {
+        path: "profile/",
+        element: <ProfilePage />,
+      },  
       {
         path: "about/",
         element: <AboutPage />,

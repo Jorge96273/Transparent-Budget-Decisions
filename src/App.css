@@ -1,52 +1,76 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.background-color-div {
+  background-color: rgb(4, 28, 42);
+  color: white;
+  padding: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-} */
-
-/* These two image ID's are for the opacity on the TBD Homepage */
-.page-container {
+.bottom-half {
   position: absolute;
-  width: 100vw;
-  min-height: 85vh;
-  overflow: auto;
+  background-color: rgb(255, 255, 247); 
+  top: 50%; /* Starts from the middle of the page */
+  left: 0;
+  width: 100%;
+  min-height: 50%; /* Bottom half of the page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 50px; 
+  border-top-right-radius: 50px; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #333;  
+}
+
+.bottom-half-login {
+  position: absolute;
+  background-color: rgb(255, 255, 247); 
+  top: 50%; /* Starts from the middle of the page */
+  left: 0;
+  width: 100%;
+  min-height: 50%; /* Bottom half of the page */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  border-top-left-radius: 50px; 
+  border-top-right-radius: 50px; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #333;  
+}
+
+.centered-button {
+  margin-top: 70px;
+  position: absolute;
+  display: flex;
+  left:50%;
+  transform: translate(-50%, -50%);
+  align-items: center; 
+}
+
+.centered-paragraph {
+  position: absolute;
+  top: 130px; 
+  width: 100%;
+  text-align: center; 
+}
+
+.column {
+  flex: 1; 
+  text-align: center; 
+}
+
+.errortxtnew {
+  color:  rgb(170, 147, 99);
+}
+
+.errortxtrtn {
+  color: rgb(4, 28, 42);
 }
 
 .full-view-image, .invisible-image {
@@ -64,156 +88,6 @@
   opacity: 1;
 }
 
-.invisible-image {
-  opacity: 0;
-  z-index: -1;
-}
-
-.top-half {
-  position: absolute;
-  /* background-color: rgb(218,211,197); */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 55%; /* Top half of the page */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* z-index: 1; */
-}
-
-.thinker-image {
-  max-height: 100%; /* Ensures the image takes up no more than the container height */
-  max-width: 100%; /* Ensures the image takes up no more than the container width */
-  object-fit: contain; /* Maintains aspect ratio and fits within the given dimensions */
-}
-
-.bottom-half {
-  position: absolute;
-  background-color: rgb(255, 255, 247); 
-  top: 50%; /* Starts from the middle of the page */
-  left: 0;
-  width: 100%;
-  min-height: 50%; /* Bottom half of the page */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-top-left-radius: 50px; /* Rounded corner on the top left */
-  border-top-right-radius: 50px; /* Rounded corner on the top right */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  color: #333;  
-}
-
-.quote-style {
-  font-style: italic; /* Italicize quotes for emphasis */
-  border-left: 4px solid #ccc; /* Adds a vertical bar to the left for classic quote styling */
-  padding-left: 16px; /* Space inside the quote from the left border */
-  color: #555; /* Slightly lighter text color for the quote */
-}
-
-.round-button {
-  background-color: rgb(4, 28, 42); /* Red color; change the RGB values as needed */
-  color: rgb(170, 147, 99); /* Text color */
-  border: none; /* No border */
-  border-radius: 50%; /* Makes the button round */
-  padding: 20px; /* Adjust padding to increase or decrease the size */
-  font-size: 16px; /* Adjust font size as needed */
-  text-align: center; /* Center text inside the button */
-  cursor: pointer; /* Changes the mouse cursor to a pointer */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.round-button:hover {
-  background-color: rgb(16, 87, 129); /* Darker shade of red on hover */
-}
-
-
-.nav-footer-background-color {
-  background-color: rgb(255, 255, 247); 
-}
-
-.rounded-form {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.centered-paragraph {
-  position: absolute;
-  top: 130px; /* Adjust this value to move the paragraph above the form */
-  width: 100%;
-  text-align: center; /* Center the text within the paragraph */
-}
-
-.rounded-input {
-  border: 2px solid #ccc;
-  border-radius: 20px;
-  padding: 10px 15px;
-  margin: 10px 0;
-  width: 300px; /* Adjust the width as needed */
-  outline: none;
-  z-index: 2;
-  border: 2px solid rgb(4, 28, 42);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
-  padding: 8px; 
-  border-radius: 9999px;
-}
-
-.rounded-button {
-  background-color: rgb(4, 28, 42); 
-  color: rgb(170, 147, 99); 
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  transition: background-color 0.3s;
-  z-index: 2;
-}
-
-.rounded-button-newuser {
-  background-color: rgb(4, 28, 42); 
-  color: rgb(170, 147, 99); 
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  width: 200px;
-  transition: background-color 0.3s;
-  border: 2px solid rgb(170, 147, 99); 
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
-  padding: 8px; 
-  border-radius: 9999px;
-  z-index: 2;
-}
-
-.rounded-button-rtnuser {
-  background-color: rgb(170, 147, 99); 
-  color: rgb(4, 28, 42);  
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  width: 200px;
-  transition: background-color 0.3s;
-  border: 2px solid rgb(4, 28, 42);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
-  padding: 8px; 
-  border-radius: 9999px;
-  z-index: 2;
-}
-
 .google-button {
   display: flex;
   align-items: center;
@@ -223,78 +97,24 @@
   background: none; 
 }
 
-.centered-button {
-  margin-top: 70px;
-  position: absolute;
-  display: flex;
-  left:50%;
-  transform: translate(-50%, -50%);
-  align-items: center; /* Adjusts space between the form and the button */
+.googlebuttondown {
+  margin-top: 4rem;
 }
 
 .google-button img {
-  height: auto; /* Maintain aspect ratio */
-  width: 70%; /* Adjust width to fit your design */
-}
-.rounded-button:hover {
-  background-color: rgb(16, 87, 129);
+  height: auto; 
+  width: 70%; 
 }
 
-.bottom-half-login {
-  position: absolute;
-  background-color: rgb(255, 255, 247); 
-  top: 50%; /* Starts from the middle of the page */
-  left: 0;
-  width: 100%;
-  min-height: 50%; /* Bottom half of the page */
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-around;
-  border-top-left-radius: 50px; /* Rounded corner on the top left */
-  border-top-right-radius: 50px; /* Rounded corner on the top right */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  color: #333;  
-  
-}
-
-.column {
-  flex: 1; /* Each column takes equal space */
-  text-align: center; /* Centers text horizontally in each column */
+.invisible-image {
+  opacity: 0;
+  z-index: -1;
 }
 
 .left-column {
-  border-right: 2px solid #ccc; /* Adds a vertical line on the right side of the left column */
-  padding-right: 20px; /* Padding to prevent content from touching the border */
+  border-right: 2px solid #ccc; 
+  padding-right: 20px; 
 }
-
-.right-column {
-  padding-left: 20px; /* Padding to prevent content from touching the border */
-}
-
-.login-container {
-  width: 300px; 
-  text-align: center; 
-  padding: 20px; 
-  background-color:  rgb(218,211,197);
-  height: 70%
-}
-
-/* begin toggle classes */
-.user-banner {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 20vh;
-  justify-content: center; 
-  align-items: center;
-  background-color:  rgb(255, 255, 247);
-}
-
 
 .login-background-container1 {
   display: flex;
@@ -302,10 +122,11 @@
   align-items: center;
   justify-content: flex-start; 
   position: relative;
-  bottom: 0;
+  bottom: 15px;
+  top: 5px;
   left: 0;
   width: 100vw;
-  height: 80vh;
+  height: 70vh;
   background-color:  rgb(4, 28, 42);  
   border-top-left-radius: 52px;
   border-top-right-radius: 52px; 
@@ -318,15 +139,24 @@
   align-items: center;
   justify-content: flex-start; 
   position: relative;
-  bottom: 0;
+  bottom: 20px;
+  top: 5px;
   left: 0;
   width: 100vw;
-  height: 80vh;
+  height: 70vh;
   background-color:rgb(170, 147, 99);
   border-top-left-radius: 52px;
   border-top-right-radius: 52px;  
   padding: 8px; 
   z-index: 1;
+}
+
+.login-container {
+  width: 300px; 
+  text-align: center; 
+  padding: 20px; 
+  background-color:  rgb(218,211,197);
+  height: 70%
 }
 
 .login-overlay1 {
@@ -344,7 +174,7 @@
   border-top-left-radius: 50px;
   border-top-right-radius: 50px; 
   z-index: 3;
-  }
+}
 
 .login-overlay2 {
   position: absolute;
@@ -361,55 +191,197 @@
   border-top-left-radius: 50px;
   border-top-right-radius: 50px; 
   z-index: 3;
-  }
+}
   
 .login-overlay3 {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 30%;
+  height: 40%;
   background-color: rgb(255, 255, 247); 
   display: flex;
   justify-content: center;
   align-items: center;
   color: black;
-  transition: opacity 2s ease;
-  visibility: hidden;
+  transition: transform 2s ease-in-out;
   opacity: 0;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px; 
   z-index: 3;
+}
+
+  .ease-overlay {
+    opacity: 1; 
+    visibility: visible; 
+    transition: opacity 2s ease, visibility 0s ease 2s;
+    
   }
 
-.ease-overlay {
-  opacity: 1; 
-  visibility: visible; 
-  transition: opacity 2s ease, visibility 0s ease 2s;
+.nav-footer-background-color {
+  background-color: rgb(255, 255, 247); 
+}
+
+.or-sectionnew {
+  display: flex;
+  margin: auto; 
+  align-items: center;
+  color: rgb(4, 28, 42);
 }
 
 .or-sectionrtn {
-    display: flex;
-    margin: auto; 
-    align-items: center;
-    color: rgb(170, 147, 99);
-  }
-
-  .or-sectionnew {
-    display: flex;
-    margin: auto; 
-    align-items: center;
-    color: rgb(4, 28, 42);
-  }
-
-.googlebuttondown {
-  margin-top: 4rem;
+  display: flex;
+  margin: auto; 
+  align-items: center;
+  color: rgb(170, 147, 99);
 }
 
-.background-color-div {
-  background-color: rgb(170, 147, 99);
-  color: rgb(4, 28, 42);
+.page-container {
+  position: absolute;
+  width: 100vw;
+  min-height: 85vh;
+  overflow: auto;
+}
+
+.quote-style {
+  font-style: italic; 
+  border-left: 4px solid #ccc; 
+  padding-left: 16px; 
+  color: #555; 
+}
+
+.right-column {
+  padding-left: 20px; 
+}
+
+.round-button {
+  background-color: rgb(4, 28, 42); 
+  color: rgb(170, 147, 99); 
+  border: none; 
+  border-radius: 50%; 
+  padding: 20px; 
+  font-size: 16px; 
+  text-align: center; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.round-button:hover {
+  background-color: rgb(16, 87, 129); 
+}
+
+.rounded-button {
+  background-color: rgb(4, 28, 42); 
+  color: rgb(170, 147, 99); 
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+
+  .rounded-button:hover {
+    background-color: rgb(16, 87, 129);
+  }
+
+.rounded-button-newuser {
+  background-color: rgb(4, 28, 42); 
+  color: rgb(170, 147, 99); 
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 220px;
+  transition: background-color 0.3s;
+  border: 2px solid rgb(170, 147, 99); 
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+.rounded-button-rtnuser {
+  background-color: rgb(170, 147, 99); 
+  color: rgb(4, 28, 42);  
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 210px;
+  transition: background-color 0.3s;
+  border: 2px solid rgb(4, 28, 42);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+.rounded-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
-
-  /* Optional: change text color to white for better contrast */
 }
+
+.rounded-input {
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  width: 300px; 
+  outline: none;
+  z-index: 2;
+  border: 2px solid rgb(4, 28, 42);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+  border-radius: 9999px;
+}
+
+.thinker-image {
+  max-height: 100%; 
+  max-width: 100%; 
+  object-fit: contain; 
+}
+
+.top-half {
+  position: absolute;
+  /* background-color: rgb(218,211,197); */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 1; */
+}
+
+.user-banner {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 20vh;
+  justify-content: center; 
+  align-items: center;
+  background-color:  rgb(255, 255, 247);
+}
+
+
+
+
+
+
+
+
+
+
+
