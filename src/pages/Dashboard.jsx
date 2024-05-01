@@ -19,7 +19,6 @@ import BudgetItem from "@/components/BudgetItem";
 import LineChart from "@/components/LineChart";
 import CalendarChart from "@/components/CalendarChart";
 
-
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   // const [lineData, setLineData] = useState([{ dates: "", balances: 0 }]);
@@ -92,13 +91,13 @@ const Dashboard = () => {
     if (accountList) {
       accountList.forEach((transaction) => {
         if (transaction.accountType === accountType) {
-          if (transaction.newTransactionType === "Withdrawl") {
+          if (transaction.newTransactionType === "Withdrawal") {
             totalWithdrawals += Number(transaction.newTransactionAmount);
           } else if (transaction.newTransactionType === "Deposit") {
             totalDeposits += Number(transaction.newTransactionAmount);
           }
         } else if (!accountType) {
-          if (transaction.newTransactionType === "Withdrawl") {
+          if (transaction.newTransactionType === "Withdrawal") {
             totalWithdrawals += Number(transaction.newTransactionAmount);
           } else if (transaction.newTransactionType === "Deposit") {
             totalDeposits += Number(transaction.newTransactionAmount);
@@ -122,7 +121,7 @@ const Dashboard = () => {
         (account) => account.monthlyExpense === "Yes"
       );
       filterred.forEach((transaction) => {
-        if (transaction.newTransactionType === "Withdrawl") {
+        if (transaction.newTransactionType === "Withdrawal") {
           totalWithdrawals += Number(transaction.newTransactionAmount);
         } else if (transaction.newTransactionType === "Deposit") {
           totalDeposits += Number(transaction.newTransactionAmount);
@@ -142,15 +141,15 @@ const Dashboard = () => {
 
   const debitCategory = "Debit";
   const debitYear = debitLine.map((item) => item.dates);
-  const debitAmounts = debitLine.map((item) => item.balances)
+  const debitAmounts = debitLine.map((item) => item.balances);
 
   const creditCategory = "Credit";
   const creditYear = creditLine.map((item) => item.dates);
-  const creditAmounts = creditLine.map((item) => item.balances)
+  const creditAmounts = creditLine.map((item) => item.balances);
 
   const savingsCategory = "Savings";
   const savingsYear = savingsLine.map((item) => item.dates);
-  const savingsAmounts = savingsLine.map((item) => item.balances)
+  const savingsAmounts = savingsLine.map((item) => item.balances);
 
   const lineGraphAccount = (accountType) => {
     let totalDeposits = 0;
@@ -159,55 +158,54 @@ const Dashboard = () => {
       let sorted = accountList.sort((a, b) =>
         a.newTransactionDate.localeCompare(b.newTransactionDate)
       );
-      if (accountType === "Debit"){
-      setDebitLine([]);
-      }else if (accountType === "Credit"){
-        setCreditLine([])
-      }else if (accountType === "Savings"){
-        setSavingsLine([])
+      if (accountType === "Debit") {
+        setDebitLine([]);
+      } else if (accountType === "Credit") {
+        setCreditLine([]);
+      } else if (accountType === "Savings") {
+        setSavingsLine([]);
       }
       sorted.forEach((transaction) => {
         if (transaction.accountType === accountType) {
-          if (transaction.newTransactionType === "Withdrawl") {
+          if (transaction.newTransactionType === "Withdrawal") {
             totalWithdrawals += Number(transaction.newTransactionAmount);
             let date = transaction.newTransactionDate;
 
             let formatted = totalDeposits - totalWithdrawals;
 
-            if(accountType === "Debit"){
+            if (accountType === "Debit") {
               setDebitLine((lineData) => [
-              ...lineData,
-              { dates: date, balances: formatted },
-            ]);
-            }else if (accountType === "Credit"){
+                ...lineData,
+                { dates: date, balances: formatted },
+              ]);
+            } else if (accountType === "Credit") {
               setCreditLine((lineData) => [
                 ...lineData,
                 { dates: date, balances: formatted },
               ]);
-            }else if (accountType === "Savings"){
+            } else if (accountType === "Savings") {
               setSavingsLine((lineData) => [
                 ...lineData,
                 { dates: date, balances: formatted },
               ]);
             }
-            
           } else if (transaction.newTransactionType === "Deposit") {
             totalDeposits += Number(transaction.newTransactionAmount);
             let date = transaction.newTransactionDate;
 
             let formatted = totalDeposits - totalWithdrawals;
 
-            if(accountType === "Debit"){
+            if (accountType === "Debit") {
               setDebitLine((lineData) => [
-              ...lineData,
-              { dates: date, balances: formatted },
-            ]);
-            }else if (accountType === "Credit"){
+                ...lineData,
+                { dates: date, balances: formatted },
+              ]);
+            } else if (accountType === "Credit") {
               setCreditLine((lineData) => [
                 ...lineData,
                 { dates: date, balances: formatted },
               ]);
-            }else if (accountType === "Savings"){
+            } else if (accountType === "Savings") {
               setSavingsLine((lineData) => [
                 ...lineData,
                 { dates: date, balances: formatted },
@@ -228,7 +226,7 @@ const Dashboard = () => {
       );
       setLineData([]);
       sorted.forEach((transaction) => {
-        if (transaction.newTransactionType === "Withdrawl") {
+        if (transaction.newTransactionType === "Withdrawal") {
           totalWithdrawals += Number(transaction.newTransactionAmount);
           let date = transaction.newTransactionDate;
 
@@ -253,17 +251,20 @@ const Dashboard = () => {
     }
   };
 
-  const monthlyCalendarfunction = () => { 
+  const monthlyCalendarfunction = () => {
     if (monthlyExpenses) {
-      console.log(`Monthly expenses: ${monthlyExpenses}`)
-      const monthlyExpenseData = monthlyExpenses.map((item) => ({transactionDate: item.newTransactionDate, transactionName: item.newTransactionName, transactionAmount: item.newTransactionAmount}))
-      console.log(monthlyExpenseData)
-      setMonthlyCalendar(monthlyExpenseData)
-      }
+      console.log(`Monthly expenses: ${monthlyExpenses}`);
+      const monthlyExpenseData = monthlyExpenses.map((item) => ({
+        transactionDate: item.newTransactionDate,
+        transactionName: item.newTransactionName,
+        transactionAmount: item.newTransactionAmount,
+      }));
+      console.log(monthlyExpenseData);
+      setMonthlyCalendar(monthlyExpenseData);
     }
-    console.log("***MONTHLY CALENDER***", monthlyCalendar)
-    // console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
-
+  };
+  console.log("***MONTHLY CALENDER***", monthlyCalendar);
+  // console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
 
   useEffect(() => {
     if (!firstRenderRef.current) {
@@ -279,30 +280,14 @@ const Dashboard = () => {
   }, [user]);
 
   useEffect(() => {
-    getTotalBalance(), lineGraphAccount("Debit"), lineGraphAccount("Credit"), lineGraphAccount("Savings"), monthlyCalendarfunction();
-
+    getTotalBalance(),
+      lineGraphAccount("Debit"),
+      lineGraphAccount("Credit"),
+      lineGraphAccount("Savings");
   }, [accountList, budgetTriggerFetch]);
 
-  useEffect(() => {
-    monthlyCalendarfunction();
-  }, [accountList]);
-
-  
   return (
     <>
-
-      {user && (
-        <>
-        <div>{lineData ? LineChart(category, year, amounts) : "Loading"}</div>
-      <div>{lineData ? LineChart(debitCategory, debitYear, debitAmounts) : "Loading"}</div>
-      <div>{lineData ? LineChart(creditCategory, creditYear, creditAmounts) : "Loading"}</div>
-      <div>{lineData ? LineChart(savingsCategory, savingsYear, savingsAmounts) : "Loading"}</div>
-      <h1>Welcome to Your Financial Dashboard, {user.displayName}!</h1>
-      </>
-      )}
-
-      <BudgetItem budgetList={budgetList} accountList={accountList} />
-      <br></br>
       <TransactionInputDialog
         uid={uid}
         triggerFetch={triggerFetch}
@@ -321,7 +306,9 @@ const Dashboard = () => {
         setAccountList={setAccountList}
         setBudgetList={setBudgetList}
         budgetList={budgetList}
-      />
+      />{" "}
+      <br></br>
+      <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
       <AccordionElement
         setBudgetList={setBudgetList}
@@ -339,87 +326,20 @@ const Dashboard = () => {
         creditAccount={creditAccount}
         monthlyExpensesBalance={monthlyExpensesBalance}
         monthlyExpenses={monthlyExpenses}
+        lineData={lineData}
+        category={category}
+        amounts={amounts}
+        year={year}
+        debitCategory={debitCategory}
+        debitAmounts={debitAmounts}
+        debitYear={debitYear}
+        savingsCategory={savingsCategory}
+        savingsAmounts={savingsAmounts}
+        savingsYear={savingsYear}
+        creditCategory={creditCategory}
+        creditAmounts={creditAmounts}
+        creditYear={creditYear}
       />
-      {/* <h3>Budget Categories</h3>
-      <BudgetsTable
-        setBudgetList={setBudgetList}
-        budgetList={budgetList}
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        budgetTriggerFetch={budgetTriggerFetch}
-        setBudgetTriggerFetch={setBudgetTriggerFetch}
-      /> */}
-      {/* <br></br>
-      <h3>Current Budget Amounts</h3>
-      <BudgetedItemTable
-        accountList={accountList}
-        budgetList={budgetList}
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        budgetTriggerFetch={budgetTriggerFetch}
-        setBudgetTriggerFetch={setBudgetTriggerFetch}
-      />
-      <br></br> */}
-      {/* <h3>
-        Debit Account Transaction History&emsp;&emsp;Current Balance:{" "}
-        {currentAccountBalance("Debit")}
-      </h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={debitAccount}
-      />
-      <br></br> */}
-      {/* <h3>
-        Savings Account Transaction History&emsp;&emsp;Current Balance:{" "}
-        {currentAccountBalance("Savings")}
-      </h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={savingsAccount}
-      />
-      <br></br> */}
-      {/* <h3>
-        Credit Card Transaction History&emsp;&emsp;Current Balance:{" "}
-        {currentAccountBalance("Credit")}
-      </h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={creditAccount} */}
-      {/* /> */}
-      {/* <br></br>
-      <h3>Monthly Expenses: {monthlyExpensesBalance()}</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={monthlyExpenses}
-      />
-      <br></br> */}
-      {/* <h3>All Transactions: {currentAccountBalance("")}</h3>
-      <TransactionTable
-        uid={uid}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        accountTable={accountList}
-      /> */}
     </>
   );
 };

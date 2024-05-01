@@ -22,7 +22,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
     if (accountList) {
       accountList.forEach((transaction) => {
         if (transaction.selectBudget === category) {
-          if (transaction.newTransactionType === "Withdrawl") {
+          if (transaction.newTransactionType === "Withdrawal") {
             totalWithdrawals += Number(transaction.newTransactionAmount);
           } else if (transaction.newTransactionType === "Deposit") {
             totalDeposits += Number(transaction.newTransactionAmount);
@@ -31,7 +31,6 @@ const BudgetItem = ({ budgetList, accountList }) => {
       });
     }
     let recordedBalance = totalDeposits - totalWithdrawals;
-
     return recordedBalance;
   }
 
@@ -48,6 +47,14 @@ const BudgetItem = ({ budgetList, accountList }) => {
         const spent = budgetSpent(budget.newBudget);
         const remaining = budget.newBudgetAmount - spent;
         const percentageSpent = ((spent * -1) / budget.newBudgetAmount) * 100;
+        const progressBarColor =
+          percentageSpent <= 50
+            ? "green"
+            : percentageSpent <= 75
+            ? "yellow"
+            : percentageSpent <= 99
+            ? "orange"
+            : "red";
 
         return (
           <div
@@ -55,12 +62,12 @@ const BudgetItem = ({ budgetList, accountList }) => {
             key={budget.newBudget}
             style={{
               border: "2px solid rgb(4, 28, 42)",
-              borderRadius: "10px", // Add rounded corners
+              borderRadius: "10px",
               backgroundColor: "rgb(4, 28, 42)",
               color: "white",
               flex: "1 0 25%",
               marginBottom: "20px",
-              marginRight: "10px", // Add space to the right of each item
+              marginRight: "10px",
             }}
           >
             <div className="progress-text w-full">
@@ -69,15 +76,20 @@ const BudgetItem = ({ budgetList, accountList }) => {
               <progress
                 max={budget.newBudgetAmount}
                 value={spent * -1}
-                className="w-75 red"
-                style={{}}
+                className="w-75 w3-container w3-pro"
+                style={{ backgroundColor: progressBarColor }}
               ></progress>
               <small>{formatPercentage(percentageSpent / 100)}</small>
               <span>
                 <p>
-                  Spent: {formatCurrency(spent * -1)}
+                  Spent:{" "}
+                  <span style={{ color: "red" }}>
+                    {formatCurrency(spent * -1)}
+                  </span>
                   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Remaining:{" "}
-                  {formatCurrency(remaining)}
+                  <span style={{ color: "green" }}>
+                    {formatCurrency(remaining)}
+                  </span>
                 </p>
               </span>
             </div>
