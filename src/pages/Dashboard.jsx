@@ -269,6 +269,7 @@ const Dashboard = () => {
   
   return (
     <>
+
       {user && (
         <>
         <div>{lineData ? LineChart(category, year, amounts) : "Loading"}</div>
@@ -278,6 +279,7 @@ const Dashboard = () => {
       <h1>Welcome to Your Financial Dashboard, {user.displayName}!</h1>
       </>
       )}
+
       <BudgetItem budgetList={budgetList} accountList={accountList} />
       <br></br>
       <TransactionInputDialog
