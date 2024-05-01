@@ -1,49 +1,60 @@
-import { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
-import '../../src/CalendarChart.css';
-import { format as formatDate, addDays, addMonths } from 'date-fns'; 
-import { format as formateTz} from 'date-fns-tz';
-import Modal from '@/components/Modal'
-
+import { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "../../src/CalendarChart.css";
+import { format as formatDate, addDays, addMonths } from "date-fns";
+import { format as formateTz } from "date-fns-tz";
+import Modal from "@/components/Modal";
 
 export default function CalendarChart({ sampleData }) {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState('');
+  const [modalContent, setModalContent] = useState("");
 
-
-  useEffect(()=>{
-    const breakDown = sampleData.map(data => ({
+  useEffect(() => {
+    const breakDown = sampleData.map((data) => ({
       title: data.transactionName,
-      date: addDays(new Date (data.transactionDate), 1),
-      amount: data.transactionAmount
-    }))
+      date: addDays(new Date(data.transactionDate), 1),
+      amount: data.transactionAmount,
+    }));
     setEvents(breakDown);
-  },[sampleData])
+  }, [sampleData]);
 
-    console.log("eevee",events)
+  console.log("eevee", events);
 
   const renderTileContent = ({ date, view }) => {
-    console.log('renderTileContent')
-    console.log("BEFORE RENDER", events)
-    if (view === 'month') {
-      const dayEvents = events.filter(event =>
-        formatDate(event.date, 'yyyy-MM-dd') === formatDate(date, 'yyyy-MM-dd')
+    console.log("renderTileContent");
+    console.log("BEFORE RENDER", events);
+    if (view === "month") {
+      const dayEvents = events.filter(
+        (event) =>
+          formatDate(event.date, "yyyy-MM-dd") ===
+          formatDate(date, "yyyy-MM-dd")
       );
-      console.log("AFTER RENDER", events)
-      return <ul>{dayEvents.map((event, index) => <li key={index}>{event.title}</li>)}</ul>;
+      console.log("AFTER RENDER", events);
+      return (
+        <ul>
+          {dayEvents.map((event, index) => (
+            <li key={index}>{event.title}</li>
+          ))}
+        </ul>
+      );
     }
   };
 
   const handleDayClick = (clickedDate) => {
-    console.log('handleDayClick')
-    const dayEvents = events.filter(event =>
-      formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
+    console.log("handleDayClick");
+    const dayEvents = events.filter(
+      (event) =>
+        formatDate(event.date, "yyyy-MM-dd") ===
+        formatDate(clickedDate, "yyyy-MM-dd")
     );
     if (dayEvents.length > 0) {
-      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: \n\n` + dayEvents.map(event => event.title).join("\n"));
-      setIsOpen(true)
+      setModalContent(
+        `Events for ${formatDate(clickedDate, "MMM dd")}: \n\n` +
+          dayEvents.map((event) => event.title).join("\n")
+      );
+      setIsOpen(true);
     }
   };
 
@@ -53,23 +64,20 @@ export default function CalendarChart({ sampleData }) {
         onChange={setDate}
         value={date}
         calendarType="iso8601"
-        className='calendar-style'
-        view='month'
+        className="calendar-style"
+        view="month"
         onClickDay={handleDayClick}
         tileContent={renderTileContent}
       />
       <div>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <h1 style={{color: 'white'}}>Event Details</h1>
-          <p style={{ color: 'white' }}>{modalContent}</p>
-      </Modal>
+        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          <h1 style={{ color: "white" }}>Event Details</h1>
+          <p style={{ color: "white" }}>{modalContent}</p>
+        </Modal>
       </div>
     </div>
   );
 }
-
-
-
 
 // const handleAddEvent = (e) => {
 //   e.preventDefault();
@@ -100,8 +108,6 @@ export default function CalendarChart({ sampleData }) {
 //   });
 // }
 
-
-
 // <form onSubmit={handleAddEvent} style={{ marginTop: '20px' }}>
 //         <input
 //           className='title'
@@ -126,7 +132,7 @@ export default function CalendarChart({ sampleData }) {
 //           onChange={e => setIsMonthly(e.target.checked)}
 //           />
 //           Happens Monthly?
-//         </label> 
+//         </label>
 //         <button className='button' type="submit">Add Event</button>
 //       </form>
 //       <button onClick={isEventToday} className="button" type="submit">Alerts for today</button>

@@ -78,9 +78,9 @@ function CreateBudgetDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <Button className="btn btn-secondary" variant="outline">
-              Click Here to Create a Budget Category and Limit
-            </Button>
+            <button variant="outline" className="rounded-button-newuser">
+              Create a Budget
+            </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             {" "}
@@ -105,9 +105,9 @@ function CreateBudgetDialog({
               />
             </div>
             <DialogFooter>
-              <Button className="btn btn-secondary" onClick={createBudget}>
+              <button variant="outline" className="rounded-button-newuser">
                 Create Budget
-              </Button>
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>{" "}

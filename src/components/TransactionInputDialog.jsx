@@ -128,9 +128,9 @@ function TransactionInputDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <Button className="btn btn-secondary" variant="outline">
-              Click Here to Add a Transaction
-            </Button>
+            <button variant="outline" className="rounded-button-newuser">
+              Add a Transaction
+            </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -216,9 +216,12 @@ function TransactionInputDialog({
             {/* ******* END OF FORM */}
 
             <DialogFooter>
-              <Button className="btn btn-secondary" onClick={addTransaction}>
+              <button
+                className="rounded-button-newuser"
+                onClick={addTransaction}
+              >
                 Submit Transaction
-              </Button>
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>{" "}
