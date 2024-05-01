@@ -17,32 +17,32 @@ export default function CalendarChart({ sampleData }) {
     const breakDown = sampleData.map(data => ({
       title: data.transactionName,
       date: addDays(new Date (data.transactionDate), 1),
-      amount: data.transactionAmount
+      amount: data.transactionAmount,
+      happensMonthly: true
     }))
     setEvents(breakDown);
   },[sampleData])
 
-    console.log("eevee",events)
 
   const renderTileContent = ({ date, view }) => {
-    console.log('renderTileContent')
-    console.log("BEFORE RENDER", events)
     if (view === 'month') {
-      const dayEvents = events.filter(event =>
+      const dayEvents = events.filter(event =>{
+        return event.happensMonthly ?
+        (date.getDate() === event.date.getDate()) :
         formatDate(event.date, 'yyyy-MM-dd') === formatDate(date, 'yyyy-MM-dd')
-      );
-      console.log("AFTER RENDER", events)
+    });
       return <ul>{dayEvents.map((event, index) => <li key={index}>{event.title}</li>)}</ul>;
     }
   };
 
   const handleDayClick = (clickedDate) => {
-    console.log('handleDayClick')
-    const dayEvents = events.filter(event =>
+    const dayEvents = events.filter(event => {
+      return event.happensMonthly ? 
+      (clickedDate.getDate() === event.date.getDate()) :
       formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
-    );
+  });
     if (dayEvents.length > 0) {
-      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: \n\n` + dayEvents.map(event => event.title).join("\n"));
+      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}:   ` + dayEvents.map(event => `${event.title} - $${event.amount}` ).join("\n"));
       setIsOpen(true)
     }
   };

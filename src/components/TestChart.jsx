@@ -5,13 +5,10 @@ import { SampleData } from '../SampleData'
 
 export default function TestChart() {
 
-    console.log("TESTCHART",SampleData)
-
     const sampleTitle = SampleData.map(item => item.transactionName);
     const sampleDate = SampleData.map(item => item.transactionDate);
     const sampleAmount = SampleData.map(item => item.transactionAmount);
 
-    console.log("Test Chart",sampleTitle,sampleDate,sampleAmount)
 
     return (
         <>
