@@ -195,7 +195,7 @@ function BudgetedItemTable({
 
   return (
     <>
-      <div className="w-75">
+      <div className="w-full">
         <div className="rounded-md border">
           <Table>
             <TableHeader className="text-center">

@@ -48,9 +48,17 @@ export function AccordionElement({
         alignItems: "center", // Center items vertically
       }}
     >
-      <Accordion type="multiple" collapsible="true" className="w-75">
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="background-color-div">
+      <Accordion
+        type="multiple"
+        collapsible="true"
+        className="w-75"
+        style={{ borderRadius: "10px" }}
+      >
+        {/* <AccordionItem value="item-1">
+          <AccordionTrigger
+            className="background-color-div"
+            style={{ borderRadius: "10px" }}
+          >
             <h4>Click to View Budget Categories And Amounts</h4>
           </AccordionTrigger>
           <AccordionContent>
@@ -72,29 +80,17 @@ export function AccordionElement({
               />
             </div>
           </AccordionContent>
-        </AccordionItem>
-        {/* <AccordionItem value="item-2">
-          <AccordionTrigger className="background-color-div">
-            <h4>Click to View Current Budget Amounts</h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <BudgetedItemTable
-              accountList={accountList}
-              budgetList={budgetList}
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              budgetTriggerFetch={budgetTriggerFetch}
-              setBudgetTriggerFetch={setBudgetTriggerFetch}
-            />
-          </AccordionContent>
         </AccordionItem> */}
+
         <AccordionItem value="item-3">
-          <AccordionTrigger className="background-color-div">
+          <AccordionTrigger
+            className="background-color-div"
+            style={{ borderRadius: "10px" }}
+          >
             {" "}
             <h4>
-              Click to View Debit Account Transaction History&emsp;&emsp;Current
-              Balance: {currentAccountBalance("Debit")}
+              Debit Account &emsp;&emsp;Current Balance:{" "}
+              {currentAccountBalance("Debit")}
             </h4>
           </AccordionTrigger>
           <AccordionContent>
@@ -115,11 +111,13 @@ export function AccordionElement({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-4">
-          <AccordionTrigger className="background-color-div">
+          <AccordionTrigger
+            className="background-color-div"
+            style={{ borderRadius: "10px" }}
+          >
             {" "}
             <h4>
-              Click to View Savings Account Transaction
-              History&emsp;&emsp;Current Balance:{" "}
+              Savings Account &emsp;&emsp;Current Balance:{" "}
               {currentAccountBalance("Savings")}
             </h4>
           </AccordionTrigger>
@@ -141,11 +139,14 @@ export function AccordionElement({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-5">
-          <AccordionTrigger className="background-color-div">
+          <AccordionTrigger
+            className="background-color-div"
+            style={{ borderRadius: "10px" }}
+          >
             {" "}
             <h4>
-              Click to View Credit Card Transaction History&emsp;&emsp;Current
-              Balance: {currentAccountBalance("Credit")}
+              Credit Card &emsp;&emsp;Current Balance:{" "}
+              {currentAccountBalance("Credit")}
             </h4>
           </AccordionTrigger>
           <AccordionContent>
@@ -165,8 +166,11 @@ export function AccordionElement({
             />
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-6">
-          <AccordionTrigger className="background-color-div">
+        {/* <AccordionItem value="item-6">
+          <AccordionTrigger
+            className="background-color-div"
+            style={{ borderRadius: "10px" }}
+          >
             {" "}
             <h4>
               Click to View Monthly Expenses &emsp;&emsp; Current Monthly
@@ -183,11 +187,14 @@ export function AccordionElement({
               accountTable={monthlyExpenses}
             />
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
         <AccordionItem value="item-7">
-          <AccordionTrigger className="background-color-div">
+          <AccordionTrigger
+            className="background-color-div"
+            style={{ borderRadius: "10px" }}
+          >
             <h4>
-              Click to View All Transactions &emsp;&emsp; Current Transactions:{" "}
+              All Transactions &emsp;&emsp; Current Transactions:{" "}
               {currentAccountBalance("")}
             </h4>
           </AccordionTrigger>
