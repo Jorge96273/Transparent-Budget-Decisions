@@ -224,14 +224,11 @@ const EnterLandingPage = () => {
               New User
             </button>
 
-{/* <<<<<<< HEAD
-            <button className="rounded-button-rtnuser" onClick={returningUser}>
-              Returning User
-======= */}
+
             <button className="rounded-button-rtnuser" onClick={returningUser}>Returning User</button>
           </div>
 
-    {isNewUser ? (
+{/*     {isNewUser ? (
           <div className="login-background-container1">
             <div className="googlebuttondown">
               <div className="or-section">
@@ -275,7 +272,7 @@ const EnterLandingPage = () => {
             <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
               Sign up with Email
 {/* >>>>>>> main */}
-            </button>
+{/*             </button> */} */}
           </div>
 
           {isNewUser ? (
