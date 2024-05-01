@@ -19,7 +19,35 @@ import {
 } from "@/components/ui/table";
 import { useMemo } from "react";
 
-function BudgetedItemTable({ uid, accountList, budgetList }) {
+import { UpdateBudgetDialog } from "./UpdateBudgetDialog";
+
+function BudgetedItemTable({
+  uid,
+  accountList,
+  budgetList,
+  triggerFetch,
+  setTriggerFetch,
+  setBudgetList,
+
+  budgetTriggerFetch,
+  setBudgetTriggerFetch,
+}) {
+  const deleteBudget = async (id) => {
+    await deleteDoc(doc(db, `budget/${uid}/newBudget`, id));
+    toast.success("Budget deleted successfully");
+    setTriggerFetch(!triggerFetch);
+  };
+
+  function transformBudgetList(list) {
+    return list.map((budget) => {
+      return {
+        budgetName: budget.newBudget,
+        budgetAmount: budget.newBudgetAmount,
+        budgetId: String(budget.id),
+      };
+    });
+  }
+
   // Caluclates the Amount Spent for Each Budget Category
   function budgetSpent(category) {
     let totalDeposits = 0;
@@ -99,6 +127,46 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
         return <div className="text-center font-medium">{formatted}</div>;
       },
     },
+    {
+      accessorKey: "updateBudget",
+      header: () => <div className="text-center">Update Budget</div>,
+      cell: ({ row }) => {
+        const budgetID = row.getValue("budgetId");
+        const budgetedName = row.getValue("budgetName");
+        const budgetedAmount = row.getValue("budgetAmount");
+
+        return (
+          <div className="items-center">
+            <UpdateBudgetDialog
+              budgetID={budgetID}
+              budgetedName={budgetedName}
+              budgetedAmount={budgetedAmount}
+              uid={uid}
+              setBudgetTriggerFetch={setBudgetTriggerFetch}
+              budgetTriggerFetch={budgetTriggerFetch}
+            />
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "budgetId",
+      header: () => <div className="text-center">Delete Budget</div>,
+      cell: ({ row }) => {
+        const budgetID = row.getValue("budgetId");
+        return (
+          <div className="text-center">
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={() => deleteBudget(budgetID)}
+            >
+              Delete Budget
+            </button>
+          </div>
+        );
+      },
+    },
   ];
 
   const [sorting, setSorting] = React.useState([]);
@@ -127,7 +195,7 @@ function BudgetedItemTable({ uid, accountList, budgetList }) {
 
   return (
     <>
-      <div className="w-50">
+      <div className="w-75">
         <div className="rounded-md border">
           <Table>
             <TableHeader className="text-center">
