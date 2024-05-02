@@ -76,12 +76,12 @@ function BudgetsTable({
       header: () => <div className="text-center">Budget Amount</div>,
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("budgetAmount"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
+        // const formatted = new Intl.NumberFormat("en-US", {
+        //   style: "currency",
+        //   currency: "USD",
+        // }).format(amount);
 
-        return <div className="text-center font-medium">{formatted}</div>;
+        return <div className="text-center font-medium">{amount}</div>;
       },
     },
     {
