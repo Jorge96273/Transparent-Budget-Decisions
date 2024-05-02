@@ -86,9 +86,7 @@ const Dashboard = () => {
   const monthlyExpenses = accountList.filter(
     (account) => account.monthlyExpense === "Yes"
   );
-  const notMonthlyExpense = accountList.filter(
-    (account) => account.monthlyExpense === "No"
-  );
+
 
   const currentAccountBalance = (accountType) => {
     let totalDeposits = 0;
