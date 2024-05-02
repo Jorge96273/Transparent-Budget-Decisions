@@ -36,7 +36,10 @@ export function BudgetSheet({
         </div>
       </SheetTrigger>
       <SheetContent style={{ width: "58%" }}>
-        <div className="background-color-div">
+        <div
+          className="background-color-div"
+          style={{ maxHeight: "500px", overflowY: "auto" }}
+        >
           <SheetTitle text-white rounded-md>
             <h4 className="text-white rounded-md"> Budget Data</h4>
           </SheetTitle>
