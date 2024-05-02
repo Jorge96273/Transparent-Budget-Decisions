@@ -112,23 +112,28 @@ const NavBar = () => {
           </div>
           <div className='pr-10 pt-1'>
             {user && (
-              <div className='flex '>
+              <div className='flex flex-col'>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    <div className='flex justify-center'>
+                    <div className='flex flex-col items-center'>
                       <Avatar>
                         {user?.photoURL ? (
+                          <>
                           <AvatarImage
                             src={user.photoURL}
                             referrerPolicy='no-referrer'
                           />
+                          
+                          </>
                         ) : (
                           <AvatarImage
                             src={userPhoto}
                             referrerPolicy='no-referrer'
                           />
                         )}
+                        
                       </Avatar>
+                      <h3 className="text-sm">{user.displayName}</h3>
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
