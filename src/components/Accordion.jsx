@@ -97,6 +97,7 @@ export function AccordionElement({
                 accountList={accountList}
                 setAccountList={setAccountList}
                 accountTable={debitAccount}
+                budgetList={budgetList}
               />
             </AccordionContent>
           </AccordionItem>
@@ -127,6 +128,7 @@ export function AccordionElement({
                 accountList={accountList}
                 setAccountList={setAccountList}
                 accountTable={savingsAccount}
+                budgetList={budgetList}
               />
             </AccordionContent>
           </AccordionItem>
@@ -157,6 +159,7 @@ export function AccordionElement({
                 accountList={accountList}
                 setAccountList={setAccountList}
                 accountTable={creditAccount}
+                budgetList={budgetList}
               />
             </AccordionContent>
           </AccordionItem>
@@ -184,6 +187,7 @@ export function AccordionElement({
                 accountList={accountList}
                 setAccountList={setAccountList}
                 accountTable={accountList}
+                budgetList={budgetList}
               />
             </AccordionContent>
           </AccordionItem>
