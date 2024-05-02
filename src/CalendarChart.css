@@ -38,6 +38,7 @@
 
 .react-calendar__navigation {
     display: flex;
+    background-color: burlywood;
     height: 44px;
     margin-bottom: 1em;
 }
@@ -84,7 +85,7 @@
 .react-calendar__month-view__days__day--neighboringMonth,
 .react-calendar__decade-view__years__year--neighboringDecade,
 .react-calendar__century-view__decades__decade--neighboringCentury {
-    color: #757575;
+    color: burlywood;
 }
 
 .react-calendar__year-view .react-calendar__tile,
@@ -95,8 +96,9 @@
 
 .react-calendar__tile {
     max-width: 100%;
+    height: 150px;
     padding: 10px 6.6667px;
-    background: none;
+    background: whitesmoke;
     text-align: center;
     line-height: 16px;
     font: inherit;

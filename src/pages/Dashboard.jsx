@@ -86,6 +86,9 @@ const Dashboard = () => {
   const monthlyExpenses = accountList.filter(
     (account) => account.monthlyExpense === "Yes"
   );
+  const notMonthlyExpense = accountList.filter(
+    (account) => account.monthlyExpense === "No"
+  );
 
   const currentAccountBalance = (accountType) => {
     let totalDeposits = 0;
@@ -257,9 +260,10 @@ const Dashboard = () => {
     if (monthlyExpenses) {
       console.log(`Monthly expenses: ${monthlyExpenses}`);
       const monthlyExpenseData = monthlyExpenses.map((item) => ({
-        transactionDate: item.newTransactionDate,
-        transactionName: item.newTransactionName,
-        transactionAmount: item.newTransactionAmount,
+        newtransactionDate: item.newTransactionDate,
+        newtransactionName: item.newTransactionName,
+        newtransactionAmount: item.newTransactionAmount,
+        monthlyExpense: item.monthlyExpense
       }));
       console.log(monthlyExpenseData);
       setMonthlyCalendar(monthlyExpenseData);
@@ -289,6 +293,8 @@ const Dashboard = () => {
       monthlyCalendarfunction();
   }, [accountList, budgetTriggerFetch]);
 
+  console.log("AAAAAALIST", accountList)
+    
   return (
     <>
       <div
@@ -300,8 +306,7 @@ const Dashboard = () => {
         }}
       >
         <CalendarChart
-          sampleData={monthlyCalendar}
-          happensMonthly={true}
+          objData={accountList}
         />
         <TransactionInputDialog
           uid={uid}
