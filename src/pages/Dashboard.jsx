@@ -233,7 +233,7 @@ const Dashboard = () => {
           totalWithdrawals += Number(transaction.newTransactionAmount);
           let date = transaction.newTransactionDate;
 
-          let formatted = totalDeposits + totalWithdrawals;
+          let formatted = totalDeposits - totalWithdrawals;
 
           setLineData((lineData) => [
             ...lineData,
@@ -243,7 +243,7 @@ const Dashboard = () => {
           totalDeposits += Number(transaction.newTransactionAmount);
           let date = transaction.newTransactionDate;
 
-          let formatted = totalDeposits - totalWithdrawals;
+          let formatted = totalDeposits + totalWithdrawals;
 
           setLineData((lineData) => [
             ...lineData,
