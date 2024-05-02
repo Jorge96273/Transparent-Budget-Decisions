@@ -266,7 +266,7 @@ const Dashboard = () => {
     }
   };
   console.log("***MONTHLY CALENDER***", monthlyCalendar);
-  // console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
+  console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
 
   useEffect(() => {
     if (!firstRenderRef.current) {
@@ -286,6 +286,7 @@ const Dashboard = () => {
       lineGraphAccount("Debit"),
       lineGraphAccount("Credit"),
       lineGraphAccount("Savings");
+      monthlyCalendarfunction();
   }, [accountList, budgetTriggerFetch]);
 
   return (
@@ -298,6 +299,10 @@ const Dashboard = () => {
           justifyContent: "space-around",
         }}
       >
+        <CalendarChart
+          sampleData={monthlyCalendar}
+          happensMonthly={true}
+        />
         <TransactionInputDialog
           uid={uid}
           triggerFetch={triggerFetch}

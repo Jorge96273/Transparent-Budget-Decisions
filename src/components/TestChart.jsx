@@ -2,7 +2,6 @@ import React from 'react';
 import CalendarChart from '../components/CalendarChart';
 import { SampleData } from '../SampleData'
 
-
 export default function TestChart() {
 
     const sampleTitle = SampleData.map(item => item.transactionName);
