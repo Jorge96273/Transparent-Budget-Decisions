@@ -76,7 +76,7 @@ function TransactionInputDialog({
       if (accountList) {
         accountList.forEach((transaction) => {
           if (transaction.accountType === accountType) {
-            if (transaction.newTransactionType === "Withdrawl") {
+            if (transaction.newTransactionType === "Withdrawal") {
               totalWithdrawals += Number(transaction.newTransactionAmount);
             } else if (transaction.newTransactionType === "Deposit") {
               totalDeposits += Number(transaction.newTransactionAmount);
@@ -86,7 +86,7 @@ function TransactionInputDialog({
       }
       let recordedBalance = totalDeposits - totalWithdrawals;
       let newBalance = recordedBalance;
-      if (newTransactionType === "Withdrawl") {
+      if (newTransactionType === "Withdrawal") {
         newBalance -= Number(newTransactionAmount);
       } else if (newTransactionType === "Deposit") {
         newBalance += Number(newTransactionAmount);
@@ -197,11 +197,11 @@ function TransactionInputDialog({
                 value={newTransactionType}
                 onChange={(event) => setNewTransactionType(event.target.value)}
               >
-                <option value="Withdrawl">Withdrawal</option>
+                <option value="Withdrawal">Withdrawal</option>
                 <option value="Deposit">Deposit</option>
               </select>
               <br></br>
-              <label htmlFor="monthlyExpense">Monthly Expense:</label>
+              <label htmlFor="monthlyExpense">Monthly Transaction:</label>
               <select
                 id="monthlyExpense"
                 value={monthlyExpense}
