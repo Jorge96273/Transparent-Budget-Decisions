@@ -51,7 +51,7 @@ const Chatbot = () => {
 
   return (
     <>
-      <div className='flex flex-col items-center'>
+      <div className='animate-in fade-in duration-1000  flex flex-col items-center'>
         <img src={bot} className='w-20'></img>
         <span className='font-bold text-3xl'>
           Ask TBD any financial question

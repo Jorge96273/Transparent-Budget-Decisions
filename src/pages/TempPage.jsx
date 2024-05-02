@@ -166,7 +166,7 @@ function App() {
   }, [accountList]);
 
   return (
-    <div className="App">
+    <div className="animate-in fade-in duration-1000  App">
       <Auth />
       <h3>Create Budget</h3>
       <div>

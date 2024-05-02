@@ -291,7 +291,7 @@ const Dashboard = () => {
   return (
     <>
       <div
-        className="w-full"
+        className="animate-in slide-in-from-top duration-1000  w-full"
         style={{
           display: "flex",
           flexWrap: "wrap",

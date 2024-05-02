@@ -375,7 +375,22 @@
   background-color:  rgb(255, 255, 247);
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between; /* This will ensure space around the center element */
+  align-items: center; /* This aligns items vertically */
+  width: 100%; /* Ensures navbar spans full width of its container */
+}
 
+.navbar-center {
+  flex-grow: 1; /* Allows the center to expand as needed */
+  text-align: center; /* Centers the text */
+}
+
+.navbar-end {
+  display: flex;
+  justify-content: flex-end; /* Aligns items to the right */
+}
 
 
 
