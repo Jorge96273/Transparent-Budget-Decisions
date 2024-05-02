@@ -1,21 +1,18 @@
 import React from 'react';
 import CalendarChart from '../components/CalendarChart';
-import { SampleData } from '../SampleData'
+import { useOutletContext } from "react-router-dom";
 
 export default function TestChart() {
 
-    const sampleTitle = SampleData.map(item => item.transactionName);
-    const sampleDate = SampleData.map(item => item.transactionDate);
-    const sampleAmount = SampleData.map(item => item.transactionAmount);
-
+    const context = useOutletContext()
+    console.log("FEOFUJ", context)
 
     return (
         <>
             <h1>Calendar</h1>
             <div>
                 <CalendarChart
-                    sampleData={SampleData}
-                    happensMonthly={true}
+                    objData={accountList}
                 />
             </div>
         </>
