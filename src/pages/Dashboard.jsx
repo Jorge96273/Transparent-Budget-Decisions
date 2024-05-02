@@ -16,6 +16,7 @@ import {
 import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
 import LineChart from "@/components/LineChart";
+import BudgetItem from "@/components/BudgetItem";
 import CalendarChart from "@/components/CalendarChart";
 import { BudgetSheet } from "@/components/BudgetSheet";
 import { MonthlyExpensesSheet } from "@/components/MonthlyExpenseSheet";
