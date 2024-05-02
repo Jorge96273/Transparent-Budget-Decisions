@@ -1,5 +1,7 @@
 // // import { useCallback } from "react";
 import * as React from "react";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/config/firebase";
 import {
   flexRender,
   getCoreRowModel,
@@ -34,8 +36,9 @@ function BudgetedItemTable({
 }) {
   const deleteBudget = async (id) => {
     await deleteDoc(doc(db, `budget/${uid}/newBudget`, id));
-    toast.success("Budget deleted successfully");
+
     setTriggerFetch(!triggerFetch);
+    console.log(deleted);
   };
 
   function transformBudgetList(list) {
@@ -55,7 +58,7 @@ function BudgetedItemTable({
     if (accountList) {
       accountList.forEach((transaction) => {
         if (transaction.selectBudget === category) {
-          if (transaction.newTransactionType === "Withdrawl") {
+          if (transaction.newTransactionType === "Withdrawal") {
             totalWithdrawals += Number(transaction.newTransactionAmount);
           } else if (transaction.newTransactionType === "Deposit") {
             totalDeposits += Number(transaction.newTransactionAmount);
@@ -64,7 +67,6 @@ function BudgetedItemTable({
       });
     }
     let recordedBalance = totalDeposits - totalWithdrawals;
-
     return recordedBalance;
   }
 

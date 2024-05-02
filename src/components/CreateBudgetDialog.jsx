@@ -101,11 +101,15 @@ function CreateBudgetDialog({
               <input
                 type="number"
                 placeholder="Budget Amount"
-                onChange={(e) => setNewBudgetAmount(e.target.value)}
+                onChange={(e) => setNewBudgetAmount(Number(e.target.value))}
               />
             </div>
             <DialogFooter>
-              <button variant="outline" className="rounded-button-newuser">
+              <button
+                variant="outline"
+                className="rounded-button-newuser"
+                onClick={createBudget}
+              >
                 Create Budget
               </button>
             </DialogFooter>
