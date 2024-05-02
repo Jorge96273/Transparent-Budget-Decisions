@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 
 import "../App.css";
-import { Auth } from "../components/auth";
+import { Auth } from "./auth";
 import { db, auth } from "../config/firebase";
 import {
   addDoc,
+  getDoc,
   collection,
   deleteDoc,
   doc,
@@ -32,9 +33,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-function TransactionInputDialog({
+function UpdateTransactionDialog({
   uid,
   triggerFetch,
+  transactionID,
   setTriggerFetch,
   accountList,
   setAccountList,
@@ -53,24 +55,49 @@ function TransactionInputDialog({
   const [newTransactionType, setNewTransactionType] = useState("Withdrawal");
   const [newTransactionAmount, setNewTransactionAmount] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState("No");
+  const [selectBudget, setSelectBudget] = useState("None");
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const fetchTransactionData = async () => {
+      try {
+        const accountRef = doc(db, `${uid}`, transactionID);
+        const docSnap = await getDoc(accountRef);
+        if (docSnap.exists()) {
+          // Assuming the document structure matches the state variables
+          setAccountType(docSnap.data().accountType);
+          setAccountBalance(docSnap.data().accountBalance);
+          setSelectBudget(docSnap.data().selectBudget);
+          setNewTransactionName(docSnap.data().newTransactionName);
+          setNewTransactionAmount(docSnap.data().newTransactionAmount);
+          setNewTransactionDate(docSnap.data().newTransactionDate);
+          setNewTransactionType(docSnap.data().newTransactionType);
+          setMonthlyExpense(docSnap.data().monthlyExpense);
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.error("Error fetching transaction data: ", error);
+      }
+    };
+
+    fetchTransactionData();
+  }, [uid, transactionID]);
+
   //   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
   //     useState(newTransactionAmount);
 
-  const firstRenderRef = useRef(true);
-
-  const transactionCollectionRef = collection(db, `${uid}`);
-
-  const [isDialogOpen, setIsDialogOpen] = useState(true); //?variable to manage dialog box visibility
   const dialogKey = useRef(0);
 
   const closeDialog = () => {
     setIsDialogOpen(false);
     dialogKey.current += 1;
   };
+  const [isDialogOpen, setIsDialogOpen] = useState(true); //?variable to manage dialog box visibility
 
-  const addTransaction = async () => {
+  const updateTransaction = async (id) => {
     try {
-      // Calculate the new balance directly
+      const accountRef = doc(db, `${uid}`, id);
+
       let totalDeposits = 0;
       let totalWithdrawals = 0;
       if (accountList) {
@@ -91,33 +118,42 @@ function TransactionInputDialog({
       } else if (newTransactionType === "Deposit") {
         newBalance += Number(newTransactionAmount);
       }
+      setAccountBalance(newBalance);
 
-      const docRef = await addDoc(transactionCollectionRef, {
-        accountType,
-        accountBalance: newBalance, // Use the calculated new balance here
-        selectBudget,
-        newTransactionName,
-        newTransactionAmount,
-        newTransactionDate,
-        newTransactionType,
-        monthlyExpense,
+      await updateDoc(accountRef, {
+        accountType: accountType,
+        accountBalance: accountBalance,
+        selectBudget: selectBudget,
+        newTransactionName: newTransactionName,
+        newTransactionAmount: newTransactionAmount,
+        newTransactionDate: newTransactionDate,
+        newTransactionType: newTransactionType,
+        monthlyExpense: monthlyExpense,
         createdAt: serverTimestamp(),
       });
+
       setTriggerFetch(!triggerFetch);
       console.log("Document written with ID: ", docRef.id);
       closeDialog();
-
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Transaction failed: ", error);
+      toast.error("Failed to update transaction. Please try again.");
     }
   };
 
-  const [newBudget, setNewBudget] = useState("");
-  const [newBudgetAmount, setNewBudgetAmount] = useState(0);
-
-  const [selectBudget, setSelectBudget] = useState("None");
-  const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true); // Disable the button
+    try {
+      await updateTransaction(transactionID);
+      setIsLoading(false); // Re-enable the button
+    } catch (error) {
+      console.error("Transaction failed: ", error);
+      toast.error("Failed to update transaction. Please try again.");
+      setIsLoading(false); // Ensure the button is re-enabled even on failure
+    }
+  };
 
   return (
     <>
@@ -129,14 +165,14 @@ function TransactionInputDialog({
         >
           <DialogTrigger asChild>
             <button variant="outline" className="rounded-button-newuser">
-              Add a Transaction
+              Update a Transaction
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Create a Transaction Below</DialogTitle>
+              <DialogTitle>Update any Transaction Fields Below</DialogTitle>
             </DialogHeader>
-            <h3>Add a Transaction</h3>
+            <h3>Update a Transaction</h3>
             <div>
               <label htmlFor="accountType">Account:</label>
               <select
@@ -148,10 +184,6 @@ function TransactionInputDialog({
                 <option value="Credit">Credit</option>
                 <option value="Savings">Savings</option>
               </select>
-              {/* <div>
-                <label htmlFor="accountBalance">Current Account Balance:</label>
-                <span id="accountBalance">{accountBalance.toFixed(2)}</span>
-              </div> */}
               <br></br>
               <label htmlFor="budgetAccount">Budget Account:</label>
               <select
@@ -159,7 +191,6 @@ function TransactionInputDialog({
                 value={selectBudget}
                 onChange={(event) => setSelectBudget(event.target.value)}
               >
-                <br></br>
                 <option value="None">None</option>
                 {budgetList.map((budget) => (
                   <option key={budget.id} value={budget.newBudget}>
@@ -171,6 +202,7 @@ function TransactionInputDialog({
               <label htmlFor="accountType">Transaction Name:</label>
               <input
                 type="text"
+                value={newTransactionName}
                 placeholder="Transaction Name"
                 onChange={(e) => setNewTransactionName(e.target.value)}
               />
@@ -178,6 +210,7 @@ function TransactionInputDialog({
               <label htmlFor="accountType">Transaction Amount:</label>
               <input
                 type="number"
+                value={newTransactionAmount}
                 placeholder="Transaction Amount"
                 onChange={(e) => setNewTransactionAmount(e.target.value)}
               />
@@ -186,11 +219,11 @@ function TransactionInputDialog({
               <input
                 aria-label="Date"
                 type="date"
+                value={newTransactionDate}
                 placeholder="Transaction Date"
                 onChange={(e) => setNewTransactionDate(e.target.value)}
               />
               <br></br>
-
               <label htmlFor="transactionType">Withdraw or Deposit:</label>
               <select
                 id="transactionType"
@@ -211,23 +244,22 @@ function TransactionInputDialog({
                 <option value="Yes">Yes</option>
               </select>
               <br></br>
-              <></>
             </div>
             {/* ******* END OF FORM */}
-
             <DialogFooter>
               <button
                 className="rounded-button-newuser"
-                onClick={addTransaction}
+                onClick={handleSubmit}
+                disabled={isLoading}
               >
-                Submit Transaction
+                Update Transaction
               </button>
             </DialogFooter>
           </DialogContent>
-        </Dialog>{" "}
+        </Dialog>
       </div>
     </>
   );
 }
 
-export default TransactionInputDialog;
+export default UpdateTransactionDialog;

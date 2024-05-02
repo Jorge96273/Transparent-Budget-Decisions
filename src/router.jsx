@@ -10,7 +10,6 @@ import TempPage from "./pages/TempPage.jsx"
 import DashboardPage from "./pages/Dashboard.jsx";
 import EducationPage from "./pages/EducationPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx"
-import TestChart from "./components/TestChart.jsx";
 
 
 const router = createBrowserRouter([
@@ -53,10 +52,6 @@ const router = createBrowserRouter([
       {
         path: "temp/",
         element: <TempPage />,
-      },
-      {
-        path: "testchart/",
-        element: <TestChart />,
       },
       {
         path: "/*/",
