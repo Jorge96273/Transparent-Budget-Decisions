@@ -87,7 +87,6 @@ const Dashboard = () => {
     (account) => account.monthlyExpense === "Yes"
   );
 
-
   const currentAccountBalance = (accountType) => {
     let totalDeposits = 0;
     let totalWithdrawals = 0;
@@ -254,7 +253,20 @@ const Dashboard = () => {
     }
   };
 
-  
+  // const monthlyCalendarfunction = () => {
+  //   if (monthlyExpenses) {
+  //     console.log(`Monthly expenses: ${monthlyExpenses}`);
+  //     const monthlyExpenseData = monthlyExpenses.map((item) => ({
+  //       transactionDate: item.newTransactionDate,
+  //       transactionName: item.newTransactionName,
+  //       transactionAmount: item.newTransactionAmount,
+  //     }));
+  //     console.log(monthlyExpenseData);
+  //     setMonthlyCalendar(monthlyExpenseData);
+  //   }
+  // };
+  // console.log("***MONTHLY CALENDER***", monthlyCalendar);
+  // // console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
 
   useEffect(() => {
     if (!firstRenderRef.current) {
@@ -276,7 +288,6 @@ const Dashboard = () => {
       lineGraphAccount("Savings");
   }, [accountList, budgetTriggerFetch]);
 
-    
   return (
     <>
       <div
@@ -287,9 +298,7 @@ const Dashboard = () => {
           justifyContent: "space-around",
         }}
       >
-        <CalendarChart
-          objData={accountList}
-        />
+        <CalendarChart objData={accountList} />
         <TransactionInputDialog
           uid={uid}
           triggerFetch={triggerFetch}
@@ -327,6 +336,7 @@ const Dashboard = () => {
             accountList={accountList}
             setAccountList={setAccountList}
             monthlyExpenses={monthlyExpenses}
+            budgetList={budgetList}
           />
         ) : null}
       </div>

@@ -26,8 +26,6 @@ export function MonthlyExpensesSheet({
   setBudgetTriggerFetch,
   monthlyExpenses,
 }) {
-  console.log("BUDGET LIST", budgetList);
-
   return (
     <Sheet>
       <SheetTrigger asChild>
