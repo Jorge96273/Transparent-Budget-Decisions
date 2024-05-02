@@ -30,7 +30,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
         }
       });
     }
-    let recordedBalance = totalDeposits - totalWithdrawals;
+    let recordedBalance = totalDeposits + totalWithdrawals;
     return recordedBalance;
   }
 
@@ -46,7 +46,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
       {budgetList.map((budget) => {
         const spent = budgetSpent(budget.newBudget);
         const remaining = budget.newBudgetAmount - spent;
-        const percentageSpent = ((spent * -1) / budget.newBudgetAmount) * 100;
+        const percentageSpent = (spent / budget.newBudgetAmount) * 100;
         const progressBarColor =
           percentageSpent <= 50
             ? "green"
@@ -72,10 +72,16 @@ const BudgetItem = ({ budgetList, accountList }) => {
           >
             <div className="progress-text w-full">
               <h3>{budget.newBudget}</h3>
-              <p>{formatCurrency(budget.newBudgetAmount)} Budgeted</p>
+              <p>
+                {Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(budget.newBudgetAmount)}{" "}
+                Budgeted
+              </p>
               <progress
                 max={budget.newBudgetAmount}
-                value={spent * -1}
+                value={spent}
                 className="w-75 w3-container w3-pro"
                 style={{ backgroundColor: progressBarColor }}
               ></progress>
