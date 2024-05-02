@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/accordion";
 import BudgetedItemTable from "@/components/BudgetedItemTable";
 import { AccordionElement } from "@/components/Accordion";
-import BudgetItem from "@/components/BudgetItem";
 import LineChart from "@/components/LineChart";
 import CalendarChart from "@/components/CalendarChart";
 import { BudgetSheet } from "@/components/BudgetSheet";
