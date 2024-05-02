@@ -212,7 +212,7 @@ const EnterLandingPage = () => {
 
   return (
     <>
-      <div>
+      <div className="animate-in fade-in duration-1000 ">
         <div className="user-banner pt-6">
           <div
             style={{ display: "flex", justifyContent: "center", gap: "40px" }}

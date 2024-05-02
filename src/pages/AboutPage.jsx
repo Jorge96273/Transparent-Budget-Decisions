@@ -3,7 +3,7 @@
 const AboutPage = () => {
   return (
     <>
-      <div>AboutPage</div>
+      <div className="animate-in fade-in duration-1000 " >AboutPage</div>
     </>
   );
 };
