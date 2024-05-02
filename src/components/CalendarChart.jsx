@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import '../../src/CalendarChart.css'; //Calendar CSS
-import { format as formatDate, addDays, addMonths } from 'date-fns'; //For date manipulation
-import { format as formateTz} from 'date-fns-tz'; //For time manipulation
-import Modal from '@/components/Modal' //For the pop up when a date is clicked
+import { format as formatDate, addDays, addMonths } from 'date-fns'; //For date manipulation-----
+import { format as formateTz} from 'date-fns-tz'; //For time manipulation----
+import Modal from '@/components/Modal' //For the pop up when a date is clicked----
 
 //objData  is a list of Objects 
 export default function CalendarChart({ objData }) {
@@ -12,60 +12,67 @@ export default function CalendarChart({ objData }) {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const [simpObjData, setSimpObjData] = useState([]);
+  const [transactionType, setTransactionType] = useState('withdrawal'); 
+
 
   console.log("datacalchart",objData )
 
-  //For filtering if any
   useEffect(() => {
     const filteredData = objData.filter(
-      (account) => account.monthlyExpense.toLowerCase() === "no" || "yes"
+      (account) => account.newTransactionType.toLowerCase() === transactionType
     );
+    console.log(filteredData)
     setSimpObjData(filteredData)
-  },[objData])
+  }, [objData, transactionType])
 
-  //Breaks down the object and grabs what I need
+  //Breaks down the object and grabs what I need------
   useEffect(() => {
     if (simpObjData.length > 0) {
       const breakDown = simpObjData.map((data) => ({
         title: data.newTransactionName,
         date: addDays(new Date (data.newTransactionDate), 1),
         amount: data.newTransactionAmount,
-        monthly: data.monthlyExpense.toLowerCase() === 'yes' ? true : false
+        monthly: data.monthlyExpense.toLowerCase() === 'yes' ? true : false,
+        type: data.newTransactionType 
     }))
-    console.log("AAAAAA",breakDown)
     setEvents(breakDown);
     }
   }, [simpObjData]);
 
-  //For what appears in the calendar tiles
+  //For what appears in the calendar tiles------
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
       const dayEvents = events.filter(event =>{
-        return event.monthly ? //Checks if it is a monthly event
+        return event.monthly ? //Checks if it is a monthly event-------
         (date.getDate() === event.date.getDate()) :
         formatDate(event.date, 'yyyy-MM-dd') === formatDate(date, 'yyyy-MM-dd')
     });
       const getEmoji = (title) => {
         if (title.includes("Birthday")) return "🎂";
-        if (title.includes("Meeting")) return "📅";
+        if (title.includes("Movie")) return "🎞️";
         if (title.includes("Dinner")) return "🍽️";
         if (title.includes("Car")) return "🚗";
-        if (title.includes("Call")) return "📞";
-        return "🎯"; // Default emoji
+        if (title.includes("Phone")) return "📞";
+        if (title.includes("Mortgage")) return "🏡";
+        if (title.includes("School")) return "📚";
+        if (title.includes("Gym")) return "🏋️";
+        if (title.includes("Cable")) return "🛜";
+        if (title.includes("Paycheck")) return "💰";
+        return "🎯"; 
       };
-      return <ul>{dayEvents.map((event, index) => <li key={index}>{getEmoji(event.title)}{event.title}: ${event.amount}</li>)}</ul>;
+      return <ul>{dayEvents.map((event, index) => <li key={index} style={{ color: transactionType.toLowerCase() === 'deposit' ? 'green' : 'red' }} >{getEmoji(event.title)}{event.title}: ${event.amount}</li>)}</ul>;
   };
   };
 
-  //For whenever you click on a date
+  //For whenever you click on a date -----
   const handleDayClick = (clickedDate) => {
     const dayEvents = events.filter(event => {
-      return event.monthly ?  //Checks if it is a monthly event
+      return event.monthly ?  //Checks if it is a monthly event-------
       (clickedDate.getDate() === event.date.getDate()) :
       formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
     });
     if (dayEvents.length > 0) {
-      //ModalContent is for the pop up when a date is clicked
+      //ModalContent is for the pop up when a date is clicked-------
       setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: ` + dayEvents.map(event => `|| ${event.title} - $${event.amount} `).join("\n"));
       setIsOpen(true)
     }
@@ -87,6 +94,10 @@ export default function CalendarChart({ objData }) {
           <h1 style={{ color: "white" }}>Event Details</h1>
           <p style={{ color: "white" }}>{modalContent}</p>
         </Modal>
+      </div>
+      <div className='button-container'>
+      <button className='dbutton' onClick={() => setTransactionType('deposit')}>Deposits</button>
+      <button className='wbutton' onClick={() => setTransactionType('withdrawal')}>Withdrawals</button>
       </div>
     </div>
   );

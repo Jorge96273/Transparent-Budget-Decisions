@@ -86,6 +86,9 @@ const Dashboard = () => {
   const monthlyExpenses = accountList.filter(
     (account) => account.monthlyExpense === "Yes"
   );
+  const notMonthlyExpense = accountList.filter(
+    (account) => account.monthlyExpense === "No"
+  );
 
   const currentAccountBalance = (accountType) => {
     let totalDeposits = 0;
@@ -242,7 +245,7 @@ const Dashboard = () => {
           totalDeposits += Number(transaction.newTransactionAmount);
           let date = transaction.newTransactionDate;
 
-          let formatted = totalDeposits + totalWithdrawals;
+          let formatted = totalDeposits - totalWithdrawals;
 
           setLineData((lineData) => [
             ...lineData,
@@ -253,21 +256,7 @@ const Dashboard = () => {
     }
   };
 
-  const monthlyCalendarfunction = () => {
-    if (monthlyExpenses) {
-      console.log(`Monthly expenses: ${monthlyExpenses}`);
-      const monthlyExpenseData = monthlyExpenses.map((item) => ({
-        newtransactionDate: item.newTransactionDate,
-        newtransactionName: item.newTransactionName,
-        newtransactionAmount: item.newTransactionAmount,
-        monthlyExpense: item.monthlyExpense
-      }));
-      console.log(monthlyExpenseData);
-      setMonthlyCalendar(monthlyExpenseData);
-    }
-  };
-  console.log("***MONTHLY CALENDER***", monthlyCalendar);
-  console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
+  
 
   useEffect(() => {
     if (!firstRenderRef.current) {
@@ -287,10 +276,8 @@ const Dashboard = () => {
       lineGraphAccount("Debit"),
       lineGraphAccount("Credit"),
       lineGraphAccount("Savings");
-      monthlyCalendarfunction();
   }, [accountList, budgetTriggerFetch]);
 
-  console.log("AAAAAALIST", accountList)
     
   return (
     <>
@@ -323,27 +310,23 @@ const Dashboard = () => {
           setBudgetList={setBudgetList}
           budgetList={budgetList}
         />{" "}
-        {budgetList.length > 0 ? (
-          <BudgetSheet
-            accountList={accountList}
-            budgetList={budgetList}
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            budgetTriggerFetch={budgetTriggerFetch}
-            setBudgetTriggerFetch={setBudgetTriggerFetch}
-          />
-        ) : null}
-        {monthlyExpenses.length > 0 ? (
-          <MonthlyExpensesSheet
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            monthlyExpenses={monthlyExpenses}
-          />
-        ) : null}
+        <BudgetSheet
+          accountList={accountList}
+          budgetList={budgetList}
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          budgetTriggerFetch={budgetTriggerFetch}
+          setBudgetTriggerFetch={setBudgetTriggerFetch}
+        />{" "}
+        <MonthlyExpensesSheet
+          uid={uid}
+          triggerFetch={triggerFetch}
+          setTriggerFetch={setTriggerFetch}
+          accountList={accountList}
+          setAccountList={setAccountList}
+          monthlyExpenses={monthlyExpenses}
+        />
       </div>
       <br></br> <br></br>
       <BudgetItem budgetList={budgetList} accountList={accountList} />
