@@ -1,5 +1,5 @@
 import LogoutButton from "./LogoutButton";
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "@/config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
