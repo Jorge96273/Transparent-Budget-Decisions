@@ -380,13 +380,13 @@
 
 
 .about-page-container {
-  display: flex;  /* Enables flexbox */
-  flex-direction: column;  /* Stacks children vertically */
-  justify-content: top;  /* Centers vertically in the flex container */
-  align-items: center;  /* Centers horizontally in the flex container */
-  height: 80%;  /* Takes full viewport height */
-  width: 100%;  /* Takes full viewport width */
-  background: #f0f0f0;  /* Optional: sets a background color */
+  display: flex;  
+  flex-direction: column;  
+  justify-content: top;  
+  align-items: center;  
+  height: 90%;  
+  width: 100%;  
+  background: rgb(255, 247, 237);  
 }
 
 .cylinder {
@@ -434,6 +434,18 @@
 .picture-adjust6 {
   width: 125px;
   height: 125px;
+}
+
+.bio {
+  max-width: 600px; /* Adjust max-width as needed */
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 

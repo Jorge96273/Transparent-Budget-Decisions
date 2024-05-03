@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Mike from "../images/Mike.png";
 import Jose from "../images/Jose.png";
 import Weston from "../images/Weston.png";
 import Saul from "../images/Saul.png";
 import Jorge from "../images/Jorge.png";
 import Andrew from "../images/Andrew.png";
+import cashregister from "../images/cashregister.mp3";
+
 
 const AboutPage = () => {
   const [cylinderRotation, setCylinderRotation] = useState(0);
   const [holeRotation, setHoleRotation] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    if (isPlaying) {
+      const audio = new Audio(cashregister);
+      audio.play();
+      audio.addEventListener('ended', () => {
+        setIsPlaying(false);
+      });
+    }
+  }, [isPlaying]);
 
   const handleRotate = () => {
-    setCylinderRotation((prevRotation) => prevRotation + 60); // Cylinder rotates by 60 degrees
-    setHoleRotation((prevRotation) => prevRotation); // Holes rotate by 30 degrees
+    setIsPlaying(true);
+    setCylinderRotation((prevRotation) => prevRotation + 60); 
+    setHoleRotation((prevRotation) => prevRotation); 
   };
 
   const getHoleStyle = (initialAngle, translateX) => ({
@@ -54,25 +68,26 @@ const AboutPage = () => {
         {nameWithAngle270 && (
           <>
             {nameWithAngle270 === "Jose" && (
-              <p>This is a paragraph for Jose.</p>
+              <p className="bio">This is a paragraph for Jose.</p>
             )}
             {nameWithAngle270 === "Mike" && (
-              <p>This is a paragraph for Mike.</p>
+              <p className="bio">This is a paragraph for Mike.</p>
             )}
             {nameWithAngle270 === "Weston" && (
-              <p>This is a paragraph for Weston.</p>
+              <p className="bio">This is a paragraph for Weston.</p>
             )}
             {nameWithAngle270 === "Saul" && (
-              <p>This is a paragraph for Saul.</p>
+              <p className="bio">This is a paragraph for Saul.</p>
             )}
             {nameWithAngle270 === "Jorge" && (
-              <p>This is a paragraph for Jorge.</p>
+              <p className="bio">This is a paragraph for Jorge. and this is some more text to see how the box is going to work.</p>
             )}
             {nameWithAngle270 === "Andrew" && (
-              <p>This is a paragraph for Andrew.</p>
+              <p className="bio">This is a paragraph for Andrew.</p>
             )}
           </>
         )}
+    
         <div
           className="cylinder"
           onClick={handleRotate}
