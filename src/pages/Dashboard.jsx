@@ -20,6 +20,7 @@ import BudgetItem from "@/components/BudgetItem";
 import CalendarChart from "@/components/CalendarChart";
 import { BudgetSheet } from "@/components/BudgetSheet";
 import { MonthlyExpensesSheet } from "@/components/MonthlyExpenseSheet";
+import AccountBalances from "@/components/AccountBalances";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [creditLine, setCreditLine] = useState([]);
   const [savingsLine, setSavingsLine] = useState([]);
   const [monthlyCalendar, setMonthlyCalendar] = useState([]);
+
   // const [date, setDate] = useState([])
   // const [balance, setBalance] = useState([])
   const uid = user?.uid;
@@ -290,88 +292,114 @@ const Dashboard = () => {
 
   return (
     <>
-      <div
-        className="w-full"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-around",
-        }}
-      >
-        <CalendarChart objData={accountList} />
-        <TransactionInputDialog
-          uid={uid}
-          triggerFetch={triggerFetch}
-          setTriggerFetch={setTriggerFetch}
-          accountList={accountList}
-          setAccountList={setAccountList}
-          setBudgetList={setBudgetList}
-          budgetList={budgetList}
-        />
-        <CreateBudgetDialog
-          uid={uid}
-          triggerFetch={triggerFetch}
-          setTriggerFetch={setTriggerFetch}
-          accountList={accountList}
-          setAccountList={setAccountList}
-          setBudgetList={setBudgetList}
-          budgetList={budgetList}
-        />{" "}
-        {budgetList.length > 0 ? (
-          <BudgetSheet
-            accountList={accountList}
-            budgetList={budgetList}
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            budgetTriggerFetch={budgetTriggerFetch}
-            setBudgetTriggerFetch={setBudgetTriggerFetch}
-          />
-        ) : null}
-        {monthlyExpenses.length > 0 ? (
-          <MonthlyExpensesSheet
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            monthlyExpenses={monthlyExpenses}
-            budgetList={budgetList}
-          />
-        ) : null}
+      <div className='animate-in slide-in-from-bottom duration-1000  w-full'>
+        <div>
+            <div className='flex w-full justify-center h-max p-2'>
+              <div className='flex items-center justify-center h-max rounded '>
+                <BudgetItem budgetList={budgetList} accountList={accountList} />
+              </div>
+            </div>
+          <div className='p-8'>
+            <div className='flex w-full items-center justify-center'>
+              <div className='mr-2 ml-2'>
+                <TransactionInputDialog
+                  uid={uid}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  setBudgetList={setBudgetList}
+                  budgetList={budgetList}
+                />
+              </div>
+              <div className='mr-2 ml-2'>
+                <CreateBudgetDialog
+                  uid={uid}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  setBudgetList={setBudgetList}
+                  budgetList={budgetList}
+                />
+              </div>
+              {budgetList.length > 0 ? (
+                <div className='mr-2 ml-2'>
+                  <BudgetSheet
+                    accountList={accountList}
+                    budgetList={budgetList}
+                    uid={uid}
+                    triggerFetch={triggerFetch}
+                    setTriggerFetch={setTriggerFetch}
+                    budgetTriggerFetch={budgetTriggerFetch}
+                    setBudgetTriggerFetch={setBudgetTriggerFetch}
+                  />{" "}
+                </div>
+              ) : null}
+              {monthlyExpenses.length > 0 ? (
+                <div className='mr-2 ml-2'>
+                  <MonthlyExpensesSheet
+                    uid={uid}
+                    triggerFetch={triggerFetch}
+                    setTriggerFetch={setTriggerFetch}
+                    accountList={accountList}
+                    setAccountList={setAccountList}
+                    monthlyExpenses={monthlyExpenses}
+                    budgetList={budgetList}
+                  />
+                </div>
+              ) : null}
+            </div>
+            <div className='flex w-full justify-center h-max'>
+              <div className='flex items-center justify-center p-1 h-max rounded '>
+                <AccountBalances
+                  currentAccountBalance={currentAccountBalance}
+                  accountList={accountList}
+                />
+              </div>
+            </div>
+            <div className='w-full flex justify-center '>
+              <div className='flex w-max justify-center h-max p-4 mb-2 rounded '>
+                <CalendarChart objData={accountList} />
+              </div>
+            </div>
+            <div className='flex w-full justify-center content-center items-center'>
+              <div className=' w-full'>
+                <AccordionElement
+                  setBudgetList={setBudgetList}
+                  budgetList={budgetList}
+                  uid={uid}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  budgetTriggerFetch={budgetTriggerFetch}
+                  setBudgetTriggerFetch={setBudgetTriggerFetch}
+                  currentAccountBalance={currentAccountBalance}
+                  debitAccount={debitAccount}
+                  savingsAccount={savingsAccount}
+                  creditAccount={creditAccount}
+                  monthlyExpensesBalance={monthlyExpensesBalance}
+                  monthlyExpenses={monthlyExpenses}
+                  lineData={lineData}
+                  category={category}
+                  amounts={amounts}
+                  year={year}
+                  debitCategory={debitCategory}
+                  debitAmounts={debitAmounts}
+                  debitYear={debitYear}
+                  savingsCategory={savingsCategory}
+                  savingsAmounts={savingsAmounts}
+                  savingsYear={savingsYear}
+                  creditCategory={creditCategory}
+                  creditAmounts={creditAmounts}
+                  creditYear={creditYear}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <br></br> <br></br>
-      <BudgetItem budgetList={budgetList} accountList={accountList} />
-      <AccordionElement
-        setBudgetList={setBudgetList}
-        budgetList={budgetList}
-        uid={uid}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        budgetTriggerFetch={budgetTriggerFetch}
-        setBudgetTriggerFetch={setBudgetTriggerFetch}
-        currentAccountBalance={currentAccountBalance}
-        debitAccount={debitAccount}
-        savingsAccount={savingsAccount}
-        creditAccount={creditAccount}
-        monthlyExpensesBalance={monthlyExpensesBalance}
-        monthlyExpenses={monthlyExpenses}
-        lineData={lineData}
-        category={category}
-        amounts={amounts}
-        year={year}
-        debitCategory={debitCategory}
-        debitAmounts={debitAmounts}
-        debitYear={debitYear}
-        savingsCategory={savingsCategory}
-        savingsAmounts={savingsAmounts}
-        savingsYear={savingsYear}
-        creditCategory={creditCategory}
-        creditAmounts={creditAmounts}
-        creditYear={creditYear}
-      />
     </>
   );
 };

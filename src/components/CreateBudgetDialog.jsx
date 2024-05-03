@@ -78,7 +78,7 @@ function CreateBudgetDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button variant="outline" className="rounded-button-newuser">
+            <button className="rounded-button-newuser hover:bg-orange-100">
               Create a Budget
             </button>
           </DialogTrigger>
@@ -106,8 +106,8 @@ function CreateBudgetDialog({
             </div>
             <DialogFooter>
               <button
-                variant="outline"
-                className="rounded-button-newuser"
+                
+                className="rounded-button-newuser hover:bg-orange-100"
                 onClick={createBudget}
               >
                 Create Budget

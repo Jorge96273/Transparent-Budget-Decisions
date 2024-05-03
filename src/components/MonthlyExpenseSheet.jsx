@@ -31,14 +31,14 @@ export function MonthlyExpensesSheet({
       <SheetTrigger asChild>
         <div className="text-white">
           {/* Assuming Button component accepts variant and className props */}
-          <button variant="outline" className="rounded-button-newuser">
+          <button  className="rounded-button-newuser hover:bg-orange-100">
             Monthly Transaction
           </button>
         </div>
       </SheetTrigger>
-      <SheetContent style={{ width: "58%" }}>
+      <SheetContent className="flex justify-center w-full" >
         <div
-          className="background-color-div text-black"
+          className="background-color-div rounded text-black"
           style={{ maxHeight: "500px", overflowY: "auto" }}
         >
           <SheetTitle>
@@ -53,6 +53,7 @@ export function MonthlyExpensesSheet({
               accountList={accountList}
               setAccountList={setAccountList}
               accountTable={monthlyExpenses}
+              budgetList={budgetList}
             />
           )}
         </div>

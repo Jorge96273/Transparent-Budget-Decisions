@@ -94,12 +94,13 @@ export default function CalendarChart({ objData }) {
   }, [events]);
 
   return (
-    <div className='full-react-calendar'>
+    <>
+    <div className='flex flex-col items-center'>
       <Calendar
         onChange={setDate}
         value={date}
         calendarType="iso8601"
-        className="calendar-style"
+        className="calendar-style rounded "
         view="month"
         onClickDay={handleDayClick}
         tileContent={renderTileContent}
@@ -110,7 +111,7 @@ export default function CalendarChart({ objData }) {
           <p style={{ color: "white" }}>{modalContent}</p>
         </Modal>
       </div>
-      <div className='button-container'>
+        <div className='m-2 w-max'>
       <button className='dbutton' onClick={() => {
         setTransactionType('deposit');
         setTriggerEffect(prev => prev + 1);
@@ -124,7 +125,8 @@ export default function CalendarChart({ objData }) {
         setTriggerEffect(prev => prev + 1);
       }}>Withdrawals</button>
       </div>
-    </div>
+      </div>
+      </>
   );
 };
 
