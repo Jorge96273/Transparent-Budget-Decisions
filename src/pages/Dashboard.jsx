@@ -290,15 +290,114 @@ const Dashboard = () => {
 
   return (
     <>
+<div >
+   <div className="p-4 border-2 bg-sky-900 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div className="grid grid-cols-3 gap-4 mb-4">
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              1 - small 1/3 wide - balance
+            </p>
+         </div>
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              2 - small 1/3 wide - balance
+            </p>
+         </div>
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+               3 - small 1/3 wide - balance
+            </p>
+         </div>
+      </div>
+   <div className="flex items-center justify-center h-auto p-4 mb-2 rounded bg-gray-50 dark:bg-gray-800">
+         <CalendarChart objData={accountList} />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 mb-4">
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              1 - small 1/3 wide - balance
+            </p>
+         </div>
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              2 - small 1/3 wide - balance
+            </p>
+         </div>
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+               3 - small 1/3 wide - balance
+            </p>
+         </div>
+      </div>
+      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+         <p className="text-2xl text-gray-400 dark:text-gray-500">
+            4 - large full wide
+         </p>
+      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              5 - half screen wide
+            </p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              6 - half screen wide
+            </p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              7 - half screen wide
+            </p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+              8 - half screen wide
+            </p>
+         </div>
+      </div>
+      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+         <p className="text-2xl text-gray-400 dark:text-gray-500">
+            9 - wide full
+         </p>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+            10 - half screen wide
+            </p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+               11 - half screen wide
+            </p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+           12 -  half screen wide
+            </p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">
+                13 - half screen wide
+            </p>
+         </div>
+      </div>
+   </div>
+</div>
+    
+
+    
       <div
         className="animate-in slide-in-from-bottom duration-1000  w-full"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-around",
-        }}
+        // style={{
+        //   display: "flex",
+        //   flexWrap: "wrap",
+        //   justifyContent: "space-around",
+        // }}
       >
-        <CalendarChart objData={accountList} />
+        
         <TransactionInputDialog
           uid={uid}
           triggerFetch={triggerFetch}
