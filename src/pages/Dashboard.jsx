@@ -20,6 +20,7 @@ import BudgetItem from "@/components/BudgetItem";
 import CalendarChart from "@/components/CalendarChart";
 import { BudgetSheet } from "@/components/BudgetSheet";
 import { MonthlyExpensesSheet } from "@/components/MonthlyExpenseSheet";
+import AccountBalances from "@/components/AccountBalances";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [creditLine, setCreditLine] = useState([]);
   const [savingsLine, setSavingsLine] = useState([]);
   const [monthlyCalendar, setMonthlyCalendar] = useState([]);
+
   // const [date, setDate] = useState([])
   // const [balance, setBalance] = useState([])
   const uid = user?.uid;
@@ -290,6 +292,10 @@ const Dashboard = () => {
 
   return (
     <>
+      <AccountBalances
+        currentAccountBalance={currentAccountBalance}
+        accountList={accountList}
+      />
 <div >
    <div className="p-4 border-2 bg-sky-900 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <div className="grid grid-cols-3 gap-4 mb-4">
