@@ -6,8 +6,8 @@ import Saul from "../images/Saul.png";
 import Jorge from "../images/Jorge.png";
 import Andrew from "../images/Andrew.png";
 import cashregister from "../images/cashregister.mp3";
-
-
+// https://pixabay.com/sound-effects/search/cash/
+// Cash Register Purchase MP3 Royalty Free, Free Download
 const AboutPage = () => {
   const [cylinderRotation, setCylinderRotation] = useState(0);
   const [holeRotation, setHoleRotation] = useState(0);
