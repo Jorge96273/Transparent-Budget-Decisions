@@ -13,6 +13,7 @@ import {
 // import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 // import { Button } from "react-bootstrap";
+import UpdateTransactionDialog from "./UpdateTransactionDialog";
 
 // import { useCallback } from "react";
 import * as React from "react";
@@ -44,6 +45,7 @@ function TransactionTable({
   accountList,
   setAccountList,
   accountTable,
+  budgetList,
 }) {
   const transactionCollectionRef = collection(db, `${uid}`);
 
@@ -161,12 +163,12 @@ function TransactionTable({
 
         return (
           <div className="items-center">
-            <TransAmtDialog
-              updateTransaction={updateTransaction}
+            <UpdateTransactionDialog
               transactionID={transactionID}
               uid={uid}
               setTriggerFetch={setTriggerFetch}
               triggerFetch={triggerFetch}
+              budgetList={budgetList}
             />
           </div>
         );
@@ -288,10 +290,11 @@ function TransactionTable({
         return (
           <div className="text-center">
             <button
+              className="rounded-button-newuser"
               type="button"
-              className="btn btn-secondary btn-sm"
               onClick={() => deleteTransaction(transactionID)}
             >
+              {" "}
               Delete Transaction
             </button>
           </div>

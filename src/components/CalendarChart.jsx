@@ -1,65 +1,85 @@
-import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
-import "../../src/CalendarChart.css";
-import { format as formatDate, addDays, addMonths } from "date-fns";
-import { format as formateTz } from "date-fns-tz";
-import Modal from "@/components/Modal";
+import { useState, useEffect } from 'react';
+import Calendar from 'react-calendar';
+import '../../src/CalendarChart.css'; //Calendar CSS
+import { format as formatDate, addDays, addMonths } from 'date-fns'; //For date manipulation-----
+import { format as formateTz} from 'date-fns-tz'; //For time manipulation----
+import Modal from '@/components/Modal' //For the pop up when a date is clicked----
 
-export default function CalendarChart({ sampleData }) {
+//objData  is a list of Objects 
+export default function CalendarChart({ objData }) {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
+  const [modalContent, setModalContent] = useState('');
+  const [simpObjData, setSimpObjData] = useState([]);
+  const [transactionType, setTransactionType] = useState('withdrawal'); 
+
+
+  console.log("datacalchart",objData )
 
   useEffect(() => {
-    const breakDown = sampleData.map((data) => ({
-      title: data.transactionName,
-      date: addDays(new Date(data.transactionDate), 1),
-      amount: data.transactionAmount,
-    }));
+    const filteredData = objData.filter(
+      (account) => account.newTransactionType.toLowerCase() === transactionType
+    );
+    console.log(filteredData)
+    setSimpObjData(filteredData)
+  }, [objData, transactionType])
+
+  //Breaks down the object and grabs what I need------
+  useEffect(() => {
+    if (simpObjData.length > 0) {
+      const breakDown = simpObjData.map((data) => ({
+        title: data.newTransactionName,
+        date: addDays(new Date (data.newTransactionDate), 1),
+        amount: data.newTransactionAmount,
+        monthly: data.monthlyExpense.toLowerCase() === 'yes' ? true : false,
+        type: data.newTransactionType 
+    }))
     setEvents(breakDown);
-  }, [sampleData]);
-
-  console.log("eevee", events);
-
-  const renderTileContent = ({ date, view }) => {
-    console.log("renderTileContent");
-    console.log("BEFORE RENDER", events);
-    if (view === "month") {
-      const dayEvents = events.filter(
-        (event) =>
-          formatDate(event.date, "yyyy-MM-dd") ===
-          formatDate(date, "yyyy-MM-dd")
-      );
-      console.log("AFTER RENDER", events);
-      return (
-        <ul>
-          {dayEvents.map((event, index) => (
-            <li key={index}>{event.title}</li>
-          ))}
-        </ul>
-      );
     }
+  }, [simpObjData]);
+
+  //For what appears in the calendar tiles------
+  const renderTileContent = ({ date, view }) => {
+    if (view === 'month') {
+      const dayEvents = events.filter(event =>{
+        return event.monthly ? //Checks if it is a monthly event-------
+        (date.getDate() === event.date.getDate()) :
+        formatDate(event.date, 'yyyy-MM-dd') === formatDate(date, 'yyyy-MM-dd')
+    });
+      const getEmoji = (title) => {
+        if (title.includes("Birthday")) return "🎂";
+        if (title.includes("Movie")) return "🎞️";
+        if (title.includes("Dinner")) return "🍽️";
+        if (title.includes("Car")) return "🚗";
+        if (title.includes("Phone")) return "📞";
+        if (title.includes("Mortgage")) return "🏡";
+        if (title.includes("School")) return "📚";
+        if (title.includes("Gym")) return "🏋️";
+        if (title.includes("Cable")) return "🛜";
+        if (title.includes("Paycheck")) return "💰";
+        return "🎯"; 
+      };
+      return <ul>{dayEvents.map((event, index) => <li key={index} style={{ color: transactionType.toLowerCase() === 'deposit' ? 'green' : 'red' }} >{getEmoji(event.title)}{event.title}: ${event.amount}</li>)}</ul>;
+  };
   };
 
+  //For whenever you click on a date -----
   const handleDayClick = (clickedDate) => {
-    console.log("handleDayClick");
-    const dayEvents = events.filter(
-      (event) =>
-        formatDate(event.date, "yyyy-MM-dd") ===
-        formatDate(clickedDate, "yyyy-MM-dd")
-    );
+    const dayEvents = events.filter(event => {
+      return event.monthly ?  //Checks if it is a monthly event-------
+      (clickedDate.getDate() === event.date.getDate()) :
+      formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
+    });
     if (dayEvents.length > 0) {
-      setModalContent(
-        `Events for ${formatDate(clickedDate, "MMM dd")}: \n\n` +
-          dayEvents.map((event) => event.title).join("\n")
-      );
-      setIsOpen(true);
+      //ModalContent is for the pop up when a date is clicked-------
+      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: ` + dayEvents.map(event => `|| ${event.title} - $${event.amount} `).join("\n"));
+      setIsOpen(true)
     }
   };
 
   return (
-    <div>
+    <div className='full-react-calendar'>
       <Calendar
         onChange={setDate}
         value={date}
@@ -75,64 +95,11 @@ export default function CalendarChart({ sampleData }) {
           <p style={{ color: "white" }}>{modalContent}</p>
         </Modal>
       </div>
+      <div className='button-container'>
+      <button className='dbutton' onClick={() => setTransactionType('deposit')}>Deposits</button>
+      <button className='wbutton' onClick={() => setTransactionType('withdrawal')}>Withdrawals</button>
+      </div>
     </div>
   );
-}
+};
 
-// const handleAddEvent = (e) => {
-//   e.preventDefault();
-//   const eventDateObject = new Date(eventDate + 'T00:00:00');
-//   const estDate = new Date(eventDateObject.getTime() + (11 * 60 * 60 * 1000))
-//   const newEvent = {
-//     id: new Date().getTime(),
-//     title: eventTitle,
-//     date: new Date(estDate).toDateString(),
-//     isMonthly: isMonthly
-//   };
-//   console.log(newEvent)
-//   setEvents([...events, newEvent]);
-//   setEventTitle('');
-//   setEventDate('');
-//   setIsMonthly(false);
-// };
-
-// const isEventToday = () => {
-//   events.forEach(eve => {
-//     const eventDate = new Date(eve.date);
-//     eventDate.setHours(0, 0, 0, 0);
-
-//     if (eventDate.getTime() === today.getTime()) {
-//       alert(`You have an event today: ${eve.title}`);
-//     }
-
-//   });
-// }
-
-// <form onSubmit={handleAddEvent} style={{ marginTop: '20px' }}>
-//         <input
-//           className='title'
-//           type="text"
-//           placeholder="Event Title"
-//           value={eventTitle}
-//           onChange={(e) => setEventTitle(e.target.value)}
-//           required
-//         />
-//         <input
-//         className='title'
-//           type="date"
-//           value={eventDate}
-//           onChange={(e) => setEventDate(e.target.value)}
-//           required
-//         />
-//         <label>
-//           <input
-//           className='title'
-//           type= "checkbox"
-//           checked={isMonthly}
-//           onChange={e => setIsMonthly(e.target.checked)}
-//           />
-//           Happens Monthly?
-//         </label>
-//         <button className='button' type="submit">Add Event</button>
-//       </form>
-//       <button onClick={isEventToday} className="button" type="submit">Alerts for today</button>

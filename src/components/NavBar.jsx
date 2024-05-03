@@ -1,5 +1,5 @@
 import LogoutButton from "./LogoutButton";
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "@/config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
@@ -44,7 +44,7 @@ const NavBar = () => {
   return (
     <>
       {isloggedIn && (
-        <nav className='flex p-2'>
+        <nav className='animate-in fade-in duration-1000  flex p-2 '>
           <div className='w-32 mt-1 ml-2'>
             {isloggedIn ? (
               <Link to='/dashboard/'>
@@ -69,7 +69,7 @@ const NavBar = () => {
                   <ul className='flex  flex-col font-medium md:p-0 mt-2 pt-2  md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
                     {isloggedIn && (
                       <>
-                        <li>
+                        <li >
                           <a
                             href='/about/'
                             className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
@@ -136,14 +136,9 @@ const NavBar = () => {
                       <h3 className="text-sm">{user.displayName}</h3>
                     </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent className="bg-orange-100">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    {user.displayName ? (
-                      <h1 className='text-sm pl-2'>{user.displayName}</h1>
-                    ) : (
-                      <h1 className='text-sm'>{user.email}</h1>
-                    )}
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator className="bg-gray-300  "/>
                     <DropdownMenuItem>
                       <Link className='no-underline text-black w-full' to='/profile/'>
                         Profile
@@ -193,6 +188,7 @@ const NavBar = () => {
           </div>
         </nav>
       )}
+      
     </>
   );
 };
