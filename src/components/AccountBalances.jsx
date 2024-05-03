@@ -46,9 +46,9 @@ const AccountBalances = ({ currentAccountBalance, accountList }) => {
         >
           <div className="progress-text w-full">
             <h3 style={{ color: "#D4B16D" }}>Debit Account Balance</h3>
-            <p style={{ color: getBalanceColor(debitBalance) }}>
+            <h4 style={{ color: getBalanceColor(debitBalance) }}>
               {debitBalance}
-            </p>
+            </h4>
           </div>
         </div>
       ) : null}
@@ -67,9 +67,9 @@ const AccountBalances = ({ currentAccountBalance, accountList }) => {
         >
           <div className="progress-text w-full">
             <h3 style={{ color: "#D4B16D" }}>Credit Account Balance</h3>
-            <p style={{ color: getBalanceColor(creditBalance) }}>
+            <h4 style={{ color: getBalanceColor(creditBalance) }}>
               {creditBalance}
-            </p>
+            </h4>
           </div>
         </div>
       ) : null}
@@ -88,9 +88,9 @@ const AccountBalances = ({ currentAccountBalance, accountList }) => {
         >
           <div className="progress-text w-full">
             <h3 style={{ color: "#D4B16D" }}>Savings Account Balance</h3>
-            <p style={{ color: getBalanceColor(savingsBalance) }}>
+            <h4 style={{ color: getBalanceColor(savingsBalance) }}>
               {savingsBalance}
-            </p>
+            </h4>
           </div>
         </div>
       ) : null}
