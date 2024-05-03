@@ -35,20 +35,25 @@ const EnterLandingPage = () => {
     }
   };
 
+  const validatePassword = (password) => {
+    if (password.length < 8) {
+      return("Password must be at least 8 characters long");
+    } else if (!/\d/.test(password)) {
+      return("Password must contain at least 1 number");
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      return("Password must contain at least 1 special character");
+    } else if (/\s/.test(password)) {
+      return("Password cannot contain spaces");
+    } else {
+      return("");
+    }
+  };
+
   const handlePasswordChangeNew = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    if (newPassword.length < 8) {
-      setErrorMessage("Password must be at least 8 characters long");
-    } else if (!/\d/.test(newPassword)) {
-      setErrorMessage("Password must contain at least 1 number");
-    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)) {
-      setErrorMessage("Password must contain at least 1 special character");
-    } else if (/\s/.test(newPassword)) {
-      setErrorMessage("Password cannot contain spaces");
-    } else {
-      setErrorMessage("");
-    }
+    const error = validatePassword(newPassword);
+    setErrorMessage(error);
   };
 
   const handlePasswordChangeReturning = (e) => {
@@ -102,8 +107,11 @@ const EnterLandingPage = () => {
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
+    const error = validatePassword(password);
     try {
-      if (password && !errorMessage) {
+      if (error) {
+        setErrorMessage(error);
+      } else {
         await createUserWithEmailAndPassword(auth, email, password);
         console.log(auth?.currentUser?.email);
         console.log(`User: ${user}`);
