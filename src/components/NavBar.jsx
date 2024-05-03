@@ -136,14 +136,9 @@ const NavBar = () => {
                       <h3 className="text-sm">{user.displayName}</h3>
                     </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent className="bg-orange-100">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    {user.displayName ? (
-                      <h1 className='text-sm pl-2'>{user.displayName}</h1>
-                    ) : (
-                      <h1 className='text-sm'>{user.email}</h1>
-                    )}
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator className="bg-gray-300  "/>
                     <DropdownMenuItem>
                       <Link className='no-underline text-black w-full' to='/profile/'>
                         Profile

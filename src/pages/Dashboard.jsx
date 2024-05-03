@@ -291,7 +291,7 @@ const Dashboard = () => {
   return (
     <>
       <div
-        className="animate-in slide-in-from-top duration-1000  w-full"
+        className="animate-in slide-in-from-bottom duration-1000  w-full"
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -342,7 +342,7 @@ const Dashboard = () => {
       </div>
       <br></br> <br></br>
       <BudgetItem budgetList={budgetList} accountList={accountList} />
-      <AccordionElement
+      <AccordionElement 
         setBudgetList={setBudgetList}
         budgetList={budgetList}
         uid={uid}

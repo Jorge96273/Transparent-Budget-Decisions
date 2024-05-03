@@ -13,6 +13,9 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+import { DonutChart, Legend } from '@tremor/react';
+
+
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
@@ -78,10 +81,39 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
+
+
+  const sales = [
+    {
+      name: 'New York',
+      sales: 980,
+    },
+    {
+      name: 'London',
+      sales: 456,
+    },
+    {
+      name: 'Hong Kong',
+      sales: 390,
+    },
+    {
+      name: 'San Francisco',
+      sales: 240,
+    },
+    {
+      name: 'Singapore',
+      sales: 190,
+    },
+  ];
+  
+  const valueFormatter = (number) =>
+    `$ ${Intl.NumberFormat('us').format(number).toString()}`;
+  
+
   return (
     <>
     
-      <div className='animate-in slide-in-from-top duration-1000 flex items-center flex-col'>
+      <div className='animate-in slide-in-from-bottom duration-1000 flex items-center flex-col'>
         <img
           className='rounded-full w-40'
           src={user.photoURL}
@@ -130,6 +162,22 @@ const Profile = () => {
           </button>
         </form>
       </div>
+      <div className="flex items-center justify-center space-x-6">
+        <DonutChart
+          data={sales}
+          category="sales"
+          index="name"
+          valueFormatter={valueFormatter}
+          colors={['blue', 'cyan', 'indigo', 'violet', 'fuchsia']}
+          className="w-40"
+        />
+        <Legend
+          categories={['New York', 'London', 'Hong Kong', 'San Francisco', 'Singapore']}
+          colors={['blue', 'cyan', 'indigo', 'violet', 'fuchsia']}
+          className="max-w-xs"
+        />
+      </div>
+
     </>
   );
 };

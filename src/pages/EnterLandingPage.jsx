@@ -294,7 +294,7 @@ const EnterLandingPage = () => {
                 <div className="rounded-form">
                   <input
                     type="text"
-                    className="rounded-input"
+                    className="rounded mb-1"
                     placeholder="Email..."
                     onChange={handleEmailChangeNew}
                   />
@@ -302,7 +302,7 @@ const EnterLandingPage = () => {
                   <input
                     type="password"
                     placeholder="Password"
-                    className="rounded-input"
+                    className="rounded mt-1"
                     onChange={handlePasswordChangeNew}
                   />
                 </div>
