@@ -128,7 +128,7 @@ function TransactionInputDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button variant="outline" className="rounded-button-newuser">
+            <button  className="rounded-button-newuser hover:bg-orange-100">
               Add a Transaction
             </button>
           </DialogTrigger>
@@ -217,7 +217,7 @@ function TransactionInputDialog({
 
             <DialogFooter>
               <button
-                className="rounded-button-newuser"
+                className="rounded-button-newuser hover:bg-orange-100"
                 onClick={addTransaction}
               >
                 Submit Transaction

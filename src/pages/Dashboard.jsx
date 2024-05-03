@@ -292,191 +292,114 @@ const Dashboard = () => {
 
   return (
     <>
-      <AccountBalances
-        currentAccountBalance={currentAccountBalance}
-        accountList={accountList}
-      />
-<div >
-   <div className="p-4 border-2 bg-sky-900 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-      <div className="grid grid-cols-3 gap-4 mb-4">
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              1 - small 1/3 wide - balance
-            </p>
-         </div>
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              2 - small 1/3 wide - balance
-            </p>
-         </div>
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               3 - small 1/3 wide - balance
-            </p>
-         </div>
+      <div className='animate-in slide-in-from-bottom duration-1000  w-full'>
+        <div>
+            <div className='flex w-full justify-center h-max p-2'>
+              <div className='flex items-center justify-center h-max rounded '>
+                <BudgetItem budgetList={budgetList} accountList={accountList} />
+              </div>
+            </div>
+          <div className='p-8'>
+            <div className='flex w-full items-center justify-center'>
+              <div className='mr-2 ml-2'>
+                <TransactionInputDialog
+                  uid={uid}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  setBudgetList={setBudgetList}
+                  budgetList={budgetList}
+                />
+              </div>
+              <div className='mr-2 ml-2'>
+                <CreateBudgetDialog
+                  uid={uid}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  setBudgetList={setBudgetList}
+                  budgetList={budgetList}
+                />
+              </div>
+              {budgetList.length > 0 ? (
+                <div className='mr-2 ml-2'>
+                  <BudgetSheet
+                    accountList={accountList}
+                    budgetList={budgetList}
+                    uid={uid}
+                    triggerFetch={triggerFetch}
+                    setTriggerFetch={setTriggerFetch}
+                    budgetTriggerFetch={budgetTriggerFetch}
+                    setBudgetTriggerFetch={setBudgetTriggerFetch}
+                  />{" "}
+                </div>
+              ) : null}
+              {monthlyExpenses.length > 0 ? (
+                <div className='mr-2 ml-2'>
+                  <MonthlyExpensesSheet
+                    uid={uid}
+                    triggerFetch={triggerFetch}
+                    setTriggerFetch={setTriggerFetch}
+                    accountList={accountList}
+                    setAccountList={setAccountList}
+                    monthlyExpenses={monthlyExpenses}
+                    budgetList={budgetList}
+                  />
+                </div>
+              ) : null}
+            </div>
+            <div className='flex w-full justify-center h-max'>
+              <div className='flex items-center justify-center p-1 h-max rounded '>
+                <AccountBalances
+                  currentAccountBalance={currentAccountBalance}
+                  accountList={accountList}
+                />
+              </div>
+            </div>
+            <div className='w-full flex justify-center '>
+              <div className='flex w-max justify-center h-max p-4 mb-2 rounded '>
+                <CalendarChart objData={accountList} />
+              </div>
+            </div>
+            <div className='flex w-full justify-center content-center items-center'>
+              <div className=' w-full'>
+                <AccordionElement
+                  setBudgetList={setBudgetList}
+                  budgetList={budgetList}
+                  uid={uid}
+                  accountList={accountList}
+                  setAccountList={setAccountList}
+                  triggerFetch={triggerFetch}
+                  setTriggerFetch={setTriggerFetch}
+                  budgetTriggerFetch={budgetTriggerFetch}
+                  setBudgetTriggerFetch={setBudgetTriggerFetch}
+                  currentAccountBalance={currentAccountBalance}
+                  debitAccount={debitAccount}
+                  savingsAccount={savingsAccount}
+                  creditAccount={creditAccount}
+                  monthlyExpensesBalance={monthlyExpensesBalance}
+                  monthlyExpenses={monthlyExpenses}
+                  lineData={lineData}
+                  category={category}
+                  amounts={amounts}
+                  year={year}
+                  debitCategory={debitCategory}
+                  debitAmounts={debitAmounts}
+                  debitYear={debitYear}
+                  savingsCategory={savingsCategory}
+                  savingsAmounts={savingsAmounts}
+                  savingsYear={savingsYear}
+                  creditCategory={creditCategory}
+                  creditAmounts={creditAmounts}
+                  creditYear={creditYear}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-   <div className="flex items-center justify-center h-auto p-4 mb-2 rounded bg-gray-50 dark:bg-gray-800">
-         <CalendarChart objData={accountList} />
-      </div>
-
-      <div className="grid grid-cols-3 gap-4 mb-4">
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              1 - small 1/3 wide - balance
-            </p>
-         </div>
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              2 - small 1/3 wide - balance
-            </p>
-         </div>
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               3 - small 1/3 wide - balance
-            </p>
-         </div>
-      </div>
-      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p className="text-2xl text-gray-400 dark:text-gray-500">
-            4 - large full wide
-         </p>
-      </div>
-      <div className="grid grid-cols-2 gap-4 mb-4">
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              5 - half screen wide
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              6 - half screen wide
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              7 - half screen wide
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              8 - half screen wide
-            </p>
-         </div>
-      </div>
-      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p className="text-2xl text-gray-400 dark:text-gray-500">
-            9 - wide full
-         </p>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-            10 - half screen wide
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               11 - half screen wide
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-           12 -  half screen wide
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-                13 - half screen wide
-            </p>
-         </div>
-      </div>
-   </div>
-</div>
-    
-
-    
-      <div
-        className="animate-in slide-in-from-bottom duration-1000  w-full"
-        // style={{
-        //   display: "flex",
-        //   flexWrap: "wrap",
-        //   justifyContent: "space-around",
-        // }}
-      >
-        
-        <TransactionInputDialog
-          uid={uid}
-          triggerFetch={triggerFetch}
-          setTriggerFetch={setTriggerFetch}
-          accountList={accountList}
-          setAccountList={setAccountList}
-          setBudgetList={setBudgetList}
-          budgetList={budgetList}
-        />
-        <CreateBudgetDialog
-          uid={uid}
-          triggerFetch={triggerFetch}
-          setTriggerFetch={setTriggerFetch}
-          accountList={accountList}
-          setAccountList={setAccountList}
-          setBudgetList={setBudgetList}
-          budgetList={budgetList}
-        />{" "}
-        {budgetList.length > 0 ? (
-          <BudgetSheet
-            accountList={accountList}
-            budgetList={budgetList}
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            budgetTriggerFetch={budgetTriggerFetch}
-            setBudgetTriggerFetch={setBudgetTriggerFetch}
-          />
-        ) : null}
-        {monthlyExpenses.length > 0 ? (
-          <MonthlyExpensesSheet
-            uid={uid}
-            triggerFetch={triggerFetch}
-            setTriggerFetch={setTriggerFetch}
-            accountList={accountList}
-            setAccountList={setAccountList}
-            monthlyExpenses={monthlyExpenses}
-            budgetList={budgetList}
-          />
-        ) : null}
-      </div>
-      <br></br> <br></br>
-      <BudgetItem budgetList={budgetList} accountList={accountList} />
-      <AccordionElement 
-        setBudgetList={setBudgetList}
-        budgetList={budgetList}
-        uid={uid}
-        accountList={accountList}
-        setAccountList={setAccountList}
-        triggerFetch={triggerFetch}
-        setTriggerFetch={setTriggerFetch}
-        budgetTriggerFetch={budgetTriggerFetch}
-        setBudgetTriggerFetch={setBudgetTriggerFetch}
-        currentAccountBalance={currentAccountBalance}
-        debitAccount={debitAccount}
-        savingsAccount={savingsAccount}
-        creditAccount={creditAccount}
-        monthlyExpensesBalance={monthlyExpensesBalance}
-        monthlyExpenses={monthlyExpenses}
-        lineData={lineData}
-        category={category}
-        amounts={amounts}
-        year={year}
-        debitCategory={debitCategory}
-        debitAmounts={debitAmounts}
-        debitYear={debitYear}
-        savingsCategory={savingsCategory}
-        savingsAmounts={savingsAmounts}
-        savingsYear={savingsYear}
-        creditCategory={creditCategory}
-        creditAmounts={creditAmounts}
-        creditYear={creditYear}
-      />
     </>
   );
 };

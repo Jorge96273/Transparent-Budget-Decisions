@@ -4,6 +4,7 @@
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
     max-height: fit-content;
+    overflow:scroll;
 }
 
 .full-react-calendar{
@@ -12,21 +13,25 @@
     height: fit-content;
     /* justify-content: space-between; */
     align-items: center;
+    overflow:scroll;
    
     }
 
 .react-calendar--doubleView {
     width: 700px;
+    overflow:scroll;
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer {
     display: flex;
     margin: -0.5em;
+    overflow:scroll;
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer>* {
     width: 50%;
     margin: 0.5em;
+    overflow:scroll;
 }
 
 .react-calendar,
@@ -36,6 +41,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    overflow:scroll;
     
 }
 
@@ -43,28 +49,35 @@
 
 .react-calendar button:enabled:hover {
     cursor: pointer;
+    overflow:scroll;
 }
 
 .react-calendar__navigation {
     display: flex ;
     border-radius: 5px;
     height: 30px;
+    overflow:scroll;
     
 }
 
 .react-calendar__navigation button {
     min-width: 44px;
     background: none;
+    overflow:scroll;
+    
     
 }
 
 .react-calendar__navigation button:disabled {
     background-color: #f0f0f0;
+    overflow:scroll;
 }
 
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
     background-color: #b6eaff;
+    overflow:scroll;
+    
 }
 
 .react-calendar__month-view__weekdays {
@@ -74,10 +87,12 @@
     font-size: 0.7em;
     font-weight: bold;
     background-color: rgb(127, 207, 229);
+    overflow:scroll;
 }
 
 .react-calendar__month-view__weekdays__weekday {
     padding: 0.5em;
+    overflow:scroll;
 }
 
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
@@ -87,22 +102,26 @@
     font: inherit;
     font-size: 0.75em;
     font-weight: bold;
+    overflow:scroll;
 }
 
 .react-calendar__month-view__days__day--weekend {
     color: #4a2424;
+    overflow:scroll;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth,
 .react-calendar__decade-view__years__year--neighboringDecade,
 .react-calendar__century-view__decades__decade--neighboringCentury {
     color: burlywood;
+    overflow:scroll;
 }
 
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
     padding: 2em 0.5em;
+    overflow:scroll;
 }
 
 .react-calendar__tile {
@@ -120,54 +139,66 @@
 .react-calendar__tile:disabled {
     background-color: #f0f0f0;
     color: #ababab;
+    overflow:scroll;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth:disabled,
 .react-calendar__decade-view__years__year--neighboringDecade:disabled,
 .react-calendar__century-view__decades__decade--neighboringCentury:disabled {
     color: #cdcdcd;
+    overflow:scroll;
 }
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
     background-color: #e6e6e6;
+    overflow:scroll;
 }
 
 .react-calendar__tile--now {
     background: rgb(126, 190, 207);
+    overflow:scroll;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
     background: #ffd59f;
+    overflow:scroll;
 }
 
 .react-calendar__tile--hasActive {
     background: #ffbb76;
+    overflow:scroll;
 }
 
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
     background: #a9d4ff;
+    overflow:scroll;
 }
 
 .react-calendar__tile--active {
     background: rgb(208, 208, 208);
     color: white;
+    overflow:scroll;
+
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
     background: rgb(255, 227, 183);
+    overflow:scroll;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
+    overflow:scroll;
 }
 
 .button-container {
     text-align: center;
     margin-top: 20px;
+    
 }
 
 .dbutton,
