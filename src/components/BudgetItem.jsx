@@ -36,12 +36,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
   return (
     <div
-      className="w-full"
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-      }}
+      className="w-full flex justify-center "
     >
       {budgetList.map((budget) => {
         const spent = budgetSpent(budget.newBudget);
@@ -58,21 +53,13 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
         return (
           <div
-            className="budget text-center w-25"
+            className="budget bg-slate-200 shadow-md m-1 rounded p-2 text-center w-max"
             key={budget.newBudget}
-            style={{
-              border: "2px solid rgb(4, 28, 42)",
-              borderRadius: "10px",
-              backgroundColor: "rgb(4, 28, 42)",
-              color: "white",
-              flex: "1 0 25%",
-              marginBottom: "20px",
-              marginRight: "10px",
-            }}
+
           >
             <div className="progress-text w-full">
-              <h3>{budget.newBudget}</h3>
-              <p>
+              <h3 className="bg-slate-50 shadow-inner font-semibold flex justify-center w-full rounded p-2">{budget.newBudget}</h3>
+              <p >
                 {Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -82,12 +69,12 @@ const BudgetItem = ({ budgetList, accountList }) => {
               <progress
                 max={budget.newBudgetAmount}
                 value={spent}
-                className="w-75 w3-container w3-pro"
+                className="w-5/6 w3-container w3-pro"
                 style={{ backgroundColor: progressBarColor }}
               ></progress>
-              <small>{formatPercentage(percentageSpent / 100)}</small>
+              <small className=" text-lg font-thin p-2">{formatPercentage(percentageSpent / 100)}</small>
               <span>
-                <p>
+                <p className="bg-slate-50 rounded p-2 shadow-inner m-1" >
                   Spent:{" "}
                   <span style={{ color: "red" }}>
                     {formatCurrency(spent * -1)}

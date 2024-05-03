@@ -30,12 +30,12 @@ export function BudgetSheet({
     <Sheet>
       <SheetTrigger asChild>
         <div>
-          <button variant="outline" className="rounded-button-newuser">
+          <button  className="rounded-button-newuser hover:bg-orange-100">
             Budget Data
           </button>
         </div>
       </SheetTrigger>
-      <SheetContent style={{ width: "58%" }}>
+      <SheetContent style={{ width: "100%" }}>
         <div
           className="background-color-div"
           style={{ maxHeight: "500px", overflowY: "auto" }}
