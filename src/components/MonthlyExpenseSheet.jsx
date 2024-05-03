@@ -53,6 +53,7 @@ export function MonthlyExpensesSheet({
               accountList={accountList}
               setAccountList={setAccountList}
               accountTable={monthlyExpenses}
+              budgetList={budgetList}
             />
           )}
         </div>
