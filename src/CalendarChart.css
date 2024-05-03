@@ -4,13 +4,14 @@
     border: 4px solid #42423f;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
+    border-radius: 20px;
 }
 
 .full-react-calendar{
     display: flex;
     flex-direction: column;
-    height: 75vh;
-    /* justify-content: space-between; */
+    /* height: 75vh; */
+    justify-content: space-between;
     align-items: center;
     }
 
@@ -48,6 +49,7 @@
     background-color: burlywood;
     height: 44px;
     margin-bottom: 1em;
+    border-radius: 15px;
 }
 
 .react-calendar__navigation button {
@@ -110,6 +112,7 @@
     line-height: 16px;
     font: inherit;
     font-size: .8em;
+    border-radius: 15px;
 }
 
 .react-calendar__tile:disabled {
@@ -166,6 +169,7 @@
 }
 
 .dbutton,
+.all-button,
 .wbutton {
     padding: 12px 24px;
     font-size: 16px;
@@ -173,6 +177,7 @@
     cursor: pointer;
     border: none;
     border-radius: 25px;
+    margin-bottom: 50px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     outline: none;
     text-transform: uppercase;
@@ -215,6 +220,27 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) inset;
 }
 
+.all-button {
+    background-image: linear-gradient(120deg, #a447c4 0%, #bc1ee3 100%);
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    margin-left: 100px;
+}
+
+.all-button:hover,
+.all-button:focus {
+    background-image: linear-gradient(120deg, #6a35e5 0%, #D32F2F 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+.all-button:active {
+    background-image: linear-gradient(120deg, #570f6d 0%, #9b2ba3 100%);
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) inset;
+}
+
+.all-button,
 .dbutton:focus,
 .wbutton:focus {
     border: 2px solid rgba(255, 255, 255, 0.5);

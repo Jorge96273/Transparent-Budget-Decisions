@@ -4,6 +4,9 @@ import '../../src/CalendarChart.css'; //Calendar CSS
 import { format as formatDate, addDays, addMonths } from 'date-fns'; //For date manipulation-----
 import { format as formateTz} from 'date-fns-tz'; //For time manipulation----
 import Modal from '@/components/Modal' //For the pop up when a date is clicked----
+import { Button } from "@/components/ui/button";
+
+
 
 //objData  is a list of Objects 
 export default function CalendarChart({ objData }) {
@@ -11,34 +14,38 @@ export default function CalendarChart({ objData }) {
   const [events, setEvents] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
-  const [simpObjData, setSimpObjData] = useState([]);
   const [transactionType, setTransactionType] = useState('withdrawal'); 
+  const [triggerEffect, setTriggerEffect] = useState(0);
 
+  const ColorChanger = () => { 
+    events.forEach(event => {
+      if (event.type.toLowerCase() === 'withdrawal') {
+        event.amount = '-'.concat(event.amount);
+      }
+    })};
 
-  console.log("datacalchart",objData )
-
-  useEffect(() => {
-    const filteredData = objData.filter(
-      (account) => account.newTransactionType.toLowerCase() === transactionType
-    );
-    console.log(filteredData)
-    setSimpObjData(filteredData)
-  }, [objData, transactionType])
-
-  //Breaks down the object and grabs what I need------
-  useEffect(() => {
-    if (simpObjData.length > 0) {
-      const breakDown = simpObjData.map((data) => ({
+  const DataChanger = () => {
+    const filteredData = objData.filter((account) => {
+      if (transactionType === 'both') {
+        return ['withdrawal', 'deposit'].includes(account.newTransactionType.toLowerCase());
+      } else {
+        return account.newTransactionType.toLowerCase() === transactionType;
+      }
+    });
+    if (filteredData.length > 0) {
+      const eventData = filteredData.map((data) => ({
         title: data.newTransactionName,
-        date: addDays(new Date (data.newTransactionDate), 1),
+        date: addDays(new Date(data.newTransactionDate), 1),
         amount: data.newTransactionAmount,
-        monthly: data.monthlyExpense.toLowerCase() === 'yes' ? true : false,
-        type: data.newTransactionType 
-    }))
-    setEvents(breakDown);
-    }
-  }, [simpObjData]);
+        monthly: data.monthlyExpense.toLowerCase() === 'yes',
+        type: data.newTransactionType
+      }));
+      setEvents(eventData);
+    } else {
+      setEvents([]); 
+  }}
 
+  
   //For what appears in the calendar tiles------
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
@@ -60,7 +67,7 @@ export default function CalendarChart({ objData }) {
         if (title.includes("Paycheck")) return "💰";
         return "🎯"; 
       };
-      return <ul>{dayEvents.map((event, index) => <li key={index} style={{ color: transactionType.toLowerCase() === 'deposit' ? 'green' : 'red' }} >{getEmoji(event.title)}{event.title}: ${event.amount}</li>)}</ul>;
+      return <ul>{dayEvents.map((event, index) => <li key={index} style={{ color: event.amount < 0 ? 'red' : 'green' }} >{getEmoji(event.title)}{event.title}: ${event.amount}</li>)}</ul>;
   };
   };
 
@@ -73,10 +80,18 @@ export default function CalendarChart({ objData }) {
     });
     if (dayEvents.length > 0) {
       //ModalContent is for the pop up when a date is clicked-------
-      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: ` + dayEvents.map(event => `|| ${event.title} - $${event.amount} `).join("\n"));
+      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: ` + dayEvents.map(event => `|| ${event.title}:  $${event.amount} `).join("\n"));
       setIsOpen(true)
     }
   };
+
+  useEffect(() => {
+    DataChanger();
+  }, [objData, transactionType]);
+
+  useEffect(() => {
+    ColorChanger();
+  }, [events]);
 
   return (
     <div className='full-react-calendar'>
@@ -96,10 +111,22 @@ export default function CalendarChart({ objData }) {
         </Modal>
       </div>
       <div className='button-container'>
-      <button className='dbutton' onClick={() => setTransactionType('deposit')}>Deposits</button>
-      <button className='wbutton' onClick={() => setTransactionType('withdrawal')}>Withdrawals</button>
+      <button className='dbutton' onClick={() => {
+        setTransactionType('deposit');
+        setTriggerEffect(prev => prev + 1);
+        }}>Deposits</button>
+      <button className='all-button' onClick={() => {
+        setTransactionType('both');        
+        setTriggerEffect(prev => prev + 1);
+      }}> Both </button>
+      <button className='wbutton' onClick={() => {
+        setTransactionType('withdrawal');
+        setTriggerEffect(prev => prev + 1);
+      }}>Withdrawals</button>
       </div>
     </div>
   );
 };
+
+
 
