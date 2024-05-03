@@ -24,28 +24,13 @@ const AccountBalances = ({ currentAccountBalance, accountList }) => {
 
   return (
     <div
-      className="w-full"
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-      }}
+      className='w-full flex flex-row justify-evenly'
+
     >
       {debitAccounts.length > 0 ? (
-        <div
-          className="budget text-center w-25"
-          style={{
-            border: "2px solid rgb(4, 28, 42)",
-            borderRadius: "10px",
-            backgroundColor: "rgb(4, 28, 42)",
-            color: "white",
-            flex: "1 0 25%",
-            marginBottom: "20px",
-            marginRight: "10px",
-          }}
-        >
-          <div className="progress-text w-full">
-            <h3 style={{ color: "#D4B16D" }}>Debit Account Balance</h3>
+        <div className=' text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-orange-100 rounded shadow-sm'>
+          <div className='progress-text w-full '>
+            <h3 className="font-thin">Debit</h3>
             <h4 style={{ color: getBalanceColor(debitBalance) }}>
               {debitBalance}
             </h4>
@@ -53,20 +38,9 @@ const AccountBalances = ({ currentAccountBalance, accountList }) => {
         </div>
       ) : null}
       {creditAccounts.length > 0 ? (
-        <div
-          className="budget text-center w-25"
-          style={{
-            border: "2px solid rgb(4, 28, 42)",
-            borderRadius: "10px",
-            backgroundColor: "rgb(4, 28, 42)",
-            color: "white",
-            flex: "1 0 25%",
-            marginBottom: "20px",
-            marginRight: "10px",
-          }}
-        >
-          <div className="progress-text w-full">
-            <h3 style={{ color: "#D4B16D" }}>Credit Account Balance</h3>
+        <div className=' text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-orange-100 rounded shadow-sm'>
+          <div className='progress-text w-full'>
+            <h3 className="font-thin">Credit</h3>
             <h4 style={{ color: getBalanceColor(creditBalance) }}>
               {creditBalance}
             </h4>
@@ -74,21 +48,10 @@ const AccountBalances = ({ currentAccountBalance, accountList }) => {
         </div>
       ) : null}
       {savingsAccounts.length > 0 ? (
-        <div
-          className="budget text-center w-25"
-          style={{
-            border: "2px solid rgb(4, 28, 42)",
-            borderRadius: "10px",
-            backgroundColor: "rgb(4, 28, 42)",
-            color: "white",
-            flex: "1 0 25%",
-            marginBottom: "20px",
-            marginRight: "10px",
-          }}
-        >
-          <div className="progress-text w-full">
-            <h3 style={{ color: "#D4B16D" }}>Savings Account Balance</h3>
-            <h4 style={{ color: getBalanceColor(savingsBalance) }}>
+        <div className=' text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-orange-100 rounded shadow-sm'>
+          <div className='progress-text w-full'>
+            <h3 className="font-thin">Savings</h3>
+            <h4 style={{ color: getBalanceColor(savingsBalance)}}>
               {savingsBalance}
             </h4>
           </div>

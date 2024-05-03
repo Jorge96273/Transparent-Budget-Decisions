@@ -62,7 +62,7 @@ const NavBar = () => {
               </Link>
             )}
           </div>
-          <div className='w-full mr-4 h-40 flex justify-center'>
+          <div className='w-full mr-4  flex justify-center'>
             <nav className=' h-20 rounded-full'>
               <div className=''>
                 <div className='text-decoration-line: none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
