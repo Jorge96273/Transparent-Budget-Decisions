@@ -10,6 +10,7 @@ function App() {
   const [accountList, setAccountList] = useState([]);
   const [budgetList, setBudgetList] = useState([]);
   const [budgetTriggerFetch, setBudgetTriggerFetch] = useState(false);
+  const [accountTriggerFetch, setAccountTriggerFetch] = useState(false);
   const [accountNamesList, setAccountNamesList] = useState([]);
   return (
     <>
@@ -28,6 +29,8 @@ function App() {
               setBudgetTriggerFetch,
               accountNamesList,
               setAccountNamesList,
+              accountTriggerFetch,
+              setAccountTriggerFetch,
             }}
           />
         </div>

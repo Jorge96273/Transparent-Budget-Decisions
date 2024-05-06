@@ -48,6 +48,8 @@ const Dashboard = () => {
     setBudgetTriggerFetch,
     accountNamesList,
     setAccountNamesList,
+    accountTriggerFetch,
+    setAccountTriggerFetch,
   } = useOutletContext();
 
   const firstRenderRef = useRef(true);
@@ -294,31 +296,16 @@ const Dashboard = () => {
     }
   };
 
-  // const monthlyCalendarfunction = () => {
-  //   if (monthlyExpenses) {
-  //     console.log(`Monthly expenses: ${monthlyExpenses}`);
-  //     const monthlyExpenseData = monthlyExpenses.map((item) => ({
-  //       transactionDate: item.newTransactionDate,
-  //       transactionName: item.newTransactionName,
-  //       transactionAmount: item.newTransactionAmount,
-  //     }));
-  //     console.log(monthlyExpenseData);
-  //     setMonthlyCalendar(monthlyExpenseData);
-  //   }
-  // };
-  // console.log("***MONTHLY CALENDER***", monthlyCalendar);
-  // // console.log("***MONTHLY CALENDER 2***", monthlyCalendar)
-
   useEffect(() => {
     if (!firstRenderRef.current) {
       getAccountList(); // Call getAccountList on subsequent renders
     }
     firstRenderRef.current = false; // Ensure this runs only once after the first render
-  }, [triggerFetch]);
+  }, [accountList, accountTriggerFetch]);
 
   useEffect(() => {
     getAccountNames(); // Call getAccountNames on every render after the initial one
-  }, [triggerFetch, setNewAccountName, newAccountName]);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -352,6 +339,8 @@ const Dashboard = () => {
                   setNewAccountName={setNewAccountName}
                   getAccountNames={getAccountNames}
                   uid={uid}
+                  accountTriggerFetch={accountTriggerFetch}
+                  setAccountTriggerFetch={setAccountTriggerFetch}
                 />
               </div>
               <div className="mr-2 ml-2">
