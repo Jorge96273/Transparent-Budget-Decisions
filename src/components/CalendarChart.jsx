@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import '../../src/CalendarChart.css'; //Calendar CSS
 import { format as formatDate, addDays, subDays, isSameDay, getDaysInMonth } from 'date-fns'; //For date manipulation-----
-import { format as formateTz} from 'date-fns-tz'; //For time manipulation----
+import { format as formateTz } from 'date-fns-tz'; //For time manipulation----
 import Modal from '@/components/Modal' //For the pop up when a date is clicked----
 
 
@@ -36,7 +36,6 @@ export default function CalendarChart({ objData }) {
 
   //For what appears in the calendar tiles------
   const renderTileContent = ({ date, view }) => {
-    console.log(events); 
     if (view === 'month') {
       const dayEvents = events.filter(event => {
 
@@ -52,25 +51,21 @@ export default function CalendarChart({ objData }) {
         }
       });
 
-      const getEmoji = (title) => {
-        if (title.includes("Birthday")) return "🎂";
-        if (title.includes("Movie")) return "🎞️";
-        if (title.includes("Dinner")) return "🍽️";
-        if (title.includes("Car")) return "🚗";
-        if (title.includes("Phone")) return "📞";
-        if (title.includes("Mortgage")) return "🏡";
-        if (title.includes("School")) return "📚";
-        if (title.includes("Gym")) return "🏋️";
-        if (title.includes("Cable")) return "🛜"; 
-        if (title.includes("Paycheck")) return "💰";
-        return "🎯";
+      const getEmoji = (type) => {
+        if (type === 'deposit') {
+          return "💲"; 
+        } else if (type === 'withdrawal') {
+          return "🔻";
+        } else {
+          return ''; 
+        }
       };
 
       return (
         <ul>
           {dayEvents.map((event, index) => (
             <li key={index} style={{ color: event.type === 'withdrawal' ? 'red' : 'green' }}>
-              {getEmoji(event.title)} {event.title}: ${event.amount}
+              {getEmoji(event.type)} {event.title}: ${event.amount}
             </li>
           ))}
         </ul>
@@ -123,25 +118,27 @@ export default function CalendarChart({ objData }) {
 
   return (
     <>
-    <div className='flex flex-col items-center'>
-      <Calendar
-        onChange={setDate}
-        value={date}
-        calendarType="iso8601"
-        className="calendar-style rounded "
-        view="month"
-        onClickDay={handleDayClick}
-        tileContent={renderTileContent}
-      />
-      <div>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <p className='p-2' >{modalContent}</p>
-        </Modal>
+      <div className='flex flex-col items-center'>
+        <Calendar
+          onChange={setDate}
+          value={date}
+          calendarType="iso8601"
+          className="calendar-style rounded "
+          view="month"
+          onClickDay={handleDayClick}
+          tileContent={renderTileContent}
+        />
+        <div>
+          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <p className='p-2' >{modalContent}</p>
+          </Modal>
+        </div>
       </div>
-      </div>
-      </>
+    </>
   );
 };
+
+
 
 
 
