@@ -53,7 +53,7 @@
 
 .react-calendar__navigation {
     display: flex ;
-    background-color: slategray;
+    background-color: #64748b;
     color: white;
     border-radius: 5px;
     height: 30px;
@@ -87,7 +87,7 @@
     font: inherit;
     font-size: 0.7em;
     font-weight: bold;
-    background-color: slategray;
+    background-color: #64748b;
     color: white;
 }
 
