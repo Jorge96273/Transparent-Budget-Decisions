@@ -186,6 +186,12 @@ const Dashboard = () => {
     getAccountNames(); // Call getAccountNames on every render after the initial one
   }, [accountTriggerFetch, user]);
 
+  useEffect(() => {
+    getAccountNames();
+    getAccountList();
+    getBudgetList(); // Call getAccountNames on every render after the initial one
+  }, []);
+
   return (
     <>
       <div className="animate-in slide-in-from-bottom duration-1000  w-full">

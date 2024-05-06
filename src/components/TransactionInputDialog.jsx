@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import "../App.css";
-import { Auth } from "../components/auth";
-import { db, auth } from "../config/firebase";
+import { db } from "../config/firebase";
 import {
   addDoc,
   collection,
@@ -13,6 +12,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
+
 import {
   Dialog,
   DialogContent,
@@ -22,8 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 function TransactionInputDialog({
   uid,
@@ -42,16 +40,12 @@ function TransactionInputDialog({
   let currentDay = currentDate.getDate();
   let formattedDate = `${currentYear}-${currentMonth}-${currentDay}`;
   const [accountType, setAccountType] = useState("Debit");
-  const [accountBalance, setAccountBalance] = useState(0);
   const [newTransactionName, setNewTransactionName] = useState("");
   const [newTransactionDate, setNewTransactionDate] = useState(formattedDate);
   const [newTransactionType, setNewTransactionType] = useState("Withdrawal");
   const [newTransactionAmount, setNewTransactionAmount] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState("No");
-  const firstRenderRef = useRef(true);
-
   const transactionCollectionRef = collection(db, `${uid}`);
-
   const [isDialogOpen, setIsDialogOpen] = useState(true); //?variable to manage dialog box visibility
   const dialogKey = useRef(0);
 
@@ -59,7 +53,6 @@ function TransactionInputDialog({
     setIsDialogOpen(false);
     dialogKey.current += 1;
   };
-
   const addTransaction = async () => {
     try {
       // Calculate the new balance directly
@@ -104,10 +97,6 @@ function TransactionInputDialog({
       console.error("Transaction failed: ", error);
     }
   };
-
-  const [newBudget, setNewBudget] = useState("");
-  const [newBudgetAmount, setNewBudgetAmount] = useState(0);
-
   const [selectBudget, setSelectBudget] = useState("None");
   const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`);
 
@@ -151,10 +140,6 @@ function TransactionInputDialog({
                   ))}
                 </select>
               </div>
-              {/* <div>
-                <label htmlFor="accountBalance">Current Account Balance:</label>
-                <span id="accountBalance">{accountBalance.toFixed(2)}</span>
-              </div> */}
               <div className="flex items-center">
                 <label htmlFor="budgetAccount">Budget Account:</label>
               </div>
@@ -244,11 +229,10 @@ function TransactionInputDialog({
                 onClick={addTransaction}
               >
                 Submit Transaction
-              </button>
-            </div>
-            {/* ******* END OF FORM */}
-
-            <DialogFooter></DialogFooter>
+              </button> 
+              </div>
+            <DialogFooter >
+            </DialogFooter>
           </DialogContent>
         </Dialog>{" "}
       </div>

@@ -99,7 +99,7 @@ function CreateAccountDialog({
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <h3>Add an Account </h3>
+            <h3 className="flex justify-center">Add an Account </h3>
             <picture>
               <source media="(min-width: )" srcSet="" />
               <img src="" alt="" />
@@ -120,20 +120,30 @@ function CreateAccountDialog({
                   )}
                 </DialogTitle>
               </DialogHeader>
-
+              <div className="flex justify-center">
               <input
                 type="text"
                 placeholder="Account Name"
                 onChange={(e) => setNewAccountName(e.target.value)}
+                className="rounded mb-1"
               />
+              </div>
             </div>
-            <DialogFooter>
+              <div className="flex justify-center">
               <button
                 className="rounded-button-newuser hover:bg-orange-100"
                 onClick={handleCreateAccount}
               >
                 Create Account
-              </button>
+              </button> 
+              </div>
+            <DialogFooter>
+              {/* <button
+                className="rounded-button-newuser hover:bg-orange-100"
+                onClick={handleCreateAccount}
+              >
+                Create Account
+              </button> */}
             </DialogFooter>
           </DialogContent>
         </Dialog>
