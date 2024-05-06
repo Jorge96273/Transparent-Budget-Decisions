@@ -40,9 +40,9 @@ export function TransAmtDialog({
         <DialogHeader>
           <DialogTitle>Update Amount</DialogTitle>
           <DialogTitle>
-            Make changes to the amount here.
+            Make changes to the Amount Here.
             <br></br>
-            Click Update Transaction when you're done.
+            Click Update Transaction When You're Done.
           </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">

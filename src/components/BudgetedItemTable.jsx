@@ -37,19 +37,9 @@ function BudgetedItemTable({
   const deleteBudget = async (id) => {
     await deleteDoc(doc(db, `budget/${uid}/newBudget`, id));
 
-    setTriggerFetch(!triggerFetch);
-    console.log(deleted);
+    setBudgetTriggerFetch(!budgetTriggerFetch);
+    console.log("deleted");
   };
-
-  function transformBudgetList(list) {
-    return list.map((budget) => {
-      return {
-        budgetName: budget.newBudget,
-        budgetAmount: budget.newBudgetAmount,
-        budgetId: String(budget.id),
-      };
-    });
-  }
 
   // Caluclates the Amount Spent for Each Budget Category
   function budgetSpent(category) {

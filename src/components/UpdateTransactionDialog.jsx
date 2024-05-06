@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-
 import "../App.css";
-import { Auth } from "./auth";
 import { db, auth } from "../config/firebase";
 import {
   addDoc,
@@ -14,13 +12,7 @@ import {
   query,
   onSnapshot,
 } from "firebase/firestore";
-import { useNavigate, Navigate } from "react-router-dom";
-import LoginDialogTemplate from "@/components/LoginDialogTemplate";
-import SignupDialogTemplate from "@/components/SignupDialogTemplate";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-import { Button } from "react-bootstrap";
-
 import {
   Dialog,
   DialogContent,
@@ -30,8 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 function UpdateTransactionDialog({
   uid,
@@ -42,6 +32,7 @@ function UpdateTransactionDialog({
   setAccountList,
   budgetList,
   setBudgetList,
+  accountNamesList,
 }) {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -62,6 +53,7 @@ function UpdateTransactionDialog({
       try {
         const accountRef = doc(db, `${uid}`, transactionID);
         const docSnap = await getDoc(accountRef);
+        console.log("FETCH TRANSACTION DATA UPDATE TRANSACTION DIALOG");
         if (docSnap.exists()) {
           // Assuming the document structure matches the state variables
           setAccountType(docSnap.data().accountType);
@@ -82,9 +74,6 @@ function UpdateTransactionDialog({
 
     fetchTransactionData();
   }, [uid, transactionID]);
-
-  //   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
-  //     useState(newTransactionAmount);
 
   const dialogKey = useRef(0);
 
@@ -154,7 +143,7 @@ function UpdateTransactionDialog({
       setIsLoading(false); // Ensure the button is re-enabled even on failure
     }
   };
-
+  console.log("ACCOUNT NAMES LIST", accountNamesList);
   return (
     <>
       <div className="App">
@@ -180,9 +169,11 @@ function UpdateTransactionDialog({
                 value={accountType}
                 onChange={(event) => setAccountType(event.target.value)}
               >
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-                <option value="Savings">Savings</option>
+                {accountNamesList.map((account) => (
+                  <option key={account.accountName} value={account.accountName}>
+                    {account.accountName}
+                  </option>
+                ))}
               </select>
               <br></br>
               <label htmlFor="budgetAccount">Budget Account:</label>
