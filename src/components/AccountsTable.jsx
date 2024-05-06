@@ -37,6 +37,7 @@ function AccountsTable({
     async (id) => {
       await deleteDoc(doc(db, `account/${uid}/newAccount`, id));
       setAccountTriggerFetch(!accountTriggerFetch);
+      console.log("DELETE ACCOUNT ACCOUNT STABLE");
     },
     [uid, accountTriggerFetch, setAccountTriggerFetch]
   );
@@ -80,7 +81,7 @@ function AccountsTable({
               accountID={accountID}
               accountName={accountName}
               uid={uid}
-              setAccountTriggerFetch={accountTriggerFetch}
+              setAccountTriggerFetch={setAccountTriggerFetch}
               accountTriggerFetch={accountTriggerFetch}
             />
           </div>

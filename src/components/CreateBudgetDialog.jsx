@@ -63,6 +63,7 @@ function CreateBudgetDialog({
       newBudget,
       newBudgetAmount,
     });
+    console.log("CREATE BUDGET CREATEBUDGET DIALOG");
     console.log("create budget");
     setTriggerFetch(!triggerFetch);
     closeDialog();
@@ -106,7 +107,6 @@ function CreateBudgetDialog({
             </div>
             <DialogFooter>
               <button
-                
                 className="rounded-button-newuser hover:bg-orange-100"
                 onClick={createBudget}
               >

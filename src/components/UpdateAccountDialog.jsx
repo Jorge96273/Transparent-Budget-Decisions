@@ -21,19 +21,24 @@ export function UpdateAccountDialog({
   accountName,
 }) {
   const [updatedAccountName, setUpdatedAccountName] = useState("");
-  // Wrap the updateAccount function in useCallback to prevent unnecessary re-renders
-  const updateAccount = useCallback(
-    async (id, updateAccountName) => {
-      const accountRef = doc(db, `account/${uid}/newAccount`, id);
-      await updateDoc(accountRef, { accountName: updateAccountName });
-      setAccountTriggerFetch(!accountTriggerFetch);
-    },
-    [uid, accountTriggerFetch, setAccountTriggerFetch]
-  );
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
+
+  const updateAccount = async (id, updateAccountName) => {
+    console.log(id, updateAccountName);
+    console.log(updatedAccountName);
+    const accountRef = doc(db, `account/${uid}/newAccount`, id);
+    await updateDoc(accountRef, { accountName: updateAccountName }); // Corrected the updateDoc call
+    setAccountTriggerFetch(!accountTriggerFetch);
+    setIsDialogOpen(false); // Close the dialog after updating the account
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="btn btn-secondary btn-sm">
+        <Button
+          className="btn btn-secondary btn-sm"
+          onClick={() => setIsDialogOpen(true)}
+        >
           Change Account Name
         </Button>
       </DialogTrigger>

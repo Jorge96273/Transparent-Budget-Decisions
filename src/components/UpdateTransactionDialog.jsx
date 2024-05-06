@@ -63,6 +63,7 @@ function UpdateTransactionDialog({
       try {
         const accountRef = doc(db, `${uid}`, transactionID);
         const docSnap = await getDoc(accountRef);
+        console.log("FETCH TRANSACTION DATA UPDATE TRANSACTION DIALOG");
         if (docSnap.exists()) {
           // Assuming the document structure matches the state variables
           setAccountType(docSnap.data().accountType);
@@ -155,7 +156,7 @@ function UpdateTransactionDialog({
       setIsLoading(false); // Ensure the button is re-enabled even on failure
     }
   };
-
+  console.log("ACCOUNT NAMES LIST", accountNamesList);
   return (
     <>
       <div className="App">

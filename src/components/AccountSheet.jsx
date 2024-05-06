@@ -24,7 +24,7 @@ export function AccountSheet({
   setTriggerFetch,
   accountTriggerFetch,
   setAccountTriggerFetch,
-  monthlyExpenses,
+
   accountNamesList,
 }) {
   return (

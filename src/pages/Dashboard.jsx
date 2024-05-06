@@ -63,40 +63,7 @@ const Dashboard = () => {
         id: doc.id,
       }));
       setAccountList(filteredData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getAccountNames = async () => {
-    try {
-      const data = await getDocs(collection(db, `account/${uid}/newAccount`));
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setAccountNamesList(filteredData);
-      console.log(filteredData);
-      const accountNames = filteredData.map((account) => account.accountName);
-      const accountNamesToCheck = ["Savings", "Credit", "Debit"];
-      const allAccountsPresent = accountNamesToCheck.every((name) =>
-        accountNames.includes(name)
-      );
-      if (!allAccountsPresent) {
-        // Create a promise for each missing account name
-        const promises = accountNamesToCheck.map(async (name) => {
-          if (!accountNames.includes(name)) {
-            const docRef = await addDoc(accountCollectionRef, {
-              accountName: name,
-            });
-            console.log(`New document added for ${name}:`, docRef.id);
-          }
-        });
-        // Wait for all promises to resolve
-        await Promise.all(promises);
-      }
-
-      console.log("SetAccountName", filteredData);
+      console.log("DASHBOARD GETACCOUNTLIST");
     } catch (err) {
       console.log(err);
     }
@@ -109,6 +76,7 @@ const Dashboard = () => {
         ...doc.data(),
         id: doc.id,
       }));
+      console.log("DASHBOARD GETBUDGETLIST");
       setBudgetList(filteredData);
     } catch (error) {
       console.log(error);
@@ -116,17 +84,8 @@ const Dashboard = () => {
   };
   useEffect(() => {
     getBudgetList();
-  }, [accountList, budgetTriggerFetch]);
+  }, [budgetTriggerFetch, user]);
 
-  const debitAccount = accountList.filter(
-    (account) => account.accountType === "Debit"
-  );
-  const creditAccount = accountList.filter(
-    (account) => account.accountType === "Credit"
-  );
-  const savingsAccount = accountList.filter(
-    (account) => account.accountType === "Savings"
-  );
   const monthlyExpenses = accountList.filter(
     (account) => account.monthlyExpense === "Yes"
   );
@@ -159,6 +118,40 @@ const Dashboard = () => {
     return formatted;
   };
 
+  const getAccountNames = async () => {
+    try {
+      const data = await getDocs(collection(db, `account/${uid}/newAccount`));
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setAccountNamesList(filteredData);
+      console.log("DASHBOARD GETACCOUNTNAMES");
+      console.log("Get Account Names FILTERED DATA", filteredData);
+      const accountNames = filteredData.map((account) => account.accountName);
+      const accountNamesToCheck = ["Savings", "Credit", "Debit"];
+      const allAccountsPresent = accountNamesToCheck.every((name) =>
+        accountNames.includes(name)
+      );
+      if (!allAccountsPresent) {
+        // Create a promise for each missing account name
+        const promises = accountNamesToCheck.map(async (name) => {
+          if (!accountNames.includes(name)) {
+            const docRef = await addDoc(accountCollectionRef, {
+              accountName: name,
+            });
+            console.log(`New document added for ${name}:`, docRef.id);
+          }
+        });
+        // Wait for all promises to resolve
+        await Promise.all(promises);
+      }
+      console.log("SetAccountName", filteredData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const monthlyExpensesBalance = () => {
     let totalDeposits = 0;
     let totalWithdrawals = 0;
@@ -181,145 +174,24 @@ const Dashboard = () => {
     }).format(recordedBalance);
     return formatted;
   };
-  const category = "Total";
-  const year = lineData.map((item) => item.dates);
-  const amounts = lineData.map((item) => item.balances);
-
-  const debitCategory = "Debit";
-  const debitYear = debitLine.map((item) => item.dates);
-  const debitAmounts = debitLine.map((item) => item.balances);
-
-  const creditCategory = "Credit";
-  const creditYear = creditLine.map((item) => item.dates);
-  const creditAmounts = creditLine.map((item) => item.balances);
-
-  const savingsCategory = "Savings";
-  const savingsYear = savingsLine.map((item) => item.dates);
-  const savingsAmounts = savingsLine.map((item) => item.balances);
-
-  const lineGraphAccount = (accountType) => {
-    let totalDeposits = 0;
-    let totalWithdrawals = 0;
-    if (accountList) {
-      let sorted = accountList.sort((a, b) =>
-        a.newTransactionDate.localeCompare(b.newTransactionDate)
-      );
-      if (accountType === "Debit") {
-        setDebitLine([]);
-      } else if (accountType === "Credit") {
-        setCreditLine([]);
-      } else if (accountType === "Savings") {
-        setSavingsLine([]);
-      }
-      sorted.forEach((transaction) => {
-        if (transaction.accountType === accountType) {
-          if (transaction.newTransactionType === "Withdrawal") {
-            totalWithdrawals += Number(transaction.newTransactionAmount);
-            let date = transaction.newTransactionDate;
-
-            let formatted = totalDeposits - totalWithdrawals;
-
-            if (accountType === "Debit") {
-              setDebitLine((lineData) => [
-                ...lineData,
-                { dates: date, balances: formatted },
-              ]);
-            } else if (accountType === "Credit") {
-              setCreditLine((lineData) => [
-                ...lineData,
-                { dates: date, balances: formatted },
-              ]);
-            } else if (accountType === "Savings") {
-              setSavingsLine((lineData) => [
-                ...lineData,
-                { dates: date, balances: formatted },
-              ]);
-            }
-          } else if (transaction.newTransactionType === "Deposit") {
-            totalDeposits += Number(transaction.newTransactionAmount);
-            let date = transaction.newTransactionDate;
-
-            let formatted = totalDeposits - totalWithdrawals;
-
-            if (accountType === "Debit") {
-              setDebitLine((lineData) => [
-                ...lineData,
-                { dates: date, balances: formatted },
-              ]);
-            } else if (accountType === "Credit") {
-              setCreditLine((lineData) => [
-                ...lineData,
-                { dates: date, balances: formatted },
-              ]);
-            } else if (accountType === "Savings") {
-              setSavingsLine((lineData) => [
-                ...lineData,
-                { dates: date, balances: formatted },
-              ]);
-            }
-          }
-        }
-      });
-    }
-  };
-
-  const getTotalBalance = () => {
-    let totalDeposits = 0;
-    let totalWithdrawals = 0;
-    if (accountList) {
-      let sorted = accountList.sort((a, b) =>
-        a.newTransactionDate.localeCompare(b.newTransactionDate)
-      );
-      setLineData([]);
-      sorted.forEach((transaction) => {
-        if (transaction.newTransactionType === "Withdrawal") {
-          totalWithdrawals += Number(transaction.newTransactionAmount);
-          let date = transaction.newTransactionDate;
-
-          let formatted = totalDeposits - totalWithdrawals;
-
-          setLineData((lineData) => [
-            ...lineData,
-            { dates: date, balances: formatted },
-          ]);
-        } else if (transaction.newTransactionType === "Deposit") {
-          totalDeposits += Number(transaction.newTransactionAmount);
-          let date = transaction.newTransactionDate;
-
-          let formatted = totalDeposits + totalWithdrawals;
-
-          setLineData((lineData) => [
-            ...lineData,
-            { dates: date, balances: formatted },
-          ]);
-        }
-      });
-    }
-  };
 
   useEffect(() => {
     if (!firstRenderRef.current) {
       getAccountList(); // Call getAccountList on subsequent renders
     }
     firstRenderRef.current = false; // Ensure this runs only once after the first render
-  }, [accountList, accountTriggerFetch]);
+  }, [triggerFetch, user]);
 
   useEffect(() => {
     getAccountNames(); // Call getAccountNames on every render after the initial one
-  }, []);
+  }, [accountTriggerFetch, user]);
 
-  useEffect(() => {
-    if (user) {
-      getAccountList(); // Call getAccountList on initial render or when user changes
-    }
-  }, [user]);
-
-  useEffect(() => {
-    getTotalBalance(),
-      lineGraphAccount("Debit"),
-      lineGraphAccount("Credit"),
-      lineGraphAccount("Savings");
-  }, [accountList, budgetTriggerFetch]);
+  // useEffect(() => {
+  //   getTotalBalance(),
+  //     lineGraphAccount("Debit"),
+  //     lineGraphAccount("Credit"),
+  //     lineGraphAccount("Savings");
+  // }, [accountList, budgetTriggerFetch]);
 
   return (
     <>
@@ -403,6 +275,7 @@ const Dashboard = () => {
                     setAccountList={setAccountList}
                     monthlyExpenses={monthlyExpenses}
                     budgetList={budgetList}
+                    accountNamesList={accountNamesList}
                   />
                 </div>
               ) : null}
@@ -434,24 +307,24 @@ const Dashboard = () => {
                   budgetTriggerFetch={budgetTriggerFetch}
                   setBudgetTriggerFetch={setBudgetTriggerFetch}
                   currentAccountBalance={currentAccountBalance}
-                  debitAccount={debitAccount}
-                  savingsAccount={savingsAccount}
-                  creditAccount={creditAccount}
+                  // debitAccount={debitAccount}
+                  // savingsAccount={savingsAccount}
+                  // creditAccount={creditAccount}
                   monthlyExpensesBalance={monthlyExpensesBalance}
                   monthlyExpenses={monthlyExpenses}
                   lineData={lineData}
-                  category={category}
-                  amounts={amounts}
-                  year={year}
-                  debitCategory={debitCategory}
-                  debitAmounts={debitAmounts}
-                  debitYear={debitYear}
-                  savingsCategory={savingsCategory}
-                  savingsAmounts={savingsAmounts}
-                  savingsYear={savingsYear}
-                  creditCategory={creditCategory}
-                  creditAmounts={creditAmounts}
-                  creditYear={creditYear}
+                  // category={category}
+                  // amounts={amounts}
+                  // year={year}
+                  // debitCategory={debitCategory}
+                  // debitAmounts={debitAmounts}
+                  // debitYear={debitYear}
+                  // savingsCategory={savingsCategory}
+                  // savingsAmounts={savingsAmounts}
+                  // savingsYear={savingsYear}
+                  // creditCategory={creditCategory}
+                  // creditAmounts={creditAmounts}
+                  // creditYear={creditYear}
                   accountNamesList={accountNamesList}
                 />
               </div>
