@@ -75,13 +75,26 @@ export default function CalendarChart({ objData }) {
   const handleDayClick = (clickedDate) => {
     const dayEvents = events.filter(event => {
       return event.monthly ?  //Checks if it is a monthly event-------
-      (clickedDate.getDate() === event.date.getDate()) :
-      formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
+        (clickedDate.getDate() === event.date.getDate()) :
+        formatDate(event.date, 'yyyy-MM-dd') === formatDate(clickedDate, 'yyyy-MM-dd')
     });
+  
     if (dayEvents.length > 0) {
-      //ModalContent is for the pop up when a date is clicked-------
-      setModalContent(`Events for ${formatDate(clickedDate, 'MMM dd')}: ` + dayEvents.map(event => `|| ${event.title}:  $${event.amount} `).join("\n"));
-      setIsOpen(true)
+      const eventsList = dayEvents.map((event, index) => (
+        <li className='bg-white p-2  shadow rounded mr-4 mb-2' key={index}>
+          {`${event.title} - $${event.amount}`}
+        </li>
+      ));
+  
+      setModalContent(
+        <div className='bg-orange-300 text-black rounded p-2'> 
+          <p className='bg-white text-black font-bold flex justify-center rounded p-2'>Events for {formatDate(clickedDate, 'MMMM dd, yyyy')}</p>
+          <ul className='rounded pr-4 pt-4 pb-4'>
+            {eventsList}
+          </ul>
+        </div>
+      );
+      setIsOpen(true);
     }
   };
 
@@ -107,8 +120,7 @@ export default function CalendarChart({ objData }) {
       />
       <div>
         <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <h1 style={{ color: "white" }}>Event Details</h1>
-          <p style={{ color: "white" }}>{modalContent}</p>
+          <p className='p-2' >{modalContent}</p>
         </Modal>
       </div>
         <div className='m-2 w-max'>
