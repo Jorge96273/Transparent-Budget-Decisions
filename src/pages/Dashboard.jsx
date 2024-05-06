@@ -23,6 +23,7 @@ import { BudgetSheet } from "@/components/BudgetSheet";
 import { MonthlyExpensesSheet } from "@/components/MonthlyExpenseSheet";
 import AccountBalances from "@/components/AccountBalances";
 import CreateAccountDialog from "@/components/CreateAccountDialog";
+import { AccountSheet } from "@/components/AccountSheet";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -333,6 +334,18 @@ const Dashboard = () => {
             <div className="flex w-full items-center justify-center">
               <div className="mr-2 ml-2">
                 <CreateAccountDialog
+                  accountNamesList={accountNamesList}
+                  setAccountNamesList={setAccountNamesList}
+                  newAccountName={newAccountName}
+                  setNewAccountName={setNewAccountName}
+                  getAccountNames={getAccountNames}
+                  uid={uid}
+                  accountTriggerFetch={accountTriggerFetch}
+                  setAccountTriggerFetch={setAccountTriggerFetch}
+                />
+              </div>
+              <div className="mr-2 ml-2">
+                <AccountSheet
                   accountNamesList={accountNamesList}
                   setAccountNamesList={setAccountNamesList}
                   newAccountName={newAccountName}

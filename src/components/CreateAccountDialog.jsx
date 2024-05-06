@@ -95,18 +95,16 @@ function CreateAccountDialog({
         >
           <DialogTrigger asChild>
             <button className="rounded-button-newuser hover:bg-orange-100">
-              Create an Account
+              Add an Account
             </button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[800px]">
-            <h3>Create a Create </h3>
+          <DialogContent className="sm:max-w-[425px]">
+            <h3>Add an Acconut </h3>
+            <picture>
+              <source media="(min-width: )" srcset="" />
+              <img src="" alt="" />
+            </picture>
             <div>
-              <AccountsTable
-                accountNamesList={accountNamesList}
-                uid={uid}
-                accountTriggerFetch={accountTriggerFetch}
-                setAccountTriggerFetch={setAccountTriggerFetch}
-              />
               <DialogHeader>
                 <DialogTitle>
                   {showAlert && (
