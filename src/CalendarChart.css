@@ -53,6 +53,8 @@
 
 .react-calendar__navigation {
     display: flex ;
+    background-color: slategray;
+    color: white;
     border-radius: 5px;
     height: 30px;
     
@@ -85,8 +87,8 @@
     font: inherit;
     font-size: 0.7em;
     font-weight: bold;
-    background-color: rgb(127, 207, 229);
-    
+    background-color: slategray;
+    color: white;
 }
 
 .react-calendar__month-view__weekdays__weekday {
