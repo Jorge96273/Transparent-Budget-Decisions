@@ -120,103 +120,135 @@ function TransactionInputDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button className="rounded-button-newuser hover:bg-orange-100">
+            <button variant="outline" className="rounded-button-newuser">
               Add a Transaction
             </button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Create a Transaction Below</DialogTitle>
+              <DialogTitle className="text-3xl">
+                Create a Transaction
+              </DialogTitle>
             </DialogHeader>
-            <h3>Add a Transaction</h3>
-            <div>
-              <label htmlFor="accountType">Account:</label>
-              <select
-                id="accountType"
-                value={accountType}
-                onChange={(event) => setAccountType(event.target.value)}
-              >
-                {accountNamesList.map((account) => (
-                  <option key={account.accountName} value={account.accountName}>
-                    {account.accountName}
-                  </option>
-                ))}
-              </select>
+            <div className="grid grid-cols-2 gap-x-4">
+              <div className="flex items-center">
+                <label htmlFor="accountType">Account:</label>
+              </div>
+              <div className="flex items-center">
+                <select
+                  id="accountType"
+                  value={accountType}
+                  onChange={(event) => setAccountType(event.target.value)}
+                  className="rounded mb-1"
+                >
+                  {accountNamesList.map((account) => (
+                    <option
+                      key={account.accountName}
+                      value={account.accountName}
+                    >
+                      {account.accountName}
+                    </option>
+                  ))}
+                </select>
+              </div>
               {/* <div>
                 <label htmlFor="accountBalance">Current Account Balance:</label>
                 <span id="accountBalance">{accountBalance.toFixed(2)}</span>
               </div> */}
-              <br></br>
-              <label htmlFor="budgetAccount">Budget Account:</label>
-              <select
-                id="budgetAccount"
-                value={selectBudget}
-                onChange={(event) => setSelectBudget(event.target.value)}
-              >
-                <br></br>
-                <option value="None">None</option>
-                {budgetList.map((budget) => (
-                  <option key={budget.id} value={budget.newBudget}>
-                    {budget.newBudget}
-                  </option>
-                ))}
-              </select>
-              <br></br>
-              <label htmlFor="accountType">Transaction Name:</label>
-              <input
-                type="text"
-                placeholder="Transaction Name"
-                onChange={(e) => setNewTransactionName(e.target.value)}
-              />
-              <br></br>
-              <label htmlFor="accountType">Transaction Amount:</label>
-              <input
-                type="number"
-                placeholder="Transaction Amount"
-                onChange={(e) => setNewTransactionAmount(e.target.value)}
-              />
-              <br></br>
-              <label htmlFor="accountType">Transaction Date:</label>
-              <input
-                aria-label="Date"
-                type="date"
-                placeholder="Transaction Date"
-                onChange={(e) => setNewTransactionDate(e.target.value)}
-              />
-              <br></br>
-
-              <label htmlFor="transactionType">Withdraw or Deposit:</label>
-              <select
-                id="transactionType"
-                value={newTransactionType}
-                onChange={(event) => setNewTransactionType(event.target.value)}
-              >
-                <option value="Withdrawal">Withdrawal</option>
-                <option value="Deposit">Deposit</option>
-              </select>
-              <br></br>
-              <label htmlFor="monthlyExpense">Monthly Transaction:</label>
-              <select
-                id="monthlyExpense"
-                value={monthlyExpense}
-                onChange={(event) => setMonthlyExpense(event.target.value)}
-              >
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-              </select>
-              <br></br>
-              <></>
+              <div className="flex items-center">
+                <label htmlFor="budgetAccount">Budget Account:</label>
+              </div>
+              <div className="flex items-center">
+                <select
+                  id="budgetAccount"
+                  value={selectBudget}
+                  onChange={(event) => setSelectBudget(event.target.value)}
+                  className="rounded mb-1"
+                >
+                  <option value="None">None</option>
+                  {budgetList.map((budget) => (
+                    <option key={budget.id} value={budget.newBudget}>
+                      {budget.newBudget}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="accountType">Transaction Name:</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Transaction Name"
+                  onChange={(e) => setNewTransactionName(e.target.value)}
+                  className="rounded mb-1"
+                />
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="accountType">Transaction Amount:</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="number"
+                  placeholder="Transaction Amount"
+                  onChange={(e) => setNewTransactionAmount(e.target.value)}
+                  className="rounded mb-1"
+                />
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="accountType">Transaction Date:</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  aria-label="Date"
+                  type="date"
+                  placeholder="Transaction Date"
+                  onChange={(e) => setNewTransactionDate(e.target.value)}
+                  className="rounded mb-1"
+                />
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="transactionType">Withdraw or Deposit:</label>
+              </div>
+              <div className="flex items-center">
+                <select
+                  id="transactionType"
+                  value={newTransactionType}
+                  onChange={(event) =>
+                    setNewTransactionType(event.target.value)
+                  }
+                  className="rounded mb-1"
+                >
+                  <option value="Withdrawal">Withdrawal</option>
+                  <option value="Deposit">Deposit</option>
+                </select>
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="monthlyExpense">Monthly Expense:</label>
+              </div>
+              <div className="flex items-center">
+                <select
+                  id="monthlyExpense"
+                  value={monthlyExpense}
+                  onChange={(event) => setMonthlyExpense(event.target.value)}
+                  className="rounded mb-1"
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
             </div>
-            {/* ******* END OF FORM */}
-
-            <DialogFooter>
+            <div className="flex justify-center">
               <button
-                className="rounded-button-newuser hover:bg-orange-100"
+                className="rounded-button-newuser"
                 onClick={addTransaction}
               >
                 Submit Transaction
               </button>
-            </DialogFooter>
+            </div>
+            {/* ******* END OF FORM */}
+
+            <DialogFooter></DialogFooter>
           </DialogContent>
         </Dialog>{" "}
       </div>
