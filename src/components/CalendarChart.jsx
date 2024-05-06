@@ -36,7 +36,6 @@ export default function CalendarChart({ objData }) {
 
   //For what appears in the calendar tiles------
   const renderTileContent = ({ date, view }) => {
-    console.log(events);
     if (view === 'month') {
       const dayEvents = events.filter(event => {
 
