@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-
 import "../App.css";
-import { Auth } from "./auth";
-import { db, auth } from "../config/firebase";
+import { db } from "../config/firebase";
 import {
   addDoc,
   getDoc,
@@ -14,13 +12,7 @@ import {
   query,
   onSnapshot,
 } from "firebase/firestore";
-import { useNavigate, Navigate } from "react-router-dom";
-import LoginDialogTemplate from "@/components/LoginDialogTemplate";
-import SignupDialogTemplate from "@/components/SignupDialogTemplate";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-import { Button } from "react-bootstrap";
-
 import {
   Dialog,
   DialogContent,
@@ -30,8 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 function UpdateTransactionDialog({
   uid,
@@ -82,12 +72,7 @@ function UpdateTransactionDialog({
 
     fetchTransactionData();
   }, [uid, transactionID]);
-
-  //   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
-  //     useState(newTransactionAmount);
-
   const dialogKey = useRef(0);
-
   const closeDialog = () => {
     setIsDialogOpen(false);
     dialogKey.current += 1;
@@ -168,28 +153,35 @@ function UpdateTransactionDialog({
               Update a Transaction
             </button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[550px]">
             <DialogHeader>
-              <DialogTitle>Update any Transaction Fields Below</DialogTitle>
+              <DialogTitle className="text-3xl">Update a Transaction</DialogTitle>
             </DialogHeader>
-            <h3>Update a Transaction</h3>
-            <div>
+            <div className="grid grid-cols-2 gap-x-4">
+            <div className="flex items-center"> 
               <label htmlFor="accountType">Account:</label>
+              </div>
+              <div className="flex items-center">
               <select
                 id="accountType"
                 value={accountType}
                 onChange={(event) => setAccountType(event.target.value)}
+                className="rounded mb-1"
               >
                 <option value="Debit">Debit</option>
                 <option value="Credit">Credit</option>
                 <option value="Savings">Savings</option>
               </select>
-              <br></br>
+              </div>
+              <div className="flex items-center">
               <label htmlFor="budgetAccount">Budget Account:</label>
+              </div>
+              <div className="flex items-center">
               <select
                 id="budgetAccount"
                 value={selectBudget}
                 onChange={(event) => setSelectBudget(event.target.value)}
+                className="rounded mb-1"
               >
                 <option value="None">None</option>
                 {budgetList.map((budget) => (
@@ -198,62 +190,81 @@ function UpdateTransactionDialog({
                   </option>
                 ))}
               </select>
-              <br></br>
+              </div>
+              <div className="flex items-center">
               <label htmlFor="accountType">Transaction Name:</label>
+              </div>
+              <div className="flex items-center">
               <input
                 type="text"
                 value={newTransactionName}
                 placeholder="Transaction Name"
                 onChange={(e) => setNewTransactionName(e.target.value)}
+                className="rounded mb-1"
               />
-              <br></br>
+              </div>
+              <div className="flex items-center">
               <label htmlFor="accountType">Transaction Amount:</label>
+              </div>
+              <div className="flex items-center">
               <input
                 type="number"
                 value={newTransactionAmount}
                 placeholder="Transaction Amount"
                 onChange={(e) => setNewTransactionAmount(e.target.value)}
+                className="rounded mb-1"
               />
-              <br></br>
+              </div>
               <label htmlFor="accountType">Transaction Date:</label>
+              <div className="flex items-center">
               <input
                 aria-label="Date"
                 type="date"
                 value={newTransactionDate}
                 placeholder="Transaction Date"
                 onChange={(e) => setNewTransactionDate(e.target.value)}
+                className="rounded mb-1"
               />
-              <br></br>
+              </div>
+              <div className="flex items-center">
               <label htmlFor="transactionType">Withdraw or Deposit:</label>
+              </div>
+              <div className="flex items-center">
               <select
                 id="transactionType"
                 value={newTransactionType}
                 onChange={(event) => setNewTransactionType(event.target.value)}
+                className="rounded mb-1"
               >
                 <option value="Withdrawal">Withdrawal</option>
                 <option value="Deposit">Deposit</option>
               </select>
-              <br></br>
+              </div>
+              <div className="flex items-center">
               <label htmlFor="monthlyExpense">Monthly Transaction:</label>
+              </div>
+              <div className="flex items-center">
               <select
                 id="monthlyExpense"
                 value={monthlyExpense}
                 onChange={(event) => setMonthlyExpense(event.target.value)}
+                className="rounded mb-1"
               >
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
               </select>
-              <br></br>
+              </div>
             </div>
-            {/* ******* END OF FORM */}
-            <DialogFooter>
+              <div className="flex justify-center">
               <button
                 className="rounded-button-newuser"
                 onClick={handleSubmit}
                 disabled={isLoading}
               >
                 Update Transaction
-              </button>
+              </button> 
+              </div>
+            <DialogFooter>
             </DialogFooter>
           </DialogContent>
         </Dialog>
