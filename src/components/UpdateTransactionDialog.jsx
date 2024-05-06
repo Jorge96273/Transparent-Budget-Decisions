@@ -42,6 +42,7 @@ function UpdateTransactionDialog({
   setAccountList,
   budgetList,
   setBudgetList,
+  accountNamesList,
 }) {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -180,9 +181,11 @@ function UpdateTransactionDialog({
                 value={accountType}
                 onChange={(event) => setAccountType(event.target.value)}
               >
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-                <option value="Savings">Savings</option>
+                {accountNamesList.map((account) => (
+                  <option key={account.accountName} value={account.accountName}>
+                    {account.accountName}
+                  </option>
+                ))}
               </select>
               <br></br>
               <label htmlFor="budgetAccount">Budget Account:</label>

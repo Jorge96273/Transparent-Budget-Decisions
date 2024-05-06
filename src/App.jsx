@@ -10,6 +10,7 @@ function App() {
   const [accountList, setAccountList] = useState([]);
   const [budgetList, setBudgetList] = useState([]);
   const [budgetTriggerFetch, setBudgetTriggerFetch] = useState(false);
+  const [accountNamesList, setAccountNamesList] = useState([]);
   return (
     <>
       <div className="bg-orange-50 flex flex-col min-h-screen">
@@ -25,6 +26,8 @@ function App() {
               setBudgetList,
               budgetTriggerFetch,
               setBudgetTriggerFetch,
+              accountNamesList,
+              setAccountNamesList,
             }}
           />
         </div>

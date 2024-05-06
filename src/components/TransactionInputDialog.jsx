@@ -40,6 +40,8 @@ function TransactionInputDialog({
   setAccountList,
   budgetList,
   setBudgetList,
+  accountNamesList,
+  getAccountNames,
 }) {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -128,7 +130,7 @@ function TransactionInputDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button  className="rounded-button-newuser hover:bg-orange-100">
+            <button className="rounded-button-newuser hover:bg-orange-100">
               Add a Transaction
             </button>
           </DialogTrigger>
@@ -144,9 +146,14 @@ function TransactionInputDialog({
                 value={accountType}
                 onChange={(event) => setAccountType(event.target.value)}
               >
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-                <option value="Savings">Savings</option>
+                {accountNamesList.map((account) => (
+                  <option key={account.accountName} value={account.accountName}>
+                    {account.accountName}
+                  </option>
+                ))}
+                {/* // <option value="Debit">Debit</option>
+                // <option value="Credit">Credit</option>
+                // <option value="Savings">Savings</option> */}
               </select>
               {/* <div>
                 <label htmlFor="accountBalance">Current Account Balance:</label>
