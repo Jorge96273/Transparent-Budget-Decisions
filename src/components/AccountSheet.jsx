@@ -36,7 +36,7 @@ export function AccountSheet({
           </button>
         </div>
       </SheetTrigger>
-      <SheetContent style={{ width: "100%" }}>
+      <SheetContent style={{ width: "50%" }}>
         <div
           className="background-color-div"
           style={{ maxHeight: "500px", overflowY: "auto" }}

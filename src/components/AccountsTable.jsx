@@ -68,26 +68,26 @@ function AccountsTable({
       ),
     },
 
-    {
-      accessorKey: "updateAccount",
-      header: () => <div className="text-center">Update Account</div>,
-      cell: ({ row }) => {
-        const accountID = row.getValue("accountID");
-        const accountName = row.getValue("accountType");
+    // {
+    //   accessorKey: "updateAccount",
+    //   header: () => <div className="text-center">Update Account</div>,
+    //   cell: ({ row }) => {
+    //     const accountID = row.getValue("accountID");
+    //     const accountName = row.getValue("accountType");
 
-        return (
-          <div className="items-center">
-            <UpdateAccountDialog
-              accountID={accountID}
-              accountName={accountName}
-              uid={uid}
-              setAccountTriggerFetch={setAccountTriggerFetch}
-              accountTriggerFetch={accountTriggerFetch}
-            />
-          </div>
-        );
-      },
-    },
+    //     return (
+    //       <div className="items-center">
+    //         <UpdateAccountDialog
+    //           accountID={accountID}
+    //           accountName={accountName}
+    //           uid={uid}
+    //           setAccountTriggerFetch={setAccountTriggerFetch}
+    //           accountTriggerFetch={accountTriggerFetch}
+    //         />
+    //       </div>
+    //     );
+    //   },
+    // },
     // TODO FIX THE DELETE AN ACCOUNT FUNCTION *****INFINITE LOOP******
     {
       accessorKey: "accountID",

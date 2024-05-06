@@ -99,7 +99,7 @@ function CreateAccountDialog({
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <h3>Add an Acconut </h3>
+            <h3>Add an Account </h3>
             <picture>
               <source media="(min-width: )" srcset="" />
               <img src="" alt="" />

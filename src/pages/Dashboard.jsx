@@ -186,13 +186,6 @@ const Dashboard = () => {
     getAccountNames(); // Call getAccountNames on every render after the initial one
   }, [accountTriggerFetch, user]);
 
-  // useEffect(() => {
-  //   getTotalBalance(),
-  //     lineGraphAccount("Debit"),
-  //     lineGraphAccount("Credit"),
-  //     lineGraphAccount("Savings");
-  // }, [accountList, budgetTriggerFetch]);
-
   return (
     <>
       <div className="animate-in slide-in-from-bottom duration-1000  w-full">
@@ -307,24 +300,9 @@ const Dashboard = () => {
                   budgetTriggerFetch={budgetTriggerFetch}
                   setBudgetTriggerFetch={setBudgetTriggerFetch}
                   currentAccountBalance={currentAccountBalance}
-                  // debitAccount={debitAccount}
-                  // savingsAccount={savingsAccount}
-                  // creditAccount={creditAccount}
                   monthlyExpensesBalance={monthlyExpensesBalance}
                   monthlyExpenses={monthlyExpenses}
                   lineData={lineData}
-                  // category={category}
-                  // amounts={amounts}
-                  // year={year}
-                  // debitCategory={debitCategory}
-                  // debitAmounts={debitAmounts}
-                  // debitYear={debitYear}
-                  // savingsCategory={savingsCategory}
-                  // savingsAmounts={savingsAmounts}
-                  // savingsYear={savingsYear}
-                  // creditCategory={creditCategory}
-                  // creditAmounts={creditAmounts}
-                  // creditYear={creditYear}
                   accountNamesList={accountNamesList}
                 />
               </div>
