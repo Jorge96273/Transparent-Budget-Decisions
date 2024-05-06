@@ -145,8 +145,3 @@ export default function CalendarChart({ objData }) {
 
 
 
-
-};
-
-
-
