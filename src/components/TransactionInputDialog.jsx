@@ -31,6 +31,8 @@ function TransactionInputDialog({
   setAccountList,
   budgetList,
   setBudgetList,
+  accountNamesList,
+  getAccountNames,
 }) {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -113,106 +115,115 @@ function TransactionInputDialog({
           </DialogTrigger>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle className="text-3xl">Create a Transaction</DialogTitle>
+              <DialogTitle className="text-3xl">
+                Create a Transaction
+              </DialogTitle>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-x-4">
               <div className="flex items-center">
-              <label htmlFor="accountType">Account:</label>
+                <label htmlFor="accountType">Account:</label>
               </div>
               <div className="flex items-center">
-              <select
-                id="accountType"
-                value={accountType}
-                onChange={(event) => setAccountType(event.target.value)}
-                className="rounded mb-1"
-              >
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-                <option value="Savings">Savings</option>
-              </select>
+                <select
+                  id="accountType"
+                  value={accountType}
+                  onChange={(event) => setAccountType(event.target.value)}
+                  className="rounded mb-1"
+                >
+                  {accountNamesList.map((account) => (
+                    <option
+                      key={account.accountName}
+                      value={account.accountName}
+                    >
+                      {account.accountName}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="flex items-center">
-              <label htmlFor="budgetAccount">Budget Account:</label>
+                <label htmlFor="budgetAccount">Budget Account:</label>
               </div>
               <div className="flex items-center">
-              <select
-                id="budgetAccount"
-                value={selectBudget}
-                onChange={(event) => setSelectBudget(event.target.value)}
-                className="rounded mb-1"
-              >
-                <option value="None">None</option>
-                {budgetList.map((budget) => (
-                  <option key={budget.id} value={budget.newBudget}>
-                    {budget.newBudget}
-                  </option>
-                ))}
-              </select>
+                <select
+                  id="budgetAccount"
+                  value={selectBudget}
+                  onChange={(event) => setSelectBudget(event.target.value)}
+                  className="rounded mb-1"
+                >
+                  <option value="None">None</option>
+                  {budgetList.map((budget) => (
+                    <option key={budget.id} value={budget.newBudget}>
+                      {budget.newBudget}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="flex items-center">
-              <label htmlFor="accountType">Transaction Name:</label>
+                <label htmlFor="accountType">Transaction Name:</label>
               </div>
               <div className="flex items-center">
-              <input
-                type="text"
-                placeholder="Transaction Name"
-                onChange={(e) => setNewTransactionName(e.target.value)}
-                className="rounded mb-1"
-              />
+                <input
+                  type="text"
+                  placeholder="Transaction Name"
+                  onChange={(e) => setNewTransactionName(e.target.value)}
+                  className="rounded mb-1"
+                />
               </div>
               <div className="flex items-center">
-              <label htmlFor="accountType">Transaction Amount:</label>
+                <label htmlFor="accountType">Transaction Amount:</label>
               </div>
               <div className="flex items-center">
-              <input
-                type="number"
-                placeholder="Transaction Amount"
-                onChange={(e) => setNewTransactionAmount(e.target.value)}
-                className="rounded mb-1"
-              />
+                <input
+                  type="number"
+                  placeholder="Transaction Amount"
+                  onChange={(e) => setNewTransactionAmount(e.target.value)}
+                  className="rounded mb-1"
+                />
               </div>
               <div className="flex items-center">
-              <label htmlFor="accountType">Transaction Date:</label>
+                <label htmlFor="accountType">Transaction Date:</label>
               </div>
               <div className="flex items-center">
-              <input
-                aria-label="Date"
-                type="date"
-                placeholder="Transaction Date"
-                onChange={(e) => setNewTransactionDate(e.target.value)}
-                className="rounded mb-1"
-              />
+                <input
+                  aria-label="Date"
+                  type="date"
+                  placeholder="Transaction Date"
+                  onChange={(e) => setNewTransactionDate(e.target.value)}
+                  className="rounded mb-1"
+                />
               </div>
               <div className="flex items-center">
-              <label htmlFor="transactionType">Withdraw or Deposit:</label>
+                <label htmlFor="transactionType">Withdraw or Deposit:</label>
               </div>
               <div className="flex items-center">
-              <select
-                id="transactionType"
-                value={newTransactionType}
-                onChange={(event) => setNewTransactionType(event.target.value)}
-                className="rounded mb-1"
-              >
-                <option value="Withdrawal">Withdrawal</option>
-                <option value="Deposit">Deposit</option>
-              </select>
+                <select
+                  id="transactionType"
+                  value={newTransactionType}
+                  onChange={(event) =>
+                    setNewTransactionType(event.target.value)
+                  }
+                  className="rounded mb-1"
+                >
+                  <option value="Withdrawal">Withdrawal</option>
+                  <option value="Deposit">Deposit</option>
+                </select>
               </div>
               <div className="flex items-center">
-              <label htmlFor="monthlyExpense">Monthly Expense:</label>
+                <label htmlFor="monthlyExpense">Monthly Expense:</label>
               </div>
               <div className="flex items-center">
-              <select
-                id="monthlyExpense"
-                value={monthlyExpense}
-                onChange={(event) => setMonthlyExpense(event.target.value)}
-                className="rounded mb-1"
-              >
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-              </select>
+                <select
+                  id="monthlyExpense"
+                  value={monthlyExpense}
+                  onChange={(event) => setMonthlyExpense(event.target.value)}
+                  className="rounded mb-1"
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
             </div>
-              </div>
-              <div className="flex justify-center">
+            <div className="flex justify-center">
               <button
                 className="rounded-button-newuser"
                 onClick={addTransaction}

@@ -32,6 +32,7 @@ function UpdateTransactionDialog({
   setAccountList,
   budgetList,
   setBudgetList,
+  accountNamesList,
 }) {
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -52,6 +53,7 @@ function UpdateTransactionDialog({
       try {
         const accountRef = doc(db, `${uid}`, transactionID);
         const docSnap = await getDoc(accountRef);
+        console.log("FETCH TRANSACTION DATA UPDATE TRANSACTION DIALOG");
         if (docSnap.exists()) {
           // Assuming the document structure matches the state variables
           setAccountType(docSnap.data().accountType);
@@ -139,7 +141,7 @@ function UpdateTransactionDialog({
       setIsLoading(false); // Ensure the button is re-enabled even on failure
     }
   };
-
+  console.log("ACCOUNT NAMES LIST", accountNamesList);
   return (
     <>
       <div className="App">
@@ -168,9 +170,11 @@ function UpdateTransactionDialog({
                 onChange={(event) => setAccountType(event.target.value)}
                 className="rounded mb-1"
               >
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-                <option value="Savings">Savings</option>
+                {accountNamesList.map((account) => (
+                  <option key={account.accountName} value={account.accountName}>
+                    {account.accountName}
+                  </option>
+                ))}
               </select>
               </div>
               <div className="flex items-center">
