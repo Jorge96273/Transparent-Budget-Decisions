@@ -101,7 +101,7 @@ function CreateAccountDialog({
           <DialogContent className="sm:max-w-[425px]">
             <h3>Add an Account </h3>
             <picture>
-              <source media="(min-width: )" srcset="" />
+              <source media="(min-width: )" srcSet="" />
               <img src="" alt="" />
             </picture>
             <div>

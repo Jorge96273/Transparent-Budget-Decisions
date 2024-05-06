@@ -1,5 +1,3 @@
-// import { useEffect, useState, useRef } from "react";
-// import { Auth } from "../components/auth";
 import { db } from "../config/firebase";
 import {
   // getDocs,
@@ -10,12 +8,8 @@ import {
   updateDoc,
   // serverTimestamp,
 } from "firebase/firestore";
-// import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-// import { Button } from "react-bootstrap";
 import UpdateTransactionDialog from "./UpdateTransactionDialog";
-
-// import { useCallback } from "react";
 import * as React from "react";
 import {
   flexRender,
@@ -86,31 +80,12 @@ function TransactionTable({
   }
 
   const columns = [
-    // {
-    //   accessorKey: "accountType",
-    //   header: "Account Type",
-    //   cell: ({ row }) => (
-    //     <div className="capitalize text-center">
-    //       {row.getValue("accountType")}
-    //     </div>
-    //   ),
-    // },
-    //! *********** MUST FIX *****************
-    // TODO FIX THE SORTING OF THE DOLLAR AMOUNT
     {
       accessorKey: "transactionAmount",
       header: ({ column }) => {
         return (
           <div className="d-flex align-items-center">
             <div className="text-center">Transaction Amount</div>
-            {/* <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button> */}
           </div>
         );
       },

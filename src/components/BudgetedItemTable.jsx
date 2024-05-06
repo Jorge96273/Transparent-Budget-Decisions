@@ -41,16 +41,6 @@ function BudgetedItemTable({
     console.log("deleted");
   };
 
-  // function transformBudgetList(list) {
-  //   return list.map((budget) => {
-  //     return {
-  //       budgetName: budget.newBudget,
-  //       budgetAmount: budget.newBudgetAmount,
-  //       budgetId: String(budget.id),
-  //     };
-  //   });
-  // }
-
   // Caluclates the Amount Spent for Each Budget Category
   function budgetSpent(category) {
     let totalDeposits = 0;

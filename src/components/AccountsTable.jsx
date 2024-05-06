@@ -19,7 +19,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useMemo, useCallback } from "react";
-import { UpdateAccountDialog } from "./UpdateAccountDialog";
 
 function AccountsTable({
   uid,
@@ -41,17 +40,7 @@ function AccountsTable({
     },
     [uid, accountTriggerFetch, setAccountTriggerFetch]
   );
-
-  function transformAccountList(list) {
-    return list.map((account) => {
-      return {
-        accountName: account.accountName,
-
-        accountID: String(account.id),
-      };
-    });
-  }
-
+  // * Maps through list of account type objects and set the accountType and AccountID to the values
   const data = accountNamesList.map((accountType) => ({
     accountType: accountType.accountName,
     accountID: accountType.id,
@@ -61,6 +50,7 @@ function AccountsTable({
     {
       accessorKey: "accountType",
       header: "Account Name",
+      //* Pulls the data from data.accountType to fill the table
       cell: ({ row }) => (
         <div className="capitalize text-center">
           {row.getValue("accountType")}
@@ -68,30 +58,10 @@ function AccountsTable({
       ),
     },
 
-    // {
-    //   accessorKey: "updateAccount",
-    //   header: () => <div className="text-center">Update Account</div>,
-    //   cell: ({ row }) => {
-    //     const accountID = row.getValue("accountID");
-    //     const accountName = row.getValue("accountType");
-
-    //     return (
-    //       <div className="items-center">
-    //         <UpdateAccountDialog
-    //           accountID={accountID}
-    //           accountName={accountName}
-    //           uid={uid}
-    //           setAccountTriggerFetch={setAccountTriggerFetch}
-    //           accountTriggerFetch={accountTriggerFetch}
-    //         />
-    //       </div>
-    //     );
-    //   },
-    // },
-    // TODO FIX THE DELETE AN ACCOUNT FUNCTION *****INFINITE LOOP******
     {
       accessorKey: "accountID",
       header: () => <div className="text-center">Delete Account</div>,
+      //* Pulls the data from data.accountID to use as parameter in the delete account method
       cell: ({ row }) => {
         const accountID = row.getValue("accountID");
         return (

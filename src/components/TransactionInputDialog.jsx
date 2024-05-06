@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-
 import "../App.css";
 import { Auth } from "../components/auth";
 import { db, auth } from "../config/firebase";
@@ -13,12 +12,6 @@ import {
   query,
   onSnapshot,
 } from "firebase/firestore";
-import { useNavigate, Navigate } from "react-router-dom";
-import LoginDialogTemplate from "@/components/LoginDialogTemplate";
-import SignupDialogTemplate from "@/components/SignupDialogTemplate";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { toast } from "react-toastify";
-import { Button } from "react-bootstrap";
 
 import {
   Dialog,
@@ -55,9 +48,6 @@ function TransactionInputDialog({
   const [newTransactionType, setNewTransactionType] = useState("Withdrawal");
   const [newTransactionAmount, setNewTransactionAmount] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState("No");
-  //   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
-  //     useState(newTransactionAmount);
-
   const firstRenderRef = useRef(true);
 
   const transactionCollectionRef = collection(db, `${uid}`);
@@ -151,9 +141,6 @@ function TransactionInputDialog({
                     {account.accountName}
                   </option>
                 ))}
-                {/* // <option value="Debit">Debit</option>
-                // <option value="Credit">Credit</option>
-                // <option value="Savings">Savings</option> */}
               </select>
               {/* <div>
                 <label htmlFor="accountBalance">Current Account Balance:</label>

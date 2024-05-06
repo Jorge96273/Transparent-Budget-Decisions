@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-
 import "../App.css";
-import { Auth } from "./auth";
 import { db, auth } from "../config/firebase";
 import {
   addDoc,
@@ -14,13 +12,7 @@ import {
   query,
   onSnapshot,
 } from "firebase/firestore";
-import { useNavigate, Navigate } from "react-router-dom";
-import LoginDialogTemplate from "@/components/LoginDialogTemplate";
-import SignupDialogTemplate from "@/components/SignupDialogTemplate";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-import { Button } from "react-bootstrap";
-
 import {
   Dialog,
   DialogContent,
@@ -30,8 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 function UpdateTransactionDialog({
   uid,
@@ -84,9 +74,6 @@ function UpdateTransactionDialog({
 
     fetchTransactionData();
   }, [uid, transactionID]);
-
-  //   const [updatedTransactionAmount, setUpdatedTransactionAmount] =
-  //     useState(newTransactionAmount);
 
   const dialogKey = useRef(0);
 

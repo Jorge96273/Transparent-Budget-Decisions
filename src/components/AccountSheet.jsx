@@ -1,6 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -11,20 +8,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import BudgetedItemTable from "./BudgetedItemTable";
-import { PinLeftIcon } from "@radix-ui/react-icons";
 import AccountsTable from "./AccountsTable";
 
 export function AccountSheet({
   accountList,
-
   setAccountList,
   uid,
-  triggerFetch,
-  setTriggerFetch,
   accountTriggerFetch,
   setAccountTriggerFetch,
-
   accountNamesList,
 }) {
   return (

@@ -56,7 +56,7 @@ function CreateBudgetDialog({
   // this set the database path for Firebase
   const budgetCollectionRef = collection(db, `budget/${uid}/newBudget`);
 
-  // This
+  // This creates the budget document in firebase using newBudget, newBudgetAmount
   const createBudget = async () => {
     console.log("UID", uid, newBudget, newBudgetAmount);
     const docRef = await addDoc(budgetCollectionRef, {

@@ -14,12 +14,15 @@ const AccountBalances = ({
   return (
     <div className="w-full flex flex-row justify-evenly">
       {accountNamesList.map((accountType) => {
+        //* Maps through account names
         const filteredAccounts = accountList.filter(
           (account) => account.accountType === accountType.accountName
+          //* Filters through transactions that match account names
         );
         const balance = currentAccountBalance(accountType.accountName);
-
+        // * Uses account name as parameter for currentAccountBalance
         if (filteredAccounts.length > 0) {
+          //* WILL NOT RENDER IF NO TRANSACTIONS ON THE ACCOUNT
           return (
             <div
               key={accountType.accountName}
