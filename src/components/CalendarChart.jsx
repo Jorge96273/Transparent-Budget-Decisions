@@ -38,7 +38,6 @@ export default function CalendarChart({ objData }) {
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
       const dayEvents = events.filter(event => {
-
         // Handles Dates that are out of range of the Calendar-----------
         if (event.monthly) {
           const eventDate = new Date(event.date);
