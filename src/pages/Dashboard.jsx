@@ -398,7 +398,10 @@ const Dashboard = () => {
                 Budgets
               </h1>
               <div className="flex w-full h-full rounded items-center justify-center">
-                <div className="flex max-w-max h-full items-center justify-center rounded shadow-2xl shadow-slate-500 m-1 p-3 ">
+                <div
+                  className="flex max-w-max h-full items-center justify-center rounded shadow-2xl shadow-slate-500 m-1 p-3 "
+                  style={{ minWidth: "100px" }}
+                >
                   <BudgetItem
                     budgetList={budgetList}
                     accountList={accountList}
