@@ -350,6 +350,8 @@ const Dashboard = () => {
                       setAccountList={setAccountList}
                       setBudgetList={setBudgetList}
                       budgetList={budgetList}
+                      setBudgetTriggerFetch={setBudgetTriggerFetch}
+                      budgetTriggerFetch={budgetTriggerFetch}
                     />
                   </div>
                 ) : (
