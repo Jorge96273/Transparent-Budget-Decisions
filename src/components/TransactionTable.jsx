@@ -340,7 +340,7 @@ function TransactionTable({
   return (
     <>
       <div className="w-full">
-        <div className="bg-blue-50  ">
+        <div className="bg-slate-100 rounded">
           <Table>
             <TableHeader className="text-center">
               {table.getHeaderGroups().map((headerGroup) => (

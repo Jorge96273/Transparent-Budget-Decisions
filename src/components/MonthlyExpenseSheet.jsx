@@ -31,7 +31,7 @@ export function MonthlyExpensesSheet({
       <SheetTrigger asChild>
         <div className="text-white">
           {/* Assuming Button component accepts variant and className props */}
-          <button  className="rounded-button-newuser hover:bg-orange-100">
+          <button   className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
             Monthly Transaction
           </button>
         </div>

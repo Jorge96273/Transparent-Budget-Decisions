@@ -58,21 +58,23 @@ export function AccordionElement({
   };
   return (
     <>
-      <div className="flex overflow-auto justify-center"
-
-      >
-        <Accordion type='multiple' collapsible='true' className='w-full flex overflow-auto'>
+      <div className='flex w-full justify-center max-w-full'>
+        <Accordion
+          type='multiple'
+          collapsible='true'
+          className='w-full flex-col flex overflow-x-scroll'
+        >
           {debitList.length > 0 ? (
-            <AccordionItem className="m-2 h-full w-full" value='item-3'>
-              <AccordionTrigger 
-                className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-orange-200 focus:bg-orange-200 shadow-md'
-              >
-             
+            <AccordionItem className='p-2 h-full flex flex-col w-full' value='item-3'>
+              <AccordionTrigger className='rounded w-3/4 flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-slate-300  shadow-md'>
                 <h4>Debit Account</h4>
-                <h4 className="p-2 bg-orange-50 shadow-inner rounded"> {currentAccountBalance("Debit")}</h4>
+                <h3 className='p-2 bg-slate-50 shadow-inner rounded'>
+                  {" "}
+                  {currentAccountBalance("Debit")}
+                </h3>
               </AccordionTrigger>
               <AccordionContent>
-              <div className="bg-orange-200 rounded shadow-md">
+                <div className='bg-slate-300 rounded shadow-md'>
                   {lineData
                     ? LineChart(debitCategory, debitYear, debitAmounts)
                     : "Loading"}
@@ -91,17 +93,17 @@ export function AccordionElement({
             </AccordionItem>
           ) : null}
           {savingsList.length > 0 ? (
-            <AccordionItem className="m-2 h-full w-full" value='item-4'>
-            <AccordionTrigger 
-                className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-orange-200 focus:bg-orange-200 shadow-md'
-              
-              >
-               
+            <AccordionItem className='p-2 h-full w-full' value='item-4'>
+              <AccordionTrigger className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-slate-300  shadow-md'>
                 <h4>Savings Account</h4>
-                <h4 className="p-2 bg-orange-50 shadow-inner rounded">{currentAccountBalance("Savings")}</h4>
+                <h3 className='p-2 bg-slate-50 shadow-inner rounded'>
+                  {currentAccountBalance("Savings")}
+                </h3>
               </AccordionTrigger>
               <AccordionContent>
-              <div className="bg-orange-200 rounded shadow-md">                  {lineData
+                <div className='bg-slate-300 rounded shadow-md'>
+                  {" "}
+                  {lineData
                     ? LineChart(savingsCategory, savingsYear, savingsAmounts)
                     : "Loading"}
                 </div>
@@ -119,18 +121,19 @@ export function AccordionElement({
             </AccordionItem>
           ) : null}
           {creditList.length > 0 ? (
-            <AccordionItem className="m-2 h-max w-full" value='item-5'>
-              <AccordionTrigger 
-                className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-orange-200 focus:bg-orange-200 shadow-md'
-                >
-          
+            <AccordionItem className='p-2 h-max w-full' value='item-5'>
+              <AccordionTrigger className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-slate-300  shadow-md'>
                 <h4>
                   Credit Card
-                  <h4 className="p-2 bg-orange-50 shadow-inner rounded">{currentAccountBalance("Credit")}</h4>
                 </h4>
+                  <h3 className='p-2 bg-slate-50 shadow-inner rounded'>
+                    {currentAccountBalance("Credit")}
+                  </h3>
               </AccordionTrigger>
               <AccordionContent>
-              <div className="bg-orange-200 rounded shadow-md">                  {lineData
+                <div className='bg-slate-300 rounded shadow-md'>
+                  {" "}
+                  {lineData
                     ? LineChart(creditCategory, creditYear, creditAmounts)
                     : "Loading"}
                 </div>
@@ -148,16 +151,15 @@ export function AccordionElement({
             </AccordionItem>
           ) : null}
           {hasItems(savingsList, creditList, debitList) ? (
-            <AccordionItem className="m-2 h-max w-full" value='item-7'>
-              <AccordionTrigger 
-                className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-orange-200 focus:bg-orange-200 shadow-md'
-           
-              >
+            <AccordionItem className='p-2 h-max w-full' value='item-7'>
+              <AccordionTrigger className='rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-slate-300  shadow-md'>
                 <h4>All Transactions</h4>
-                <h4 className="p-2 bg-orange-50 shadow-inner rounded">{currentAccountBalance("")}</h4>
+                <h4 className='p-2 bg-slate-50 shadow-inner rounded'>
+                  {currentAccountBalance("")}
+                </h4>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="bg-orange-200 rounded shadow-md">
+                <div className='bg-slate-300 rounded shadow-md'>
                   {lineData ? LineChart(category, year, amounts) : "Loading"}
                 </div>
                 <br></br>
@@ -169,7 +171,6 @@ export function AccordionElement({
                   setAccountList={setAccountList}
                   accountTable={accountList}
                   budgetList={budgetList}
-                
                 />
               </AccordionContent>
             </AccordionItem>

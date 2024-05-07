@@ -30,7 +30,7 @@ export function BudgetSheet({
     <Sheet>
       <SheetTrigger asChild>
         <div>
-          <button  className="rounded-button-newuser hover:bg-orange-100">
+          <button   className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
             Budget Data
           </button>
         </div>

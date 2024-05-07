@@ -128,8 +128,8 @@ function TransactionInputDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button  className="rounded-button-newuser hover:bg-orange-100">
-              Add a Transaction
+            <button  className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+              Add Transaction
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
@@ -217,7 +217,7 @@ function TransactionInputDialog({
 
             <DialogFooter>
               <button
-                className="rounded-button-newuser hover:bg-orange-100"
+                 className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={addTransaction}
               >
                 Submit Transaction
