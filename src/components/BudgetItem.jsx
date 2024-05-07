@@ -45,7 +45,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
           return (
             <div
-              className='flex justify-center items-center m-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 h-72'
+              className='flex justify-center items-center m-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 h-72'
               key={budget.newBudget}
             >
               <div className='flex items-center justify-center min-h-full shadow rounded text-white h-72'>

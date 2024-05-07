@@ -106,7 +106,7 @@ export function AccordionElement({
       <Accordion
           type="multiple"
           collapsible="true"
-          className="w-full "
+          className="w-full"
         >
           {accountNamesList.map((accountType, index) => {
             const filteredAccounts = accountList.filter(
