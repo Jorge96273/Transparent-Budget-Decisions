@@ -25,23 +25,25 @@ export function MonthlyExpensesSheet({
   setTriggerFetch,
   setBudgetTriggerFetch,
   monthlyExpenses,
+  accountNamesList,
 }) {
-  console.log("BUDGET LIST", budgetList);
-
   return (
     <Sheet>
       <SheetTrigger asChild>
         <div className="text-white">
           {/* Assuming Button component accepts variant and className props */}
-          <button variant="outline" className="rounded-button-newuser">
-            Monthly Expenses
+          <button   className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+            Monthly Transaction
           </button>
         </div>
       </SheetTrigger>
-      <SheetContent style={{ width: "58%" }}>
-        <div className="background-color-div text-black">
+      <SheetContent className="flex justify-center w-full">
+        <div
+          className="background-color-div rounded text-black"
+          style={{ maxHeight: "500px", overflowY: "auto" }}
+        >
           <SheetTitle>
-            <h4 className="rounded-md text-white">Monthly Expenses</h4>
+            <h4 className="rounded-md text-white">Monthly Transactions</h4>
           </SheetTitle>
 
           {monthlyExpenses && (
@@ -52,6 +54,8 @@ export function MonthlyExpensesSheet({
               accountList={accountList}
               setAccountList={setAccountList}
               accountTable={monthlyExpenses}
+              budgetList={budgetList}
+              accountNamesList={accountNamesList}
             />
           )}
         </div>

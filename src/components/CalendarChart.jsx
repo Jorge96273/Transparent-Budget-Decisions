@@ -1,138 +1,146 @@
-import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
-import "../../src/CalendarChart.css";
-import { format as formatDate, addDays, addMonths } from "date-fns";
-import { format as formateTz } from "date-fns-tz";
-import Modal from "@/components/Modal";
+import { useState, useEffect } from 'react';
+import Calendar from 'react-calendar';
+import '../../src/CalendarChart.css'; //Calendar CSS
+import { format as formatDate, addDays, subDays, isSameDay, getDaysInMonth } from 'date-fns'; //For date manipulation-----
+import { format as formateTz } from 'date-fns-tz'; //For time manipulation----
+import Modal from '@/components/Modal' //For the pop up when a date is clicked----
 
-export default function CalendarChart({ sampleData }) {
+
+
+//objData  is a list of Objects 
+export default function CalendarChart({ objData }) {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
+  const [modalContent, setModalContent] = useState('');
 
-  useEffect(() => {
-    const breakDown = sampleData.map((data) => ({
-      title: data.transactionName,
-      date: addDays(new Date(data.transactionDate), 1),
-      amount: data.transactionAmount,
+
+  const AddSign = () => {
+    events.forEach(event => {
+      if (event.type.toLowerCase() === 'withdrawal') {
+        event.amount = '-$'.concat(event.amount);
+      }
+      else if(event.type.toLowerCase() === 'deposit'){
+        event.amount = '+$'.concat(event.amount);
+      }
+    })
+  }
+
+  const DataChanger = () => {
+    const eventData = objData.map((data) => ({
+      title: data.newTransactionName,
+      date: addDays(new Date(data.newTransactionDate), 1),
+      amount: data.newTransactionAmount,
+      monthly: data.monthlyExpense.toLowerCase() === 'yes',
+      type: data.newTransactionType.toLowerCase()
     }));
-    setEvents(breakDown);
-  }, [sampleData]);
+    setEvents(eventData);
+  }
 
-  console.log("eevee", events);
-
+  //For what appears in the calendar tiles------
   const renderTileContent = ({ date, view }) => {
-    console.log("renderTileContent");
-    console.log("BEFORE RENDER", events);
-    if (view === "month") {
-      const dayEvents = events.filter(
-        (event) =>
-          formatDate(event.date, "yyyy-MM-dd") ===
-          formatDate(date, "yyyy-MM-dd")
-      );
-      console.log("AFTER RENDER", events);
+    if (view === 'month') {
+      const dayEvents = events.filter(event => {
+        // Handles Dates that are out of range of the Calendar-----------
+        if (event.monthly) {
+          const eventDate = new Date(event.date);
+          const eventDayOfMonth = eventDate.getDate();
+          const daysInMonth = getDaysInMonth(new Date(date.getFullYear(), date.getMonth()));
+          const adjustedDay = eventDayOfMonth > daysInMonth ? daysInMonth : eventDayOfMonth;
+          return isSameDay(date, new Date(date.getFullYear(), date.getMonth(), adjustedDay));
+        } else {
+          return isSameDay(date, new Date(event.date));
+        }
+      });
+
+      const getEmoji = (type) => {
+        if (type === 'deposit') {
+          return "💲"; 
+        } else if (type === 'withdrawal') {
+          return "🔻";
+        } else {
+          return ''; 
+        }
+      };
+
       return (
         <ul>
           {dayEvents.map((event, index) => (
-            <li key={index}>{event.title}</li>
+            <li key={index} style={{ color: event.type === 'withdrawal' ? 'red' : 'green' }}>
+              {getEmoji(event.type)} {event.title}: {event.amount}
+            </li>
           ))}
         </ul>
       );
     }
   };
 
+  //For whenever you click on a date -----
   const handleDayClick = (clickedDate) => {
-    console.log("handleDayClick");
-    const dayEvents = events.filter(
-      (event) =>
-        formatDate(event.date, "yyyy-MM-dd") ===
-        formatDate(clickedDate, "yyyy-MM-dd")
-    );
+    const dayEvents = events.filter(event => {
+      if (event.monthly) {
+        const daysInMonth = getDaysInMonth(new Date(clickedDate.getFullYear(), clickedDate.getMonth()));
+        const eventDayOfMonth = new Date(event.date).getDate();
+        const adjustedDay = eventDayOfMonth > daysInMonth ? daysInMonth : eventDayOfMonth;
+        const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), adjustedDay);
+        return isSameDay(clickedDate, adjustedDate);
+      } else {
+        return isSameDay(clickedDate, new Date(event.date));
+      }
+    });
+
     if (dayEvents.length > 0) {
+      const eventsList = dayEvents.map((event, index) => (
+        <li className='bg-white p-2 shadow rounded mr-4 mb-2' key={index}>
+          {`${event.title}: ${event.amount}`}
+        </li>
+      ));
+
       setModalContent(
-        `Events for ${formatDate(clickedDate, "MMM dd")}: \n\n` +
-          dayEvents.map((event) => event.title).join("\n")
+        <div className='bg-blue-400 text-black rounded-lg p-4 shadow-xl'>
+          <p className='bg-blue-500 text-white font-bold text-center rounded-lg py-3 px-4 shadow'>
+            Events for {formatDate(clickedDate, 'MMMM dd, yyyy')}
+          </p>
+          <ul className='bg-blue-500 rounded-lg shadow-md p-4 mt-4  '>
+            {eventsList}
+          </ul>
+        </div>
       );
       setIsOpen(true);
     }
   };
 
+  useEffect(() => {
+    DataChanger();
+  }, [objData]);
+
+  useEffect(() => {
+    AddSign();
+  }, [events]);
+
   return (
-    <div>
-      <Calendar
-        onChange={setDate}
-        value={date}
-        calendarType="iso8601"
-        className="calendar-style"
-        view="month"
-        onClickDay={handleDayClick}
-        tileContent={renderTileContent}
-      />
-      <div>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <h1 style={{ color: "white" }}>Event Details</h1>
-          <p style={{ color: "white" }}>{modalContent}</p>
-        </Modal>
+    <>
+      <div className='flex flex-col items-center'>
+        <Calendar
+          onChange={setDate}
+          value={date}
+          calendarType="iso8601"
+          className="full-react-calendar"
+          view="month"
+          onClickDay={handleDayClick}
+          tileContent={renderTileContent}
+        />
+        <div>
+          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <p className='p-2' >{modalContent}</p>
+          </Modal>
+        </div>
       </div>
-    </div>
+    </>
   );
-}
+};
 
-// const handleAddEvent = (e) => {
-//   e.preventDefault();
-//   const eventDateObject = new Date(eventDate + 'T00:00:00');
-//   const estDate = new Date(eventDateObject.getTime() + (11 * 60 * 60 * 1000))
-//   const newEvent = {
-//     id: new Date().getTime(),
-//     title: eventTitle,
-//     date: new Date(estDate).toDateString(),
-//     isMonthly: isMonthly
-//   };
-//   console.log(newEvent)
-//   setEvents([...events, newEvent]);
-//   setEventTitle('');
-//   setEventDate('');
-//   setIsMonthly(false);
-// };
 
-// const isEventToday = () => {
-//   events.forEach(eve => {
-//     const eventDate = new Date(eve.date);
-//     eventDate.setHours(0, 0, 0, 0);
 
-//     if (eventDate.getTime() === today.getTime()) {
-//       alert(`You have an event today: ${eve.title}`);
-//     }
 
-//   });
-// }
 
-// <form onSubmit={handleAddEvent} style={{ marginTop: '20px' }}>
-//         <input
-//           className='title'
-//           type="text"
-//           placeholder="Event Title"
-//           value={eventTitle}
-//           onChange={(e) => setEventTitle(e.target.value)}
-//           required
-//         />
-//         <input
-//         className='title'
-//           type="date"
-//           value={eventDate}
-//           onChange={(e) => setEventDate(e.target.value)}
-//           required
-//         />
-//         <label>
-//           <input
-//           className='title'
-//           type= "checkbox"
-//           checked={isMonthly}
-//           onChange={e => setIsMonthly(e.target.checked)}
-//           />
-//           Happens Monthly?
-//         </label>
-//         <button className='button' type="submit">Add Event</button>
-//       </form>
-//       <button onClick={isEventToday} className="button" type="submit">Alerts for today</button>

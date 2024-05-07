@@ -7,213 +7,170 @@ import {
 import BudgetsTable from "./BudgetsTable";
 import BudgetedItemTable from "./BudgetedItemTable";
 import TransactionTable from "./TransactionTable";
-import LineChart from "@/components/LineChart";
+import { Chart } from "chart.js/auto";
+import { CategoryScale } from "chart.js";
+import { Line } from "react-chartjs-2";
 
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+
+
+
+Chart.register(CategoryScale);
+
+// LineChart Component
+const LineChart = ({ category, xlabels, ydata }) => {
+  return (
+    <div>
+      <div>
+        <Line
+          data={{
+            labels: xlabels,
+            datasets: [
+              {
+                label: category,
+                data: ydata,
+                fill: false,
+                borderColor: "#6A8D92",
+                backgroundColor: "red",
+                pointBorderColor: "red",
+                pointBackgroundColor: "white",
+                pointBorderWidth: 2,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#F4A261",
+                pointHoverBorderColor: "red",
+                pointHoverBorderWidth: 20,
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#000",
+                  font: {
+                    size: 12,
+                  },
+                },
+                position: "top",
+              },
+            },
+            animation: {
+              tension: {
+                duration: 2500,
+                easing: "linear",
+                from: 1,
+                to: 0,
+                loop: false,
+              },
+            },
+            maintainAspectRatio: false,
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// AccordionElement Component
 export function AccordionElement({
+  accountNamesList,
   setBudgetList,
   budgetList,
   uid,
   triggerFetch,
   setTriggerFetch,
-  budgetTriggerFetch,
-  setBudgetTriggerFetch,
   accountList,
   setAccountList,
   currentAccountBalance,
-  debitAccount,
-  creditAccount,
-  savingsAccount,
-  monthlyExpensesBalance,
-  monthlyExpenses,
-  lineData,
-  category,
-  amounts,
-  year,
-  debitCategory,
-  debitAmounts,
-  debitYear,
-  savingsCategory,
-  savingsAmounts,
-  savingsYear,
-  creditCategory,
-  creditAmounts,
-  creditYear,
 }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center", // Center items horizontally
-        alignItems: "center", // Center items vertically
-      }}
-    >
+    <>
+      <div className='flex-col w-full justify-center max-w-full'>
       <Accordion
-        type="multiple"
-        collapsible="true"
-        className="w-75"
-        style={{ borderRadius: "10px" }}
-      >
-        {/* <AccordionItem value="item-1">
-          <AccordionTrigger
-            className="background-color-div"
-            style={{ borderRadius: "10px" }}
-          >
-            <h4>Click to View Budget Categories And Amounts</h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center", // Center items horizontally
-              }}
-            >
-              <BudgetedItemTable
-                accountList={accountList}
-                budgetList={budgetList}
-                uid={uid}
-                triggerFetch={triggerFetch}
-                setTriggerFetch={setTriggerFetch}
-                budgetTriggerFetch={budgetTriggerFetch}
-                setBudgetTriggerFetch={setBudgetTriggerFetch}
-              />
-            </div>
-          </AccordionContent>
-        </AccordionItem> */}
+          type="multiple"
+          collapsible="true"
+          className="w-full "
+        >
+          {accountNamesList.map((accountType, index) => {
+            const filteredAccounts = accountList.filter(
+              (account) => account.accountType === accountType.accountName
+            );
+            const balance = currentAccountBalance(accountType.accountName);
 
-        <AccordionItem value="item-3">
-          <AccordionTrigger
-            className="background-color-div"
-            style={{ borderRadius: "10px" }}
-          >
-            {" "}
-            <h4>
-              Debit Account &emsp;&emsp;Current Balance:{" "}
-              {currentAccountBalance("Debit")}
-            </h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div>
-              {lineData
-                ? LineChart(debitCategory, debitYear, debitAmounts)
-                : "Loading"}
-            </div>
-            <br></br>
-            <TransactionTable
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              accountList={accountList}
-              setAccountList={setAccountList}
-              accountTable={debitAccount}
-            />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-4">
-          <AccordionTrigger
-            className="background-color-div"
-            style={{ borderRadius: "10px" }}
-          >
-            {" "}
-            <h4>
-              Savings Account &emsp;&emsp;Current Balance:{" "}
-              {currentAccountBalance("Savings")}
-            </h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div>
-              {lineData
-                ? LineChart(savingsCategory, savingsYear, savingsAmounts)
-                : "Loading"}
-            </div>
-            <br></br>
-            <TransactionTable
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              accountList={accountList}
-              setAccountList={setAccountList}
-              accountTable={savingsAccount}
-            />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-5">
-          <AccordionTrigger
-            className="background-color-div"
-            style={{ borderRadius: "10px" }}
-          >
-            {" "}
-            <h4>
-              Credit Card &emsp;&emsp;Current Balance:{" "}
-              {currentAccountBalance("Credit")}
-            </h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div>
-              {lineData
-                ? LineChart(creditCategory, creditYear, creditAmounts)
-                : "Loading"}
-            </div>
-            <br></br>
-            <TransactionTable
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              accountList={accountList}
-              setAccountList={setAccountList}
-              accountTable={creditAccount}
-            />
-          </AccordionContent>
-        </AccordionItem>
-        {/* <AccordionItem value="item-6">
-          <AccordionTrigger
-            className="background-color-div"
-            style={{ borderRadius: "10px" }}
-          >
-            {" "}
-            <h4>
-              Click to View Monthly Expenses &emsp;&emsp; Current Monthly
-              Expense: {monthlyExpensesBalance()}
-            </h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <TransactionTable
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              accountList={accountList}
-              setAccountList={setAccountList}
-              accountTable={monthlyExpenses}
-            />
-          </AccordionContent>
-        </AccordionItem> */}
-        <AccordionItem value="item-7">
-          <AccordionTrigger
-            className="background-color-div"
-            style={{ borderRadius: "10px" }}
-          >
-            <h4>
-              All Transactions &emsp;&emsp; Current Transactions:{" "}
-              {currentAccountBalance("")}
-            </h4>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div>
-              {lineData ? LineChart(category, year, amounts) : "Loading"}
-            </div>
-            <br></br>
-            <TransactionTable
-              uid={uid}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              accountList={accountList}
-              setAccountList={setAccountList}
-              accountTable={accountList}
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+            // Calculate line chart data for the current account type
+            const year = filteredAccounts.map(
+              (item) => item.newTransactionDate
+            );
+            const amounts = filteredAccounts.map(
+              (item) => item.newTransactionAmount
+            );
+
+            return (
+              <AccordionItem
+                key={index} // Using index as a key, consider using a unique identifier if available
+                className=" h-max w-full"
+                value={`item-${index}`}
+              >
+                <AccordionTrigger className='rounded-xl w-3/4 flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-slate-600 bg-slate-400 shadow-md'>
+                  <h4>{accountType.accountName} Account</h4>
+                  <h4 className='p-2 bg-slate-500 shadow-inner rounded'>
+                    {balance}
+                  </h4>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className='bg-slate-300 rounded shadow-md'>
+                    {/* Pass the calculated data to the LineChart component */}
+                    <LineChart
+                      category={accountType.accountName}
+                      xlabels={year}
+                      ydata={amounts}
+                    />
+                  </div>
+             
+                  <TransactionTable
+                    uid={uid}
+                    triggerFetch={triggerFetch}
+                    setTriggerFetch={setTriggerFetch}
+                    accountList={accountList}
+                    setAccountList={setAccountList}
+                    accountTable={filteredAccounts}
+                    budgetList={budgetList}
+                    accountNamesList={accountNamesList}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
+        
+        {/* <Tabs defaultValue="account" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">Make changes to your account here.</TabsContent>
+  <TabsContent value="password">Change your password here.</TabsContent>
+</Tabs> */}
+      </div>
+
+      
+    </>
   );
 }

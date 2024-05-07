@@ -1,5 +1,6 @@
 import React from "react";
 import { Currency } from "lucide-react";
+import { Card, ProgressBar, ProgressCircle } from "@tremor/react";
 
 const BudgetItem = ({ budgetList, accountList }) => {
   const formatCurrency = (amt) => {
@@ -35,74 +36,70 @@ const BudgetItem = ({ budgetList, accountList }) => {
   }
 
   return (
-    <div
-      className="w-full"
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-      }}
-    >
-      {budgetList.map((budget) => {
-        const spent = budgetSpent(budget.newBudget);
-        const remaining = budget.newBudgetAmount - spent;
-        const percentageSpent = (spent / budget.newBudgetAmount) * 100;
-        const progressBarColor =
-          percentageSpent <= 50
-            ? "green"
-            : percentageSpent <= 75
-            ? "yellow"
-            : percentageSpent <= 99
-            ? "orange"
-            : "red";
+    <>
+      <div className='flex flex-wrap justify-center'>
+        {budgetList.map((budget) => {
+          const spent = budgetSpent(budget.newBudget);
+          const remaining = budget.newBudgetAmount - spent;
+          const percentageSpent = (spent / budget.newBudgetAmount) * 100;
 
-        return (
-          <div
-            className="budget text-center w-25"
-            key={budget.newBudget}
-            style={{
-              border: "2px solid rgb(4, 28, 42)",
-              borderRadius: "10px",
-              backgroundColor: "rgb(4, 28, 42)",
-              color: "white",
-              flex: "1 0 25%",
-              marginBottom: "20px",
-              marginRight: "10px",
-            }}
-          >
-            <div className="progress-text w-full">
-              <h3>{budget.newBudget}</h3>
-              <p>
-                {Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format(budget.newBudgetAmount)}{" "}
-                Budgeted
-              </p>
-              <progress
-                max={budget.newBudgetAmount}
-                value={spent}
-                className="w-75 w3-container w3-pro"
-                style={{ backgroundColor: progressBarColor }}
-              ></progress>
-              <small>{formatPercentage(percentageSpent / 100)}</small>
-              <span>
-                <p>
-                  Spent:{" "}
-                  <span style={{ color: "red" }}>
-                    {formatCurrency(spent * -1)}
+          return (
+            <div
+              className='flex justify-center items-center m-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 h-72'
+              key={budget.newBudget}
+            >
+              <div className='flex items-center justify-center min-h-full shadow rounded text-white h-72'>
+                <Card className=' flex flex-col shadow min-h-full justify-center items-center bg-slate-500'>
+                  <h4 className='bg-slate-700 px-2 py-1 text-xl font-light shadow-inner flex justify-center items-center w-full  overflow-hidden rounded '>
+                    {budget.newBudget}
+                  </h4>
+                  <p className='text-md flex justify-center'>
+                    {Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(spent)}{" "}
+                    /{" "}
+                    {Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(budget.newBudgetAmount)}
+                  </p>
+                  {/* <small className='flex justify-center text-lg font-medium'>
+                    {formatPercentage(percentageSpent / 100)}
+                  </small>
+
+                  
+                    <ProgressBar
+                      showAnimation
+                      max={budget.newBudgetAmount}
+                      value={percentageSpent}
+                      color='teal'
+                      
+                    /> */}
+                  <ProgressCircle
+                    showAnimation
+                    max={budget.newBudgetAmount}
+                    value={percentageSpent}
+                    color='green'
+                  >
+                    <span className='text-md font-medium text-slate-700'>
+                      {Math.round(percentageSpent)}%
+                    </span>
+                  </ProgressCircle>
+
+                  <span className="text-md">
+                    Remaining:{" "}
+                    <span className='text-green-500'>
+                      {formatCurrency(remaining)}
+                    </span>
                   </span>
-                  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Remaining:{" "}
-                  <span style={{ color: "green" }}>
-                    {formatCurrency(remaining)}
-                  </span>
-                </p>
-              </span>
+                </Card>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

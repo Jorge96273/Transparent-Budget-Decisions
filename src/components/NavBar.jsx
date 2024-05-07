@@ -1,5 +1,5 @@
 import LogoutButton from "./LogoutButton";
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "@/config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
@@ -11,9 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
-import userPhoto from "../images/userPhoto.svg";
+import userPhoto from "../images/userPhoto1.svg";
 import {
   Drawer,
   DrawerClose,
@@ -44,35 +44,35 @@ const NavBar = () => {
   return (
     <>
       {isloggedIn && (
-        <nav className='flex p-2'>
-          <div className='w-32 mt-1 ml-2'>
+        <nav className='animate-in fade-in duration-1000 flex justify-center items-center py-1 '>
+          <div className='w-32 mr-3 mt-1 ml-2'>
             {isloggedIn ? (
               <Link to='/dashboard/'>
                 <img
-                  className='rounded-full outline outline-orange-50 shadow'
+                  className=' shadow-xl shadow-slate-500/50 rounded-full p-1 outline outline-2 bg-slate-200 outline-slate-800'
                   src='/src/assets/tbd_logo.png'
                 ></img>
               </Link>
             ) : (
               <Link to='/'>
                 <img
-                  className='rounded-full outline outline-orange-50 shadow'
+                  className='rounded-full outline outline-slate-50 shadow'
                   src='/src/assets/tbd_logo.png'
                 ></img>
               </Link>
             )}
           </div>
-          <div className='w-full mr-4 h-40 flex justify-center'>
-            <nav className=' h-20 rounded-full'>
+          <div className='w-full flex justify-center'>
+         
               <div className=''>
-                <div className='text-decoration-line: none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
-                  <ul className='flex  flex-col font-medium md:p-0 mt-2 pt-2  md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
+                <div className='text-decoration-line:none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
+                  <ul className='flex bg-slate-400 shadow-inner rounded-full px-5 py-2 round font-medium md:p-0  justify-center content-center items-center md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
                     {isloggedIn && (
                       <>
-                        <li>
+                        <li >
                           <a
                             href='/about/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                            className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900  bg-slate-200 hover:bg-slate-100 '
                           >
                             About
                           </a>
@@ -81,7 +81,7 @@ const NavBar = () => {
                         <li>
                           <a
                             href='/dashboard/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-slate-100 bg-slate-200'
                           >
                             Dashboard
                           </a>
@@ -90,7 +90,7 @@ const NavBar = () => {
                         <li>
                           <a
                             href='/temp/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-slate-100 bg-slate-200'
                           >
                             Temp
                           </a>
@@ -98,7 +98,7 @@ const NavBar = () => {
                         <li>
                           <a
                             href='/education/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-orange-100'
+                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-slate-100 bg-slate-200'
                           >
                             Education
                           </a>
@@ -108,18 +108,18 @@ const NavBar = () => {
                   </ul>
                 </div>
               </div>
-            </nav>
           </div>
-          <div className='pr-10 pt-1'>
+          <div className=' pt-2 '>
             {user && (
-              <div className='flex flex-col'>
+              <div className='mx-8'>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <div className='flex flex-col items-center'>
-                      <Avatar>
+                      <Avatar className="bg-slate-200 shadow-md outline outline-slate-400 shadow-slate-100">
                         {user?.photoURL ? (
                           <>
                           <AvatarImage
+                          
                             src={user.photoURL}
                             referrerPolicy='no-referrer'
                           />
@@ -127,23 +127,19 @@ const NavBar = () => {
                           </>
                         ) : (
                           <AvatarImage
-                            src={userPhoto}
-                            referrerPolicy='no-referrer'
+                          src={userPhoto}
+                          referrerPolicy='no-referrer'
                           />
                         )}
                         
                       </Avatar>
-                      <h3 className="text-sm">{user.displayName}</h3>
+                      <h3 className="text-sm bg-slate-500 shadow rounded my-2 text-slate-50">{user.displayName}</h3>
+
                     </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent className="bg-slate-100">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    {user.displayName ? (
-                      <h1 className='text-sm pl-2'>{user.displayName}</h1>
-                    ) : (
-                      <h1 className='text-sm'>{user.email}</h1>
-                    )}
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator className="bg-gray-300  "/>
                     <DropdownMenuItem>
                       <Link className='no-underline text-black w-full' to='/profile/'>
                         Profile
@@ -193,6 +189,7 @@ const NavBar = () => {
           </div>
         </nav>
       )}
+      
     </>
   );
 };
