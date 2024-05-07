@@ -18,7 +18,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -63,51 +62,57 @@ const NavBar = () => {
             )}
           </div>
           <div className='w-full flex justify-center'>
-         
-              <div className=''>
-                <div className='text-decoration-line:none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
-                  <ul className='flex bg-slate-400 shadow-inner rounded-full px-5 py-2 round font-medium md:p-0  justify-center content-center items-center md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
-                    {isloggedIn && (
-                      <>
-                        <li >
-                          <a
-                            href='/about/'
-                            className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900  bg-slate-200 hover:bg-slate-100 '
-                          >
-                            About
-                          </a>
-                        </li>
+            <div className=''>
+              <div className='text-decoration-line:none items-center justify-between hidden h-max w-full md:flex md:w-auto md:order-1'>
+                <ul className='flex bg-slate-400 shadow-inner rounded-full px-5 py-2 round font-medium md:p-0  justify-center content-center items-center md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0   '>
+                  {isloggedIn && (
+                    <>
+                      <li>
+                        <Link
+                          to='/dashboard/'
+                          className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900   hover:bg-slate-300 bg-slate-200'
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
 
-                        <li>
-                          <a
-                            href='/dashboard/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-slate-100 bg-slate-200'
+                      {/* <li>
+                          <Link
+                          to='/temp/'
+                          className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900   hover:bg-slate-300 bg-slate-200'
                           >
-                            Dashboard
-                          </a>
-                        </li>
-
-                        <li>
-                          <a
-                            href='/temp/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-slate-100 bg-slate-200'
-                          >
-                            Temp
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href='/education/'
-                            className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-gray-900   hover:bg-slate-100 bg-slate-200'
-                          >
-                            Education
-                          </a>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                </div>
+                          Temp
+                          </Link>
+                        </li> */}
+                      <li>
+                        <Link
+                          to='/education/'
+                          className='shadow-md rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900   hover:bg-slate-300 bg-slate-200'
+                        >
+                          Education
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to='/about/'
+                          className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900  bg-slate-200 hover:bg-slate-300 '
+                        >
+                          About
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to='/team/'
+                          className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900  bg-slate-200 hover:bg-slate-300 '
+                        >
+                          Meet the Team
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                </ul>
               </div>
+            </div>
           </div>
           <div className=' pt-2 '>
             {user && (
@@ -115,47 +120,42 @@ const NavBar = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <div className='flex flex-col items-center'>
-                      <Avatar className="bg-slate-200 shadow-md outline outline-slate-400 shadow-slate-100">
+                      <Avatar className='bg-slate-200 shadow-md outline outline-slate-400 shadow-slate-100'>
                         {user?.photoURL ? (
                           <>
-                          <AvatarImage
-                          
-                            src={user.photoURL}
-                            referrerPolicy='no-referrer'
-                          />
-                          
+                            <AvatarImage
+                              src={user.photoURL}
+                              referrerPolicy='no-referrer'
+                            />
                           </>
                         ) : (
                           <AvatarImage
-                          src={userPhoto}
-                          referrerPolicy='no-referrer'
+                            src={userPhoto}
+                            referrerPolicy='no-referrer'
                           />
                         )}
-                        
                       </Avatar>
-                      <h3 className="text-sm bg-slate-500 shadow rounded my-2 text-slate-50">{user.displayName}</h3>
-
+                      <h3 className='text-sm bg-slate-500 shadow rounded my-2 text-slate-50'>
+                        {user.displayName}
+                      </h3>
                     </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-slate-100">
+                  <DropdownMenuContent className='bg-slate-200 shadow-xl shadow-slate-300/40 mr-2'>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator className="bg-gray-300  "/>
-                    <DropdownMenuItem>
-                      <Link className='no-underline text-black w-full' to='/profile/'>
-                        Profile
+                    <DropdownMenuSeparator className='bg-slate-300' />
+                    <DropdownMenuItem className="bg-slate-100 shadow-sm hover:bg-slate-400 p-1 rounded my-2">
+                  
+                      <Link
+                        className='no-underline text-slate-800 w-full justify-center flex 'to='/profile/'>
+                        Edit Profile
                       </Link>
                     </DropdownMenuItem>
-
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    
-                      <div className="w-full bg-red-400 rounded p-1 text-sm mb-1 mt-1">
+                   <DropdownMenuItem className="bg-slate-100 shadow-sm hover:bg-slate-400 p-1 rounded my-2">
                       <LogoutButton />
-                      </div>
-       
-
-                    <div >
+                    </DropdownMenuItem>
+                    <div>
                       <Drawer>
-                        <DrawerTrigger className='rounded text-sm bg-sky-400 hover:bg-sky-500 shadow w-full p-1'>
+                        <DrawerTrigger className='rounded text-sm bg-sky-500 hover:bg-sky-600 shadow w-full p-1'>
                           Notifications
                         </DrawerTrigger>
                         <DrawerContent>
@@ -189,7 +189,6 @@ const NavBar = () => {
           </div>
         </nav>
       )}
-      
     </>
   );
 };

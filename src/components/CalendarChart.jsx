@@ -123,7 +123,7 @@ export default function CalendarChart({ objData }) {
           onChange={setDate}
           value={date}
           calendarType="iso8601"
-          className="calendar-style rounded "
+          className="my-2 p-2 bg-slate-700 shadow-xl shadow-slate-400/80 rounded-2xl "
           view="month"
           onClickDay={handleDayClick}
           tileContent={renderTileContent}

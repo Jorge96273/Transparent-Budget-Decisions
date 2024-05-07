@@ -10,7 +10,7 @@ import TempPage from "./pages/TempPage.jsx"
 import DashboardPage from "./pages/Dashboard.jsx";
 import EducationPage from "./pages/EducationPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx"
-
+import TeamPage from "./pages/TeamPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "about/",
         element: <AboutPage />,
+      },
+      {
+        path: "team/",
+        element: <TeamPage />,
       },
       {
         path: "temp/",
