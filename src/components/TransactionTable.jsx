@@ -1,5 +1,3 @@
-// import { useEffect, useState, useRef } from "react";
-// import { Auth } from "../components/auth";
 import { db } from "../config/firebase";
 import {
   // getDocs,
@@ -10,12 +8,8 @@ import {
   updateDoc,
   // serverTimestamp,
 } from "firebase/firestore";
-// import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-// import { Button } from "react-bootstrap";
 import UpdateTransactionDialog from "./UpdateTransactionDialog";
-
-// import { useCallback } from "react";
 import * as React from "react";
 import {
   flexRender,
@@ -46,6 +40,7 @@ function TransactionTable({
   setAccountList,
   accountTable,
   budgetList,
+  accountNamesList,
 }) {
   const transactionCollectionRef = collection(db, `${uid}`);
 
@@ -64,20 +59,6 @@ function TransactionTable({
     setTriggerFetch(!triggerFetch);
   };
 
-  if (accountList) {
-    const debitAccount = accountList.filter(
-      (account) => account.accountType === "Debit"
-    );
-    const creditAccount = accountList.filter(
-      (account) => account.accountType === "Credit"
-    );
-    const savingsAccount = accountList.filter(
-      (account) => account.accountType === "Savings"
-    );
-    const monthlyExpenses = accountList.filter(
-      (account) => account.monthlyExpense === "Yes"
-    );
-  }
   function transformAccountList(list) {
     return list.map((transaction) => {
       // console.log(transaction.id); // Directly log the transaction.id
@@ -99,31 +80,12 @@ function TransactionTable({
   }
 
   const columns = [
-    // {
-    //   accessorKey: "accountType",
-    //   header: "Account Type",
-    //   cell: ({ row }) => (
-    //     <div className="capitalize text-center">
-    //       {row.getValue("accountType")}
-    //     </div>
-    //   ),
-    // },
-    //! *********** MUST FIX *****************
-    // TODO FIX THE SORTING OF THE DOLLAR AMOUNT
     {
       accessorKey: "transactionAmount",
       header: ({ column }) => {
         return (
           <div className="d-flex align-items-center">
             <div className="text-center">Transaction Amount</div>
-            {/* <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button> */}
           </div>
         );
       },
@@ -169,6 +131,7 @@ function TransactionTable({
               setTriggerFetch={setTriggerFetch}
               triggerFetch={triggerFetch}
               budgetList={budgetList}
+              accountNamesList={accountNamesList}
             />
           </div>
         );
@@ -195,15 +158,6 @@ function TransactionTable({
         <div className="capitalize">{row.getValue("transactionName")}</div>
       ),
     },
-    // {
-    //   accessorKey: "monthlyExpense",
-    //   header: "Monthly Expense",
-    //   cell: ({ row }) => (
-    //     <div className="capitalize text-center">
-    //       {row.getValue("monthlyExpense")}
-    //     </div>
-    //   ),
-    // },
 
     {
       accessorKey: "transactionDate",
@@ -228,59 +182,7 @@ function TransactionTable({
         </div>
       ),
     },
-    // {
-    //   accessorKey: "transactionType",
-    //   header: ({ column }) => {
-    //     return (
-    //       <div className="d-flex align-items-center">
-    //         <div className="text-center">Transaction Type</div>
-    //         <Button
-    //           variant="ghost"
-    //           onClick={() =>
-    //             column.toggleSorting(column.getIsSorted() === "asc")
-    //           }
-    //         >
-    //           <ArrowUpDown className="ml-2 h-4 w-4" />
-    //         </Button>
-    //       </div>
-    //     );
-    //   },
-    //   cell: ({ row }) => (
-    //     <div className="capitalize">{row.getValue("transactionType")}</div>
-    //   ),
-    // },
-    // {
-    //   accessorKey: "monthlyExpense",
-    //   header: "Monthly Expense",
-    //   cell: ({ row }) => (
-    //     <div className="capitalize text-center">
-    //       {row.getValue("monthlyExpense")}
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   accessorKey: "budgetCategory",
-    //   header: ({ column }) => {
-    //     return (
-    //       <div className="d-flex align-items-center">
-    //         <div className="text-center">Budget Category</div>
-    //         <Button
-    //           variant="ghost"
-    //           onClick={() =>
-    //             column.toggleSorting(column.getIsSorted() === "asc")
-    //           }
-    //         >
-    //           <ArrowUpDown className="ml-2 h-4 w-4" />
-    //         </Button>
-    //       </div>
-    //     );
-    //   },
-    //   cell: ({ row }) => (
-    //     <div className="capitalize text-center">
-    //       {row.getValue("budgetCategory")}
-    //     </div>
-    //   ),
-    // },
+
     {
       accessorKey: "transactionId",
       header: () => <div className="text-center">Delete Transaction</div>,

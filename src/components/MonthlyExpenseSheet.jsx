@@ -25,6 +25,7 @@ export function MonthlyExpensesSheet({
   setTriggerFetch,
   setBudgetTriggerFetch,
   monthlyExpenses,
+  accountNamesList,
 }) {
   return (
     <Sheet>
@@ -36,7 +37,7 @@ export function MonthlyExpensesSheet({
           </button>
         </div>
       </SheetTrigger>
-      <SheetContent className="flex justify-center w-full" >
+      <SheetContent className="flex justify-center w-full">
         <div
           className="background-color-div rounded text-black"
           style={{ maxHeight: "500px", overflowY: "auto" }}
@@ -54,6 +55,7 @@ export function MonthlyExpensesSheet({
               setAccountList={setAccountList}
               accountTable={monthlyExpenses}
               budgetList={budgetList}
+              accountNamesList={accountNamesList}
             />
           )}
         </div>

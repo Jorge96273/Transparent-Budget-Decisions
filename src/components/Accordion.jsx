@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,55 +8,79 @@ import {
 import BudgetsTable from "./BudgetsTable";
 import BudgetedItemTable from "./BudgetedItemTable";
 import TransactionTable from "./TransactionTable";
-import LineChart from "@/components/LineChart";
+import { Chart } from "chart.js/auto";
+import { CategoryScale } from "chart.js";
+import { Line } from "react-chartjs-2";
 
+Chart.register(CategoryScale);
+
+// LineChart Component
+const LineChart = ({ category, xlabels, ydata }) => {
+  return (
+    <div>
+      <div>
+        <Line
+          data={{
+            labels: xlabels,
+            datasets: [
+              {
+                label: category,
+                data: ydata,
+                fill: false,
+                borderColor: "#6A8D92",
+                backgroundColor: "#6F1D1B",
+                pointBorderColor: "#6F1D1B",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 2,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#F4A261",
+                pointHoverBorderColor: "#6F1D1B",
+                pointHoverBorderWidth: 20,
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#000",
+                  font: {
+                    size: 12,
+                  },
+                },
+                position: "top",
+              },
+            },
+            animation: {
+              tension: {
+                duration: 2500,
+                easing: "linear",
+                from: 1,
+                to: 0,
+                loop: false,
+              },
+            },
+            maintainAspectRatio: false,
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// AccordionElement Component
 export function AccordionElement({
+  accountNamesList,
   setBudgetList,
   budgetList,
   uid,
   triggerFetch,
   setTriggerFetch,
-  budgetTriggerFetch,
-  setBudgetTriggerFetch,
   accountList,
   setAccountList,
   currentAccountBalance,
-  debitAccount,
-  creditAccount,
-  savingsAccount,
-  monthlyExpensesBalance,
-  monthlyExpenses,
-  lineData,
-  category,
-  amounts,
-  year,
-  debitCategory,
-  debitAmounts,
-  debitYear,
-  savingsCategory,
-  savingsAmounts,
-  savingsYear,
-  creditCategory,
-  creditAmounts,
-  creditYear,
 }) {
-  const debitList = accountList.filter(
-    (account) => account.accountType === "Debit"
-  );
-  const creditList = accountList.filter(
-    (account) => account.accountType === "Credit"
-  );
-  const savingsList = accountList.filter(
-    (account) => account.accountType === "Savings"
-  );
-
-  // Helper function to conditionally render All Transaction part of the accordion.
-  const hasItems = (list1, list2, list3) => {
-    const count = [list1.length > 0, list2.length > 0, list3.length > 0].filter(
-      Boolean
-    ).length;
-    return count >= 2;
-  };
   return (
     <>
       <div className='flex w-full justify-center max-w-full'>

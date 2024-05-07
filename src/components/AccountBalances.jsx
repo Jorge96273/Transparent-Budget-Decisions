@@ -1,18 +1,11 @@
 import React from "react";
 import { Currency } from "lucide-react";
 
-const AccountBalances = ({ currentAccountBalance, accountList }) => {
-  // Filter accountList into separate arrays for debit, credit, and savings accounts
-  const debitAccounts = accountList.filter(
-    (account) => account.accountType === "Debit"
-  );
-  const creditAccounts = accountList.filter(
-    (account) => account.accountType === "Credit"
-  );
-  const savingsAccounts = accountList.filter(
-    (account) => account.accountType === "Savings"
-  );
-
+const AccountBalances = ({
+  currentAccountBalance,
+  accountList,
+  accountNamesList,
+}) => {
   // Function to determine the color based on the balance
   const getBalanceColor = (balance) => {
     return balance.includes("-") ? "red" : "green";
