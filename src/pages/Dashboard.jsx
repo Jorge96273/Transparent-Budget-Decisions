@@ -205,18 +205,20 @@ const Dashboard = () => {
             <div className='flex items-center flex-col justify-center p-1 mb-4 h-max rounded '>
               <div className='bg-slate-400 shadow-xl shadow-slate-400/50 rounded-tl-2xl rounded-xl pb-1'>
                 <h3 className='rounded-tl-xl font-light text-2xl rounded-tr-xl bg-slate-700 text-slate-50 justify-center flex w-full p-2'>
-                  Account Balance
+                  Account Balances
                 </h3>
+                <div className=''>
                 <AccountBalances
                   currentAccountBalance={currentAccountBalance}
                   accountList={accountList}
                   accountNamesList={accountNamesList}
                 />
+                </div>
               </div>
             </div>
             <div>
-              <div className='flex w-full  py-3 justify-center h-max'>
-                <div className='mx-2'>
+              <div className='flex flex-wrap justify-center py-3'>
+                <div className='mx-2 mb-2 sm:mb-0'>
                   <CreateAccountDialog
                     accountNamesList={accountNamesList}
                     setAccountNamesList={setAccountNamesList}
@@ -228,7 +230,7 @@ const Dashboard = () => {
                     setAccountTriggerFetch={setAccountTriggerFetch}
                   />
                 </div>
-                <div className='mx-2'>
+                <div className='mx-2 mb-2 sm:mb-0'>
                   <AccountSheet
                     accountNamesList={accountNamesList}
                     setAccountNamesList={setAccountNamesList}
@@ -240,7 +242,7 @@ const Dashboard = () => {
                     setAccountTriggerFetch={setAccountTriggerFetch}
                   />
                 </div>
-                <div className='mx-2'>
+                <div className='mx-2 mb-2 sm:mb-0'>
                   <TransactionInputDialog
                     uid={uid}
                     triggerFetch={triggerFetch}
@@ -253,7 +255,7 @@ const Dashboard = () => {
                     getAccountNames={getAccountNames}
                   />
                 </div>
-                <div className='mx-2'>
+                <div className='mx-2 mb-2 sm:mb-0'>
                   <CreateBudgetDialog
                     uid={uid}
                     triggerFetch={triggerFetch}
@@ -265,7 +267,7 @@ const Dashboard = () => {
                   />
                 </div>
                 {budgetList.length > 0 ? (
-                  <div className='mx-2'>
+                  <div className='mx-2 mb-2 sm:mb-0'>
                     <BudgetSheet
                       accountList={accountList}
                       budgetList={budgetList}
@@ -278,7 +280,7 @@ const Dashboard = () => {
                   </div>
                 ) : null}
                 {monthlyExpenses.length > 0 ? (
-                  <div className='mx-2'>
+                  <div className='mx-2 mb-2 sm:mb-0'>
                     <MonthlyExpensesSheet
                       uid={uid}
                       triggerFetch={triggerFetch}
@@ -300,7 +302,7 @@ const Dashboard = () => {
           <div className='flex px-4 flex-col w-full center-items justify-center'>
             <div className='flex h-full items-center shadow-xl shadow-slate-100/50 flex-col justify-center bg-slate-500 rounded-3xl text-slate-50 font-medium'>
               <h1 className='rounded-tl-2xl font-thin text-3xl py-2 flex justify-center items-center rounded-tr-2xl bg-slate-700 w-full'>
-                Budgets Data
+                Budgets
               </h1>
               <div className='flex w-full h-full rounded items-center justify-center'>
                 <div className='flex max-w-max h-full items-center justify-center rounded shadow-2xl shadow-slate-500 m-1 p-3 '>
