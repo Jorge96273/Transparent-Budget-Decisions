@@ -246,9 +246,9 @@ const Dashboard = () => {
     }
   }, [user]); // Adjusted dependency array
 
-  // useEffect(() => {
-  //   getAccountNames(); // Call getAccountNames on every render after the initial one
-  // }, [accountTriggerFetch]);
+  useEffect(() => {
+    getAccountNames(user); // Call getAccountNames on every render after the initial one
+  }, [accountTriggerFetch]);
 
   useEffect(() => {
     getAccountList();
@@ -350,6 +350,8 @@ const Dashboard = () => {
                       setAccountList={setAccountList}
                       setBudgetList={setBudgetList}
                       budgetList={budgetList}
+                      setBudgetTriggerFetch={setBudgetTriggerFetch}
+                      budgetTriggerFetch={budgetTriggerFetch}
                     />
                   </div>
                 ) : (
