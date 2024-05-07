@@ -61,29 +61,30 @@ const AboutPage = () => {
   console.log(holeRotation);
   return (
     <>
-      <div className="about-page-container">
-        <p className="quote-style">
+    <div className="w-full h-full flex justify-center items-center">
+      <div className="about-page-container h-full  shadow-xl shadow-slate-400 h-100 py-3 rounded-xl sahdwo-xl bg-slate-500 my-2 w-3/4">
+        <p className="quote-style text-slate-50">
           &quot;TBD: Helping you hit your financial targets.&quot;
         </p>
         {nameWithAngle270 && (
           <>
             {nameWithAngle270 === "Jose" && (
-              <p className="bio">Jose Sandoval, Army Veteran turned Full-Stack Software Engineer, worked on front-end development and UI design, contributing broadly to ensure the project's success. From Cars & Coffee to Code & Coffee, you'll find me meeting people and sharing passions!</p>
+              <p className="bio shadow">Jose Sandoval, Army Veteran turned Full-Stack Software Engineer, worked on front-end development and UI design. From Cars & Coffee to Code & Coffee, out here sharing passions!</p>
             )}
             {nameWithAngle270 === "Mike" && (
-              <p className="bio">Mike Durell, Navy Intelligence Veteran turned Full-Stack Software Engineer, worked on the animations and styling for the home, login/signup, and about us pages.</p>
+              <p className="bio shadow">Mike Durell, Navy Intelligence Veteran turned Full-Stack Software Engineer, worked on the animations and styling for the home, login/signup, and about us pages.</p>
             )}
             {nameWithAngle270 === "Weston" && (
-              <p className="bio">Weston Kelly, Marine Corps Veteran turned Full-Stack Software Engineer, worked on authentication, demo video, chart and calendar functionality for the application.</p>
+              <p className="bio shadow">Weston Kelly, Marine Corps Veteran turned Full-Stack Software Engineer, worked on authentication, demo video, chart and calendar functionality for the application.</p>
             )}
             {nameWithAngle270 === "Saul" && (
-              <p className="bio">Saul Alvarez, Navy Engineering Veteran turned Full-Stack Software Engineer, worked on the database, data entry, table design and line chart functionality.</p>
+              <p className="bio shadow">Saul Alvarez, Navy Engineering Veteran turned Full-Stack Software Engineer, worked on the database, data entry, table design and line chart functionality.</p>
             )}
             {nameWithAngle270 === "Jorge" && (
-              <p className="bio">Jorge L. Ayala, Marine Corps Veteran turned Full-Stack Software Engineer, worked on data manipulation, dynamic charts, and interactive calendars.</p>
+              <p className="bio shadow">Jorge L. Ayala, Marine Corps Veteran turned Full-Stack Software Engineer, worked on data manipulation, dynamic charts, and interactive calendars.</p>
             )}
             {nameWithAngle270 === "Andrew" && (
-              <p className="bio">Andrew Dew, Special Forces Veteran turned Full-Stack Software Engineer, worked on the database, data manipulation, and table design.</p>
+              <p className="bio shadow">Andrew Dew, Special Forces Veteran turned Full-Stack Software Engineer, worked on the database, data manipulation, and table design.</p>
             )}
           </>
         )}
@@ -92,21 +93,21 @@ const AboutPage = () => {
           className="cylinder"
           onClick={handleRotate}
           style={{ transform: `rotate(${cylinderRotation}deg)` }}
-        >
+          >
           <div
             className="hole"
             style={{ ...getHoleStyle(-87.5, 143)}}
-          >
+            >
             {nameWithAngle270 === "Jose" && (
               <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 255, 0, 0.5)",
-                }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 255, 0, 0.5)",
+              }}
               />
             )}
             <img src={Jose} alt="Jose" />
@@ -114,17 +115,17 @@ const AboutPage = () => {
           <div
             className="hole"
             style={{ ...getHoleStyle(-29.5, 149)}}
-          >
+            >
             {nameWithAngle270 === "Mike" && (
               <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 255, 0, 0.5)",
-                }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 255, 0, 0.5)",
+              }}
               />
             )}
             <img src={Mike} alt="Mike" />
@@ -132,17 +133,17 @@ const AboutPage = () => {
           <div
             className="hole"
             style={{ ...getHoleStyle(26, 150)}}
-          >
+            >
             {nameWithAngle270 === "Weston" && (
               <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 255, 0, 0.5)",
-                }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 255, 0, 0.5)",
+              }}
               />
             )}
             <img src={Weston} alt="Weston" />
@@ -150,17 +151,17 @@ const AboutPage = () => {
           <div
             className="hole picture-adjust4"
             style={{ ...getHoleStyle(84, 143)}}
-          >
+            >
             {nameWithAngle270 === "Saul" && (
               <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 255, 0, 0.5)",
-                }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 255, 0, 0.5)",
+              }}
               />
             )}
             <img src={Saul} alt="Saul" />
@@ -168,17 +169,17 @@ const AboutPage = () => {
           <div
             className="hole picture-adjust5"
             style={{ ...getHoleStyle(147, 137)}}
-          >
+            >
             {nameWithAngle270 === "Jorge" && (
               <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 255, 0, 0.5)",
-                }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 255, 0, 0.5)",
+              }}
               />
             )}
             <img src={Jorge} alt="Jorge" />
@@ -186,23 +187,24 @@ const AboutPage = () => {
           <div
             className="hole picture-adjust6"
             style={{ ...getHoleStyle(211, 138)}}
-          >
+            >
             {nameWithAngle270 === "Andrew" && (
               <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 255, 0, 0.5)",
-                }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 255, 0, 0.5)",
+              }}
               />
             )}
             <img src={Andrew} alt="Andrew" />
           </div>
         </div>
       </div>
+            </div>
     </>
   );
 };
