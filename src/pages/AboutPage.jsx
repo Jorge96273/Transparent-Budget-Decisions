@@ -68,22 +68,22 @@ const AboutPage = () => {
         {nameWithAngle270 && (
           <>
             {nameWithAngle270 === "Jose" && (
-              <p className="bio">This is a paragraph for Jose.</p>
+              <p className="bio">Jose Sandoval, Army Veteran turned Full-Stack Software Engineer, worked on front-end development and UI design, contributing broadly to ensure the project's success. From Cars & Coffee to Code & Coffee, you'll find me meeting people and sharing passions!</p>
             )}
             {nameWithAngle270 === "Mike" && (
-              <p className="bio">This is a paragraph for Mike.</p>
+              <p className="bio">Mike Durell, Navy Intelligence Veteran turned Full-Stack Software Engineer, worked on the animations and styling for the home, login/signup, and about us pages.</p>
             )}
             {nameWithAngle270 === "Weston" && (
-              <p className="bio">This is a paragraph for Weston.</p>
+              <p className="bio">Weston Kelly, Marine Corps Veteran turned Full-Stack Software Engineer, worked on authentication, demo video, chart and calendar functionality for the application.</p>
             )}
             {nameWithAngle270 === "Saul" && (
-              <p className="bio">This is a paragraph for Saul.</p>
+              <p className="bio">Saul Alvarez, Navy Engineering Veteran turned Full-Stack Software Engineer, worked on the database, data entry, table design and line chart functionality.</p>
             )}
             {nameWithAngle270 === "Jorge" && (
-              <p className="bio">This is a paragraph for Jorge. and this is some more text to see how the box is going to work.</p>
+              <p className="bio">Jorge L. Ayala, Marine Corps Veteran turned Full-Stack Software Engineer, worked on data manipulation, dynamic charts, and interactive calendars.</p>
             )}
             {nameWithAngle270 === "Andrew" && (
-              <p className="bio">This is a paragraph for Andrew.</p>
+              <p className="bio">Andrew Dew, Special Forces Veteran turned Full-Stack Software Engineer, worked on the database, data manipulation, and table design.</p>
             )}
           </>
         )}
