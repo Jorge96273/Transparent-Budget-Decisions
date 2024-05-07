@@ -35,7 +35,9 @@ const HomePage = () => {
         <p className=' text-3xl font-serif mb-8 bg-slate-600 text-white p-3 rounded'>Transparent Budget Decisions</p>
         <p className='quote-style'>&quot;Breaking the stigma that focusing on your money is difficult.&quot;</p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '80px', margin: '60px' }}>
-        <button className="rounded-full bg-slate-400 px-4 py-2 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500">Demo</button>
+          <Link to="/about/">
+        <button className="rounded-full bg-slate-400 px-4 py-2 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500">About</button>
+          </Link>
         <Link to="/enterlanding">
         <button className="rounded-full bg-slate-400 px-4 py-2 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500">Enter</button>
         </Link>

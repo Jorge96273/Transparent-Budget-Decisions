@@ -51,7 +51,7 @@ const Chatbot = () => {
 
   return (
     <>
-      <div className='animate-in fade-in duration-1000 flex flex-col justify-center items-center'>
+      <div className='animate-in fade-in duration-1000 flex flex-col justify-center items-center my-5'>
         <div className="bg-slate-00 shadow-xl shadow-slate-200/50 rounded-2xl p-3 flex flex-col items-center justify-center w-5/6 ">
 
         <img src={bot} className='w-20'></img>
@@ -109,7 +109,7 @@ const Chatbot = () => {
         <div className=' rounded mt-4 lg:w-1/2 md:w-2/3 sm:w-3/4 xs:w-11/12'>
           <Accordion type='single' collapsible>
               <AccordionItem value='item-1'>
-                <AccordionTrigger className=' rounded shadow bg-slate-700 text-slate-50 pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+                <AccordionTrigger className=' rounded shadow bg-slate-500 text-slate-50 pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
                   What is good debt?
                 </AccordionTrigger>
                 <AccordionContent className='ml-6 mr-6 text-slate-50'>
@@ -117,13 +117,13 @@ const Chatbot = () => {
                 </AccordionContent>
               </AccordionItem>
             <AccordionItem value='item-2'>
-              <AccordionTrigger className='rounded shadow bg-slate-700 text-slate-50 pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+              <AccordionTrigger className='rounded shadow bg-slate-500 text-slate-50 pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
                 What is bad debt?
               </AccordionTrigger>
               <AccordionContent className='ml-6 mr-6 text-slate-50'>Bad debt is debt that...</AccordionContent>
             </AccordionItem>
             <AccordionItem value='item-3'>
-              <AccordionTrigger className='rounded shadow bg-slate-700 text-slate-50 pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
+              <AccordionTrigger className='rounded shadow bg-slate-500 text-slate-50 pt-2 pb-2 pl-3 pr-3 m-2 text-lg'>
                 How can I save money with no job?
               </AccordionTrigger>
               <AccordionContent className='ml-6 mr-6 text-slate-50'>Step 1. Get a job!</AccordionContent>

@@ -12,7 +12,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import userPhoto from "../images/userPhoto1.svg"
+import userPhoto from "../images/userPhoto1.svg";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -79,63 +79,60 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
-
   return (
     <>
-    
-      <div className='animate-in slide-in-from-bottom w-full duration-1000 flex items-center flex-col my-2'>
-        <div className="flex shadow-xl shadow-slate-300/70 rounded-3xl w-max bg-slate-400 p-4 flex-col center-items justify-center">
-    <div className="flex flex-col justify-center items-center">
-
-        <img
-          className=' rounded-full w-40   bg-slate-200'
-          src={user.photoURL? user.photoURL: userPhoto}
-          referrerPolicy='no-referrer'
-          ></img>
-        <p>{user.displayName}</p>
-        <p>{user.email}</p>
+      <div className='animate-in slide-in-from-bottom w-full duration-1000 flex items-center flex-col my-4'>
+        <div className='flex shadow-xl shadow-slate-300/70 rounded-3xl w-max bg-slate-400 p-4 flex-col center-items justify-center'>
+          <div className='flex flex-col justify-center items-center'>
+            <img
+              className=' rounded-full w-40   bg-slate-200'
+              src={user.photoURL ? user.photoURL : userPhoto}
+              referrerPolicy='no-referrer'
+            ></img>
+            <h4 className="font-bold text-xl">{user.displayName}</h4>
+            <h4 className="font-medium text-lg">{user.email}</h4>
           </div>
-        <form className='flex flex-col iems-center' onSubmit={handleSubmit}>
-          <input
-            className='rounded m-2 p-2'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder='New Email'
+          <form className='flex flex-col iems-center' onSubmit={handleSubmit}>
+            <input
+              className='rounded m-2 p-2'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder='New Email'
             />
-          <input
-            className='rounded m-2 p-2'
-            type='text'
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            placeholder='New Display Name'
+            <input
+              className='rounded m-2 p-2'
+              type='text'
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder='New Display Name'
             />
-          <input
-            className='rounded m-2 p-2'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='New Password'
+            <input
+              className='rounded m-2 p-2'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder='New Password'
             />
-          <div className='font-bold '>
-            {" "}
-            To make changes, enter current password below!
-          </div>
-          <input
-            className='rounded m-2 p-2'
-            type='password'
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder='Current Password'
-            />
-          <button
-            className='rounded m-2 p-2 bg-teal-100 hover:bg-teal-300'
-            type='submit'
-            >
-            Update Profile
-          </button>
-        </form>
+            <div className='font-bold text-slate-800 mt-4 '>
+              {" "}
+              To make changes, enter current password below!
             </div>
+            <input
+              className='rounded m-2 p-2'
+              type='password'
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder='Current Password'
+            />
+            <button
+              className='rounded m-2 p-2 bg-teal-100 hover:bg-teal-300'
+              type='submit'
+            >
+              Update Profile
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );
