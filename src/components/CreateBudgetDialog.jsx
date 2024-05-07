@@ -36,6 +36,8 @@ function CreateBudgetDialog({
   uid,
   triggerFetch,
   setTriggerFetch,
+  setBudgetTriggerFetch,
+  budgetTriggerFetch,
   accountList,
   setAccountList,
   budgetAccount,
@@ -66,6 +68,7 @@ function CreateBudgetDialog({
     console.log("CREATE BUDGET CREATEBUDGET DIALOG");
     console.log("create budget");
     setTriggerFetch(!triggerFetch);
+    setBudgetTriggerFetch(!budgetTriggerFetch);
     closeDialog();
     setNewBudget(""), setNewBudgetAmount(0);
   };
@@ -79,7 +82,7 @@ function CreateBudgetDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button  className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+            <button className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
               Create Budget
             </button>
           </DialogTrigger>
@@ -93,23 +96,23 @@ function CreateBudgetDialog({
                 </DialogTitle>
               </DialogHeader>
               <div className="flex justify-center">
-              <input
-                type="text"
-                placeholder="Budget Name"
-                onChange={(e) => setNewBudget(e.target.value)}
-                className="rounded mb-1"
-              />
+                <input
+                  type="text"
+                  placeholder="Budget Name"
+                  onChange={(e) => setNewBudget(e.target.value)}
+                  className="rounded mb-1"
+                />
               </div>
               <div className="flex justify-center">
-              <input
-                type="number"
-                placeholder="Budget Amount"
-                onChange={(e) => setNewBudgetAmount(Number(e.target.value))}
-                className="rounded mb-1"
-              />
+                <input
+                  type="number"
+                  placeholder="Budget Amount"
+                  onChange={(e) => setNewBudgetAmount(Number(e.target.value))}
+                  className="rounded mb-1"
+                />
               </div>
-              </div>
-              <div className="flex justify-center">
+            </div>
+            <div className="flex justify-center">
               <button
                 className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={createBudget}
