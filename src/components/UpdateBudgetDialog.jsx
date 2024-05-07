@@ -43,7 +43,7 @@ export function UpdateBudgetDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="btn btn-secondary btn-sm">Update Budget</Button>
+        <button className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">Update Budget</button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
@@ -94,7 +94,7 @@ export function UpdateBudgetDialog({
         </div>
         <button
           type="button"
-          className="btn btn-secondary "
+          className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
           onClick={() => updateBudget(budgetID, field)}
         >
           Update Budget

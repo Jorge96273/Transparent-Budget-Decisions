@@ -80,7 +80,7 @@ function CreateBudgetDialog({
         >
           <DialogTrigger asChild>
             <button  className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
-              Create a Budget
+              Create Budget
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">

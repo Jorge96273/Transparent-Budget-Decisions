@@ -85,7 +85,7 @@ function TransactionTable({
       header: ({ column }) => {
         return (
           <div className="d-flex align-items-center">
-            <div className="text-center">Transaction Amount</div>
+            <div className="text-center text-slate-700">Transaction Amount</div>
           </div>
         );
       },
@@ -118,8 +118,53 @@ function TransactionTable({
     },
 
     {
+      accessorKey: "transactionName",
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center text-slate-700">Transaction Name</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+              >
+              <ArrowUpDown className="ml-2 h-4 w-4 text-slate-700" />
+            </Button>
+          </div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize text-slate-700">{row.getValue("transactionName")}</div>
+      ),
+    },
+    
+    {
+      accessorKey: "transactionDate",
+      header: ({ column }) => {
+        return (
+          <div className="d-flex align-items-center">
+            <div className="text-center text-slate-700">Transaction Date</div>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+              >
+              <ArrowUpDown className="ml-2 h-4 w-4 text-slate-700" />
+            </Button>
+          </div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="text-slate-700 capitalize text-center">
+          {row.getValue("transactionDate")}
+        </div>
+      ),
+    },
+    {
       accessorKey: "updateTransaction",
-      header: () => <div className="text-center">Update Transaction</div>,
+      header: () => <div className="text-slate-700 text-center">Update Transaction</div>,
       cell: ({ row }) => {
         const transactionID = row.getValue("transactionId");
 
@@ -137,67 +182,22 @@ function TransactionTable({
         );
       },
     },
-    {
-      accessorKey: "transactionName",
-      header: ({ column }) => {
-        return (
-          <div className="d-flex align-items-center">
-            <div className="text-center">Transaction Name</div>
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("transactionName")}</div>
-      ),
-    },
-
-    {
-      accessorKey: "transactionDate",
-      header: ({ column }) => {
-        return (
-          <div className="d-flex align-items-center">
-            <div className="text-center">Transaction Date</div>
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("transactionDate")}
-        </div>
-      ),
-    },
-
+    
     {
       accessorKey: "transactionId",
-      header: () => <div className="text-center">Delete Transaction</div>,
+      header: () => <div className="text-slate-700 text-center">Delete Transaction</div>,
       cell: ({ row }) => {
         const transactionID = row.getValue("transactionId");
 
         return (
           <div className="text-center">
             <button
-              className="rounded-button-newuser"
+              className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-slate-50 py-2 px-3"
               type="button"
               onClick={() => deleteTransaction(transactionID)}
             >
               {" "}
-              Delete Transaction
+              Delete
             </button>
           </div>
         );

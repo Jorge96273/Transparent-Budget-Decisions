@@ -31,17 +31,17 @@ export function BudgetSheet({
       <SheetTrigger asChild>
         <div>
           <button   className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
-            Budget Data
+            Manage Budgets
           </button>
         </div>
       </SheetTrigger>
       <SheetContent style={{ width: "100%" }}>
         <div
-          className="background-color-div"
+          className="bg-slate-500"
           style={{ maxHeight: "500px", overflowY: "auto" }}
         >
           <SheetTitle text-white rounded-md>
-            <h4 className="text-white rounded-md"> Budget Data</h4>
+            <h4 className="text-slate-50 rounded-2xl flex justify-center w-full p-2"> Manage Budgets</h4>
           </SheetTitle>
           <BudgetedItemTable
             accountList={accountList}

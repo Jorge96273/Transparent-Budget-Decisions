@@ -37,7 +37,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
   return (
     <>
-      <div className='overflow-x-scroll w-full flex items-center justify-center'>
+      <div className='flex flex-row overflow-x-scroll items-center justify-center'>
         {budgetList.map((budget) => {
           const spent = budgetSpent(budget.newBudget);
           const remaining = budget.newBudgetAmount - spent;
@@ -45,12 +45,12 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
           return (
             <div
-              className='m-1 h-max w-full rounded text-center'
+              className='flex justify-center items-center m-1 w-full min-h-full rounded text-center'
               key={budget.newBudget}
             >
-              <div className='h-max shadow rounded text-white'>
-                <Card className='shadow h-full flex flex-col justify-center items-center bg-slate-500'>
-                  <h4 className='bg-slate-700 px-2 py-1 text-xl font-light shadow-inner flex justify-center items-center w-full h-max overflow-hidden rounded '>
+              <div className='flex items-center justify-center min-h-full shadow rounded text-white'>
+                <Card className=' flex flex-col shadow min-h-full justify-center items-center bg-slate-500'>
+                  <h4 className='bg-slate-700 px-2 py-1 text-xl font-light shadow-inner flex justify-center items-center w-full  overflow-hidden rounded '>
                     {budget.newBudget}
                   </h4>
                   <p className='text-md flex justify-center'>
