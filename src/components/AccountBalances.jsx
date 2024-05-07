@@ -28,11 +28,11 @@ const AccountBalances = ({
           return (
             <div
               key={accountType.accountName}
-              className="text-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 m-1 pt-2 pb-2 pl-4 pr-4 bg-slate-100 rounded shadow-sm"
+              className="text-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 m-1 pt-2 pb-2 pl-4 pr-4 bg-slate-100 rounded shadow-sm min-w-40 min-h-24"
             >
               <div className="progress-text w-full">
                 <h3 className="font-thin">{accountType.accountName}</h3>
-                <h4 style={{ color: getBalanceColor(balance) }}>{balance}</h4>
+                <h4 style={{ color: getBalanceColor(balance) }} >{balance}</h4>
               </div>
             </div>
           );
