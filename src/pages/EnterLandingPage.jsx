@@ -311,6 +311,7 @@ const EnterLandingPage = () => {
                   placeholder='Email...'
                   onChange={handleEmailChangeReturning}
                 />
+                <div className='errortxtnew'>{errorMessage}</div>
                 <input
                   type='password'
                   placeholder='Password'
