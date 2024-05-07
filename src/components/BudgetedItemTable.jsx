@@ -150,7 +150,7 @@ function BudgetedItemTable({
           <div className="text-center">
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
               onClick={() => deleteBudget(budgetID)}
             >
               Delete Budget

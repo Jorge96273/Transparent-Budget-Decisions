@@ -52,7 +52,7 @@ function AccountsTable({
       header: "Account Name",
       //* Pulls the data from data.accountType to fill the table
       cell: ({ row }) => (
-        <div className="capitalize text-center">
+        <div className="capitalize font-bold text-center">
           {row.getValue("accountType")}
         </div>
       ),
@@ -60,7 +60,7 @@ function AccountsTable({
 
     {
       accessorKey: "accountID",
-      header: () => <div className="text-center">Delete Account</div>,
+      header: () => <div className="text-center text-lg font-bold">Delete Account</div>,
       //* Pulls the data from data.accountID to use as parameter in the delete account method
       cell: ({ row }) => {
         const accountID = row.getValue("accountID");
@@ -68,7 +68,7 @@ function AccountsTable({
           <div className="text-center">
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
               onClick={() => deleteAccount(accountID)}
             >
               Delete Account
@@ -105,15 +105,15 @@ function AccountsTable({
 
   return (
     <>
-      <div className="w-full">
-        <div className="rounded-md border">
+      <div className="w-full flex items-center justify-center p-4 rounded-2xl ">
+        <div className="rounded-md w-full border">
           <Table>
-            <TableHeader className="text-center">
+            <TableHeader className="text-center ">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="text-center">
+                      <TableHead key={header.id} className="text-center font-bold text-lg">
                         {header.isPlaceholder
                           ? null
                           : flexRender(

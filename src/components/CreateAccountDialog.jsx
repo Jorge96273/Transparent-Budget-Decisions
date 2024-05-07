@@ -94,12 +94,12 @@ function CreateAccountDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button className="rounded-button-newuser hover:bg-orange-100">
-              Add an Account
+            <button className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+              Add Account
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <h3>Add an Account </h3>
+            <h3 className="flex justify-center">Add an Account </h3>
             <picture>
               <source media="(min-width: )" srcSet="" />
               <img src="" alt="" />
@@ -111,7 +111,7 @@ function CreateAccountDialog({
                     <div className="color-red alert">
                       <p className="text-red-500">{alertMessage}</p>
                       <button
-                        className="rounded-button-newuser hover:bg-orange-100 text-red-500"
+                        className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                         onClick={closeAlert}
                       >
                         Close
@@ -120,20 +120,30 @@ function CreateAccountDialog({
                   )}
                 </DialogTitle>
               </DialogHeader>
-
+              <div className="flex justify-center">
               <input
                 type="text"
                 placeholder="Account Name"
                 onChange={(e) => setNewAccountName(e.target.value)}
+                className="rounded mb-1"
               />
+              </div>
             </div>
-            <DialogFooter>
+              <div className="flex justify-center">
               <button
-                className="rounded-button-newuser hover:bg-orange-100"
+               className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={handleCreateAccount}
               >
                 Create Account
-              </button>
+              </button> 
+              </div>
+            <DialogFooter>
+              {/* <button
+                className="rounded-button-newuser hover:bg-slate-100"
+                onClick={handleCreateAccount}
+              >
+                Create Account
+              </button> */}
             </DialogFooter>
           </DialogContent>
         </Dialog>

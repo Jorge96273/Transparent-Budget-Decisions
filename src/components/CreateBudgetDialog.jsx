@@ -79,39 +79,52 @@ function CreateBudgetDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button className="rounded-button-newuser hover:bg-orange-100">
-              Create a Budget
+            <button  className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+              Create Budget
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             {" "}
-            <h3>Create a Budget</h3>
+            <h3 className="flex justify-center">Create a Budget</h3>
             <div>
               <DialogHeader>
                 <DialogTitle>
                   Add a Budget Category and Monthly Limit
                 </DialogTitle>
               </DialogHeader>
-
+              <div className="flex justify-center">
               <input
                 type="text"
                 placeholder="Budget Name"
                 onChange={(e) => setNewBudget(e.target.value)}
+                className="rounded mb-1"
               />
-
+              </div>
+              <div className="flex justify-center">
               <input
                 type="number"
                 placeholder="Budget Amount"
                 onChange={(e) => setNewBudgetAmount(Number(e.target.value))}
+                className="rounded mb-1"
               />
-            </div>
-            <DialogFooter>
+              </div>
+              </div>
+              <div className="flex justify-center">
               <button
-                className="rounded-button-newuser hover:bg-orange-100"
+                className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={createBudget}
               >
                 Create Budget
               </button>
+            </div>
+            <DialogFooter>
+              {/* <button
+                
+                className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
+                onClick={createBudget}
+              >
+                Create Budget
+              </button> */}
             </DialogFooter>
           </DialogContent>
         </Dialog>{" "}

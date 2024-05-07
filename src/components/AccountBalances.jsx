@@ -11,8 +11,49 @@ const AccountBalances = ({
     return balance.includes("-") ? "red" : "green";
   };
 
+  // const debitBalance = currentAccountBalance("Debit");
+  // const savingsBalance = currentAccountBalance("Savings");
+  // const creditBalance = currentAccountBalance("Credit");
+
   return (
-    <div className="w-full flex flex-row justify-evenly">
+    <>
+    {/* <div
+      className='w-full px-3 py-1 flex flex-row justify-evenly'
+      
+      > */}
+      {/* {debitAccounts.length > 0 ? (
+        <div className=' text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-slate-100 rounded shadow-sm'>
+        <div className='progress-text w-full '>
+        <h3 className="font-thin">Debit</h3>
+        <h4 style={{ color: getBalanceColor(debitBalance) }}>
+        {debitBalance}
+        </h4>
+        </div>
+        </div>
+      ) : null}
+      {creditAccounts.length > 0 ? (
+        <div className=' text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-slate-100 rounded shadow-sm'>
+        <div className='progress-text w-full'>
+        <h3 className="font-thin">Credit</h3>
+        <h4 style={{ color: getBalanceColor(creditBalance) }}>
+        {creditBalance}
+        </h4>
+        </div>
+        </div>
+      ) : null}
+      {savingsAccounts.length > 0 ? (
+        <div className=' text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-slate-100 rounded shadow-sm'>
+        <div className='progress-text w-full'>
+        <h3 className="font-thin">Savings</h3>
+        <h4 style={{ color: getBalanceColor(savingsBalance)}}>
+        {savingsBalance}
+        </h4>
+        </div>
+        </div>
+      ) : null} */}
+
+
+     <div className="w-full px-3 py-1 flex flex-row justify-evenly">
       {accountNamesList.map((accountType) => {
         //* Maps through account names
         const filteredAccounts = accountList.filter(
@@ -26,7 +67,7 @@ const AccountBalances = ({
           return (
             <div
               key={accountType.accountName}
-              className="text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-orange-100 rounded shadow-sm"
+              className="text-center w-full m-1 pt-2 pb-2 pl-4 pr-4 bg-slate-100 rounded shadow-sm"
             >
               <div className="progress-text w-full">
                 <h3 className="font-thin">{accountType.accountName}</h3>
@@ -38,6 +79,7 @@ const AccountBalances = ({
         return null;
       })}
     </div>
+    </>
   );
 };
 

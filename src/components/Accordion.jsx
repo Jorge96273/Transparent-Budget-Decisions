@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +10,26 @@ import TransactionTable from "./TransactionTable";
 import { Chart } from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { Line } from "react-chartjs-2";
+
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+
+
 
 Chart.register(CategoryScale);
 
@@ -28,13 +47,13 @@ const LineChart = ({ category, xlabels, ydata }) => {
                 data: ydata,
                 fill: false,
                 borderColor: "#6A8D92",
-                backgroundColor: "#6F1D1B",
-                pointBorderColor: "#6F1D1B",
-                pointBackgroundColor: "#fff",
+                backgroundColor: "red",
+                pointBorderColor: "red",
+                pointBackgroundColor: "white",
                 pointBorderWidth: 2,
                 pointHoverRadius: 5,
                 pointHoverBackgroundColor: "#F4A261",
-                pointHoverBorderColor: "#6F1D1B",
+                pointHoverBorderColor: "red",
                 pointHoverBorderWidth: 20,
               },
             ],
@@ -83,11 +102,11 @@ export function AccordionElement({
 }) {
   return (
     <>
-      <div className="flex overflow-auto justify-center">
-        <Accordion
+      <div className='flex-col w-full justify-center max-w-full'>
+      <Accordion
           type="multiple"
           collapsible="true"
-          className="w-full flex overflow-auto"
+          className="w-full "
         >
           {accountNamesList.map((accountType, index) => {
             const filteredAccounts = accountList.filter(
@@ -106,17 +125,17 @@ export function AccordionElement({
             return (
               <AccordionItem
                 key={index} // Using index as a key, consider using a unique identifier if available
-                className="m-2 h-max w-full"
+                className=" h-max w-full"
                 value={`item-${index}`}
               >
-                <AccordionTrigger className="rounded w-max flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-orange-200 focus:bg-orange-200 shadow-md">
+                <AccordionTrigger className='rounded-xl w-3/4 flex flex-col items-center content-center justify-center pl-4 pr-4 hover:no-underline hover:bg-slate-600 bg-slate-400 shadow-md'>
                   <h4>{accountType.accountName} Account</h4>
-                  <h4 className="p-2 bg-orange-50 shadow-inner rounded">
+                  <h4 className='p-2 bg-slate-500 shadow-inner rounded'>
                     {balance}
                   </h4>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="bg-orange-200 rounded shadow-md">
+                  <div className='bg-slate-300 rounded shadow-md'>
                     {/* Pass the calculated data to the LineChart component */}
                     <LineChart
                       category={accountType.accountName}
@@ -124,7 +143,7 @@ export function AccordionElement({
                       ydata={amounts}
                     />
                   </div>
-                  <br />
+             
                   <TransactionTable
                     uid={uid}
                     triggerFetch={triggerFetch}
@@ -140,7 +159,18 @@ export function AccordionElement({
             );
           })}
         </Accordion>
+        
+        {/* <Tabs defaultValue="account" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">Make changes to your account here.</TabsContent>
+  <TabsContent value="password">Change your password here.</TabsContent>
+</Tabs> */}
       </div>
+
+      
     </>
   );
 }

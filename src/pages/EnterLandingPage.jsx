@@ -37,15 +37,15 @@ const EnterLandingPage = () => {
 
   const validatePassword = (password) => {
     if (password.length < 8) {
-      return("Password must be at least 8 characters long");
+      return "Password must be at least 8 characters long";
     } else if (!/\d/.test(password)) {
-      return("Password must contain at least 1 number");
+      return "Password must contain at least 1 number";
     } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      return("Password must contain at least 1 special character");
+      return "Password must contain at least 1 special character";
     } else if (/\s/.test(password)) {
-      return("Password cannot contain spaces");
+      return "Password cannot contain spaces";
     } else {
-      return("");
+      return "";
     }
   };
 
@@ -220,53 +220,52 @@ const EnterLandingPage = () => {
 
   return (
     <>
-      <div className="animate-in fade-in duration-1000 ">
-        <div className="user-banner pt-6">
+      <div className='animate-in fade-in duration-1000 bg-white'>
+        <div className='user-banner bg-white pt-6'>
           <div
             style={{ display: "flex", justifyContent: "center", gap: "40px" }}
           >
             <button
-              className="rounded-button-newuser"
+              className="rounded-full bg-slate-400 px-4 py-2 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500"
               onClick={toggleLayer_1_2}
             >
               New User
             </button>
 
-
-            <button className="rounded-button-rtnuser" onClick={returningUser}>Returning User</button>
+            <button className="rounded-full bg-slate-400 px-4 py-2 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500" onClick={returningUser}>
+              Returning User
+            </button>
           </div>
+        </div>
 
-{/*     {isNewUser ? (
-          <div className="login-background-container1">
-            <div className="googlebuttondown">
-              <div className="or-section">
+        {isNewUser ? (
+          <div className='login-background-container1'>
+            <div className='googlebuttondown'>
+              <div className='or-section'>
                 <button
-                  className="google-button or-section mr-3"
+                  className='google-button or-section'
                   onClick={signInWithGoogle}
                 >
-                  <img
-                src={signupgoogle}
-                alt="Sign up with Google"
-                
-      />
+                  <img src={signupgoogle} alt='Sign up with Google' />
                 </button>
               </div>
               <br></br>
 
-              <div className="or-sectionrtn">
-                <p className="font-bold text-lg or-sectionrtn">OR</p>
+              <div className='or-sectionrtn'>
+                <p className='font-bold text-lg or-sectionrtn text-white'>OR</p>
               </div>
-              <div className="rounded-form">
+              <div className='rounded-form'>
                 <input
-                  type="text"
-                  className="rounded-input"
-                  placeholder="Email..."
+                  type='text'
+                  className='rounded my-1 px-4'
+                  placeholder='Email...'
                   onChange={handleEmailChangeNew}
                 />
+                <div className='errortxtnew'>{errorMessage}</div>
                 <input
-                  type="password"
-                  placeholder="Password"
-                  className="rounded-input"
+                  type='password'
+                  placeholder='Password'
+                  className='rounded my-1 px-4'
                   onChange={handlePasswordChangeNew}
                 />
               </div>
@@ -275,156 +274,48 @@ const EnterLandingPage = () => {
               className={isOpen1 ? "login-overlay2" : "login-overlay1"}
             ></div>
 
-{showOverlay3 && (
-          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
-            <button className="rounded-button-newuser" onClick={handleSubmitSignUp}>
-              Sign up with Email
-{/* >>>>>>> main */}
-{/*             </button> */} 
-          </div>
-
-          {isNewUser ? (
-            <div className="login-background-container1">
-              <div className="googlebuttondown">
-                <div className="or-section">
-                  <button
-                    className="google-button or-section"
-                    onClick={signInWithGoogle}
-                  >
-                    <img src={signupgoogle} alt="Sign up with Google" />
-                  </button>
-                </div>
-                <br></br>
-
-                <div className="or-sectionrtn">
-                  <p className="font-bold text-lg or-sectionrtn">Or</p>
-                </div>
-                <div className="rounded-form">
-                  <input
-                    type="text"
-                    className="rounded mb-1"
-                    placeholder="Email..."
-                    onChange={handleEmailChangeNew}
-                  />
-                  <div className="errortxtnew">{errorMessage}</div>
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="rounded mt-1"
-                    onChange={handlePasswordChangeNew}
-                  />
-                </div>
-              </div>
+            {showOverlay3 && (
               <div
-                className={isOpen1 ? "login-overlay2" : "login-overlay1"}
-              ></div>
-
-              {showOverlay3 && (
-                <div
-                  ref={overlayRef}
-                  className={`login-overlay3 ${
-                    showStyle ? "ease-overlay" : ""
-                  }`}
+                ref={overlayRef}
+                className={`login-overlay3 ${showStyle ? "ease-overlay" : ""}`}
+              >
+                <button
+                  className="rounded-full bg-slate-400 px-4 py-2 mb-10 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500"
+                  onClick={handleSubmitSignUp}
                 >
-                  <button
-                    className="rounded-button-newuser"
-                    onClick={handleSubmitSignUp}
-                    // style={{ transform: "translateY(-100px)" }}
-                  >
-                    Sign up Email/Password
-                  </button>
-                </div>
-              )}
-            </div>
-//           ) : (
-//             <div className="login-background-container2">
-//               <div className="googlebuttondown">
-//                 <div className="or-section">
-//                   <button
-//                     className="google-button or-section"
-//                     onClick={signInWithGoogle}
-//                   >
-//                     <img src={continuegoogle} alt="Continue with Google" />
-//                   </button>
-//                 </div>
-//                 <br></br>
-
-//                 <div className="or-sectionnew">
-//                   <p className="font-bold text-lg or-sectionnew">Or</p>
-//                 </div>
-//                 <div className="rounded-form">
-//                   <input
-//                     type="text"
-//                     className="rounded-input"
-//                     placeholder="Email..."
-//                     onChange={handleEmailChangeReturning}
-//                   />
-//                   <div className="errortxtrtn">{errorMessage}</div>
-//                   <input
-//                     type="password"
-//                     placeholder="Password"
-//                     className="rounded-input"
-//                     onChange={handlePasswordChangeReturning}
-//                   />
-//                 </div>
-//               </div>
-//               <div
-//                 className={isOpen1 ? "login-overlay2" : "login-overlay1"}
-//               ></div>
-
-//               {showOverlay3 && (
-//                 <div
-//                   className={`login-overlay3 ${
-//                     showStyle ? "ease-overlay" : ""
-//                   }`}
-//                 >
-//                   <button
-//                     className="rounded-button-rtnuser"
-//                     onClick={handleSubmitLogin}
-//                     // style={{ transform: "translateY(-100px)" }}
-//                   >
-//                     Continue Email/Password
-//                   </button>
-//                 </div>
-//               )}
-//             </div>
-//           )}
-//         </div>
-// <<<<<<< HEAD
-//       </div>
-//     </>
-// =======
-    ) : (
-        <div className="login-background-container2">
-            <div className="googlebuttondown">
-              <div className="or-section">
-              <button
-                  className="google-button or-section mr-3"
+                  Sign up with Email
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className='login-background-container2'>
+            <div className='googlebuttondown'>
+              <div className='or-section'>
+                <button
+                  className='google-button or-section'
                   onClick={signInWithGoogle}
                 >
-                  <img
-            
-                src={continuegoogle}
-                alt="Continue with Google"
-      />
+                  <img src={continuegoogle} alt='Continue with Google' />
                 </button>
               </div>
               <br></br>
 
-              <div className="or-sectionnew">
-                <p className="font-bold text-lg or-sectionnew">OR</p>
+              <div className='or-sectionnew'>
+                <p className='font-bold text-lg or-sectionnew'>OR</p>
               </div>
-              <div className="rounded-form">
+              <div className='rounded-form'>
                 <input
-                  type="text"
-                  className="rounded-input"
-                  placeholder="Email..."
+                  type='text'
+                  className='rounded px-4 my-1'
+                  placeholder='Email...'
                   onChange={handleEmailChangeReturning}
                 />
+                <div className='errortxtnew'>{errorMessage}</div>
                 <input
-                  type="password"
-                  placeholder="Password"
-                  className="rounded-input"
+                  type='password'
+                  placeholder='Password'
+                  className='rounded px-4 my-1'
                   onChange={handlePasswordChangeReturning}
                 />
               </div>
@@ -433,20 +324,22 @@ const EnterLandingPage = () => {
               className={isOpen1 ? "login-overlay2" : "login-overlay1"}
             ></div>
 
-{showOverlay3 && (
-          <div className={`login-overlay3 ${showStyle ? 'ease-overlay' : ''}`}>
-            <button className="rounded-button-rtnuser" onClick={handleSubmitLogin}>
-              Continue with Email
-            </button>
+            {showOverlay3 && (
+              <div
+                className={`login-overlay3 ${showStyle ? "ease-overlay" : ""}`}
+              >
+                <button
+                  className="rounded-full bg-slate-400 px-4 py-2 text-xl font-bold text-white shadow-slate-200 shadow-md hover:bg-slate-500"
+                  onClick={handleSubmitLogin}
+                >
+                  Continue with Email
+                </button>
+              </div>
+            )}
           </div>
         )}
-        </div>   
-    )}
-       </div>   
-       
-        
-      </>
-// >>>>>>> main
+      </div>
+    </>
   );
 };
 
