@@ -62,7 +62,7 @@ const AboutPage = () => {
   return (
     <>
     <div className="w-full h-full flex justify-center items-center">
-      <div className="about-page-container h-full  shadow-xl shadow-slate-400 h-100 py-3 rounded-xl sahdwo-xl bg-slate-500 my-2 w-3/4">
+      <div className="about-page-container h-full  shadow-xl shadow-slate-400 h-100 py-3 rounded-xl bg-slate-500 my-2 w-3/4">
         <p className="quote-style text-slate-50">
           &quot;TBD: Helping you hit your financial targets.&quot;
         </p>
