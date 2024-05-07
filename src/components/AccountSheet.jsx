@@ -32,8 +32,8 @@ export function AccountSheet({
           className="bg-slate-500"
           style={{ maxHeight: "500px", overflowY: "auto" }}
         >
-          <SheetTitle text-white rounded-md>
-            <h4 className="text-slate-50 rounded-2xl flex justify-center w-full p-2"> Manage Accounts</h4>
+          <SheetTitle>
+            <span className="text-slate-50 text-2xl rounded-2xl flex justify-center w-full p-2"> Manage Accounts</span>
           </SheetTitle>
           <AccountsTable 
             accountNamesList={accountNamesList}
