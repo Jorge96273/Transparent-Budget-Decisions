@@ -94,18 +94,18 @@ const NavBar = () => {
                       </li>
                       <li>
                         <Link
-                          to='/about/'
-                          className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900  bg-slate-200 hover:bg-slate-300 '
-                        >
-                          About
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
                           to='/team/'
                           className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900  bg-slate-200 hover:bg-slate-300 '
                         >
                           Meet the Team
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to='/about/'
+                          className='shadow-md  rounded-full pt-2 pb-2 pr-4 pl-4 no-underline flex justify-center text-slate-900  bg-slate-200 hover:bg-slate-300 '
+                        >
+                          About
                         </Link>
                       </li>
                     </>
