@@ -12,9 +12,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
-import { DonutChart, Legend } from '@tremor/react';
-
+import userPhoto from "../images/userPhoto1.svg"
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -82,45 +80,21 @@ const Profile = () => {
   }
 
 
-
-  const sales = [
-    {
-      name: 'New York',
-      sales: 980,
-    },
-    {
-      name: 'London',
-      sales: 456,
-    },
-    {
-      name: 'Hong Kong',
-      sales: 390,
-    },
-    {
-      name: 'San Francisco',
-      sales: 240,
-    },
-    {
-      name: 'Singapore',
-      sales: 190,
-    },
-  ];
-  
-  const valueFormatter = (number) =>
-    `$ ${Intl.NumberFormat('us').format(number).toString()}`;
-  
-
   return (
     <>
     
-      <div className='animate-in slide-in-from-bottom duration-1000 flex items-center flex-col'>
+      <div className='animate-in slide-in-from-bottom w-full duration-1000 flex items-center flex-col my-2'>
+        <div className="flex shadow-xl shadow-slate-300/70 rounded-3xl w-max bg-slate-400 p-4 flex-col center-items justify-center">
+    <div className="flex flex-col justify-center items-center">
+
         <img
-          className='rounded-full w-40'
-          src={user.photoURL}
+          className=' rounded-full w-40   bg-slate-200'
+          src={user.photoURL? user.photoURL: userPhoto}
           referrerPolicy='no-referrer'
-        ></img>
+          ></img>
         <p>{user.displayName}</p>
         <p>{user.email}</p>
+          </div>
         <form className='flex flex-col iems-center' onSubmit={handleSubmit}>
           <input
             className='rounded m-2 p-2'
@@ -128,21 +102,21 @@ const Profile = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='New Email'
-          />
+            />
           <input
             className='rounded m-2 p-2'
             type='text'
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             placeholder='New Display Name'
-          />
+            />
           <input
             className='rounded m-2 p-2'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder='New Password'
-          />
+            />
           <div className='font-bold '>
             {" "}
             To make changes, enter current password below!
@@ -153,31 +127,16 @@ const Profile = () => {
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             placeholder='Current Password'
-          />
+            />
           <button
-            className='rounded m-2 p-2 bg-teal-400 hover:bg-teal-500'
+            className='rounded m-2 p-2 bg-teal-100 hover:bg-teal-300'
             type='submit'
-          >
+            >
             Update Profile
           </button>
         </form>
+            </div>
       </div>
-      <div className="flex items-center justify-center space-x-6">
-        <DonutChart
-          data={sales}
-          category="sales"
-          index="name"
-          valueFormatter={valueFormatter}
-          colors={['blue', 'cyan', 'indigo', 'violet', 'fuchsia']}
-          className="w-40"
-        />
-        <Legend
-          categories={['New York', 'London', 'Hong Kong', 'San Francisco', 'Singapore']}
-          colors={['blue', 'cyan', 'indigo', 'violet', 'fuchsia']}
-          className="max-w-xs"
-        />
-      </div>
-
     </>
   );
 };

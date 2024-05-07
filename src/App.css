@@ -126,8 +126,8 @@
   top: 5px;
   left: 0;
   width: 100vw;
-  height: 70vh;
-  background-color:  rgb(4, 28, 42);  
+  height: 90vh;
+  background-color:rgb(112,128,144);  
   border-top-left-radius: 52px;
   border-top-right-radius: 52px; 
   z-index: 1;
@@ -143,8 +143,8 @@
   top: 5px;
   left: 0;
   width: 100vw;
-  height: 70vh;
-  background-color:rgb(170, 147, 99);
+  height: 90vh;
+  background-color:rgb(216, 189, 142);
   border-top-left-radius: 52px;
   border-top-right-radius: 52px;  
   padding: 8px; 
@@ -165,14 +165,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color:  rgb(255, 255, 247); 
+  background-color:  white; 
   display: flex;
   justify-content: center;
   align-items: center;
   color: black;
   transition: height 1s ease;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px; 
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px; 
   z-index: 3;
 }
 
@@ -198,7 +198,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40%;
+  height: 50%;
   background-color: rgb(255, 255, 247); 
   display: flex;
   justify-content: center;
@@ -288,8 +288,8 @@
   }
 
 .rounded-button-newuser {
-  background-color: rgb(4, 28, 42); 
-  color: rgb(170, 147, 99); 
+  background-color:rgb(255, 255, 255); 
+  color: rgb(135, 135, 135); 
   border: none;
   border-radius: 20px;
   padding: 10px 20px;

@@ -2,7 +2,7 @@
 export default function Footer() {
   return (
     <>
-      <footer className="nav-footer-background-color">
+      <footer className="shadow">
         <div className='w-full mx-auto flex justify-center mt-3'>
           <span className='text-xs text-gray-500 sm:text-center dark:text-gray-400'>
             © 2024{" "}

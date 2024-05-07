@@ -79,8 +79,8 @@ function CreateBudgetDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button className="rounded-button-newuser hover:bg-orange-100">
-              Create a Budget
+            <button  className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+              Create Budget
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
@@ -111,7 +111,7 @@ function CreateBudgetDialog({
               </div>
               <div className="flex justify-center">
               <button
-                className="rounded-button-newuser hover:bg-orange-100"
+                className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={createBudget}
               >
                 Create Budget
@@ -120,7 +120,7 @@ function CreateBudgetDialog({
             <DialogFooter>
               {/* <button
                 
-                className="rounded-button-newuser hover:bg-orange-100"
+                className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={createBudget}
               >
                 Create Budget

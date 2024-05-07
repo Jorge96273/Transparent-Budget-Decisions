@@ -151,8 +151,8 @@ function UpdateTransactionDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button variant="outline" className="rounded-button-newuser">
-              Update a Transaction
+            <button className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+              Update
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[550px]">
@@ -261,7 +261,7 @@ function UpdateTransactionDialog({
             </div>
               <div className="flex justify-center">
               <button
-                className="rounded-button-newuser"
+                className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={handleSubmit}
                 disabled={isLoading}
               >

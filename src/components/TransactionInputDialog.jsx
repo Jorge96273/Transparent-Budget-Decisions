@@ -109,8 +109,8 @@ function TransactionInputDialog({
           onClose={closeDialog}
         >
           <DialogTrigger asChild>
-            <button variant="outline" className="rounded-button-newuser">
-              Add a Transaction
+            <button  className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+              Add Transaction
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[500px]">
@@ -225,7 +225,7 @@ function TransactionInputDialog({
             </div>
             <div className="flex justify-center">
               <button
-                className="rounded-button-newuser"
+                 className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3"
                 onClick={addTransaction}
               >
                 Submit Transaction

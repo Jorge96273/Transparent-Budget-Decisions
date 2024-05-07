@@ -22,20 +22,20 @@ export function AccountSheet({
     <Sheet>
       <SheetTrigger asChild>
         <div>
-          <button className="rounded-button-newuser hover:bg-orange-100">
-            Account Data
+          <button className="rounded-full shadow-md hover:bg-slate-500 bg-slate-400 text-white py-2 px-3">
+            Manage Accounts
           </button>
         </div>
       </SheetTrigger>
-      <SheetContent style={{ width: "50%" }}>
+      <SheetContent className="w-full">
         <div
-          className="background-color-div"
+          className="bg-slate-500"
           style={{ maxHeight: "500px", overflowY: "auto" }}
         >
           <SheetTitle text-white rounded-md>
-            <h4 className="text-white rounded-md"> Account Data</h4>
+            <h4 className="text-slate-50 rounded-2xl flex justify-center w-full p-2"> Manage Accounts</h4>
           </SheetTitle>
-          <AccountsTable
+          <AccountsTable 
             accountNamesList={accountNamesList}
             uid={uid}
             accountTriggerFetch={accountTriggerFetch}
