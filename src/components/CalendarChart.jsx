@@ -15,10 +15,13 @@ export default function CalendarChart({ objData }) {
   const [modalContent, setModalContent] = useState('');
 
 
-  const NegativeAdd = () => {
+  const AddSign = () => {
     events.forEach(event => {
       if (event.type.toLowerCase() === 'withdrawal') {
-        event.amount = '-'.concat(event.amount);
+        event.amount = '-$'.concat(event.amount);
+      }
+      else if(event.type.toLowerCase() === 'deposit'){
+        event.amount = '+$'.concat(event.amount);
       }
     })
   }
@@ -38,7 +41,6 @@ export default function CalendarChart({ objData }) {
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
       const dayEvents = events.filter(event => {
-
         // Handles Dates that are out of range of the Calendar-----------
         if (event.monthly) {
           const eventDate = new Date(event.date);
@@ -65,7 +67,7 @@ export default function CalendarChart({ objData }) {
         <ul>
           {dayEvents.map((event, index) => (
             <li key={index} style={{ color: event.type === 'withdrawal' ? 'red' : 'green' }}>
-              {getEmoji(event.type)} {event.title}: ${event.amount}
+              {getEmoji(event.type)} {event.title}: {event.amount}
             </li>
           ))}
         </ul>
@@ -90,16 +92,16 @@ export default function CalendarChart({ objData }) {
     if (dayEvents.length > 0) {
       const eventsList = dayEvents.map((event, index) => (
         <li className='bg-white p-2 shadow rounded mr-4 mb-2' key={index}>
-          {`${event.title} - $${event.amount}`}
+          {`${event.title}: ${event.amount}`}
         </li>
       ));
 
       setModalContent(
-        <div className='bg-orange-300 text-black rounded p-2'>
-          <p className='bg-white text-black font-bold flex justify-center rounded p-2'>
+        <div className='bg-blue-400 text-black rounded-lg p-4 shadow-xl'>
+          <p className='bg-blue-500 text-white font-bold text-center rounded-lg py-3 px-4 shadow'>
             Events for {formatDate(clickedDate, 'MMMM dd, yyyy')}
           </p>
-          <ul className='rounded pr-4 pt-4 pb-4'>
+          <ul className='bg-blue-500 rounded-lg shadow-md p-4 mt-4  '>
             {eventsList}
           </ul>
         </div>
@@ -113,7 +115,7 @@ export default function CalendarChart({ objData }) {
   }, [objData]);
 
   useEffect(() => {
-    NegativeAdd();
+    AddSign();
   }, [events]);
 
   return (
@@ -123,7 +125,7 @@ export default function CalendarChart({ objData }) {
           onChange={setDate}
           value={date}
           calendarType="iso8601"
-          className="calendar-style rounded "
+          className="full-react-calendar"
           view="month"
           onClickDay={handleDayClick}
           tileContent={renderTileContent}
