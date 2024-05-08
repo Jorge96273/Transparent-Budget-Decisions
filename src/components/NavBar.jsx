@@ -24,6 +24,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import TBD from "../images/TBD.png";
 
 const NavBar = () => {
   const [isloggedIn, setIsLoggedIn] = useState(false);
@@ -49,14 +50,14 @@ const NavBar = () => {
               <Link to="/dashboard/">
                 <img
                   className=" shadow-xl shadow-slate-500/50 rounded-full p-1 outline outline-2 bg-slate-200 outline-slate-800"
-                  src="./images/tbd_logo.png"
+                  src={TBD}
                 ></img>
               </Link>
             ) : (
               <Link to="/">
                 <img
                   className="rounded-full outline outline-slate-50 shadow"
-                  src="./images/tbd_logo.png"
+                  src={TBD}
                 ></img>
               </Link>
             )}
