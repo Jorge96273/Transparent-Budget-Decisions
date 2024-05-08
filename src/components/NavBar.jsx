@@ -24,7 +24,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import TBD from "../images/TBD.png";
+import TBD from "../images/tbd_logo.png";
 
 const NavBar = () => {
   const [isloggedIn, setIsLoggedIn] = useState(false);

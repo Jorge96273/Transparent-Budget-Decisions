@@ -119,40 +119,6 @@ const Dashboard = () => {
     return formatted;
   };
 
-  // const getAccountNames = async () => {
-  //   try {
-  //     const data = await getDocs(collection(db, `account/${uid}/newAccount`));
-  //     const filteredData = data.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-  //     setAccountNamesList(filteredData);
-  //     console.log("DASHBOARD GETACCOUNTNAMES");
-  //     console.log("Get Account Names FILTERED DATA", filteredData);
-  //     const accountNames = filteredData.map((account) => account.accountName);
-  //     const accountNamesToCheck = ["Savings", "Credit", "Debit"];
-  //     const allAccountsPresent = accountNamesToCheck.every((name) =>
-  //       accountNames.includes(name)
-  //     );
-  //     if (!allAccountsPresent) {
-  //       // Create a promise for each missing account name
-  //       const promises = accountNamesToCheck.map(async (name) => {
-  //         if (!accountNames.includes(name)) {
-  //           const docRef = await addDoc(accountCollectionRef, {
-  //             accountName: name,
-  //           });
-  //           console.log(`New document added for ${name}:`, docRef.id);
-  //         }
-  //       });
-  //       // Wait for all promises to resolve
-  //       await Promise.all(promises);
-  //     }
-  //     console.log("SetAccountName", filteredData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   const getAccountNames = async (user) => {
     if (!user) {
       return; // Exit the function if user is not true
@@ -237,14 +203,13 @@ const Dashboard = () => {
 
   const isLoadingRef = useRef(false);
 
-  useEffect(() => {
-    if (user && !isLoadingRef.current) {
-      isLoadingRef.current = true; // Set loading state to prevent re-entry
-      getAccountNames(user).then(() => {
-        isLoadingRef.current = false; // Reset loading state after completion
-      });
-    }
-  }, [user]); // Adjusted dependency array
+  // useEffect(() => {
+  //   // Check if it's the first render or if the user has changed
+  //   if (firstRenderRef.current || user) {
+  //     firstRenderRef.current = false; // Set to false after the first render
+  //     getAccountNames(user); // Call getAccountNames only once after the first render or when the user changes
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     getAccountNames(user); // Call getAccountNames on every render after the initial one
