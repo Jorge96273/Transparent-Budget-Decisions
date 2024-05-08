@@ -203,14 +203,6 @@ const Dashboard = () => {
 
   const isLoadingRef = useRef(false);
 
-  // useEffect(() => {
-  //   // Check if it's the first render or if the user has changed
-  //   if (firstRenderRef.current || user) {
-  //     firstRenderRef.current = false; // Set to false after the first render
-  //     getAccountNames(user); // Call getAccountNames only once after the first render or when the user changes
-  //   }
-  // }, [user]);
-
   useEffect(() => {
     getAccountNames(user); // Call getAccountNames on every render after the initial one
   }, [accountTriggerFetch]);
