@@ -37,7 +37,7 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
   return (
     <>
-      <div className='flex flex-wrap justify-center'>
+      <div className="flex flex-wrap justify-center">
         {budgetList.map((budget) => {
           const spent = budgetSpent(budget.newBudget);
           const remaining = budget.newBudgetAmount - spent;
@@ -45,15 +45,16 @@ const BudgetItem = ({ budgetList, accountList }) => {
 
           return (
             <div
-              className='flex justify-center items-center m-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 h-72'
+              className="flex justify-center items-center m-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 h-72"
+              style={{ minWidth: "160px" }}
               key={budget.newBudget}
             >
-              <div className='flex items-center justify-center min-h-full shadow rounded text-white h-72'>
-                <Card className=' flex flex-col shadow min-h-full justify-center items-center bg-slate-500'>
-                  <h4 className='bg-slate-700 px-2 py-1 text-xl font-light shadow-inner flex justify-center items-center w-full  overflow-hidden rounded '>
+              <div className="flex items-center justify-center min-h-full shadow rounded text-white h-72">
+                <Card className=" flex flex-col shadow min-h-full justify-center items-center bg-slate-500">
+                  <h4 className="bg-slate-700 px-2 py-1 text-xl font-light shadow-inner flex justify-center items-center w-full overflow-hidden rounded inline-block text-center">
                     {budget.newBudget}
                   </h4>
-                  <p className='text-md flex justify-center'>
+                  <p className="text-md flex items-center justify-center">
                     {Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: "USD",
@@ -80,16 +81,16 @@ const BudgetItem = ({ budgetList, accountList }) => {
                     showAnimation
                     max={budget.newBudgetAmount}
                     value={percentageSpent}
-                    color='green'
+                    color="green"
                   >
-                    <span className='text-md font-medium text-slate-700'>
+                    <span className="text-md text-center font-medium text-slate-700">
                       {Math.round(percentageSpent)}%
                     </span>
                   </ProgressCircle>
 
-                  <span className="text-md">
+                  <span className="inline-flex items-center justify-center text-md">
                     Remaining:{" "}
-                    <span className='text-green-500'>
+                    <span className="text-green-500 inline-flex items-center justify-center">
                       {formatCurrency(remaining)}
                     </span>
                   </span>
