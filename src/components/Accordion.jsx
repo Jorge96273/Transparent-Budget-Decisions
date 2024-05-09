@@ -119,7 +119,7 @@ export function AccordionElement({
               (item) => item.newTransactionDate
             );
             const amounts = filteredAccounts.map(
-              (item) => item.newTransactionAmount
+              (item) => item.accountBalance
             );
 
             return (
