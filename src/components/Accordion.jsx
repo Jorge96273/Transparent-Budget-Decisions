@@ -112,6 +112,9 @@ export function AccordionElement({
             const filteredAccounts = accountList.filter(
               (account) => account.accountType === accountType.accountName
             );
+
+            filteredAccounts.sort((a, b) => new Date(a.newTransactionDate) - new Date(b.newTransactionDate));
+            
             const balance = currentAccountBalance(accountType.accountName);
 
             // Calculate line chart data for the current account type
